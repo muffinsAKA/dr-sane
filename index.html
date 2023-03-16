@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="lol.css">
+    <meta charset="utf-8" />
+    <title>Dr. Maku Sane</title>
+  </head>
+  <body>
+    <div id="start-screen"></div>
+    <div id="first-time">Click to begin</div>
+    <canvas id="player"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js" integrity="sha512-fTTVSuY9tLP+l/6c6vWz7uAQqd1rq3Q/GyKBN2jOZvJSLC5RjggSdboIFL1ox09/Ezx/AKwcv/xnDeYN9+iDDA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module">
+
+
+import * as THREE from 'three';
+import { FontLoader } from 'three/addons/loaders/FontLoader';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry';
+import { TTFLoader } from 'three/addons/loaders/TTFLoader';
+import { TWEEN } from 'three/addons/libs/tween.module.min';
+import { TweenLite, TimelineMax, Linear, Back, Sine } from 'gsap';
+import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls';
+import { LottieLoader } from 'three/addons/loaders/LottieLoader';
+
+
+//  ------------- [ API GRAB ] -----------------
+
+let title;
+let script;
+let audio;
+
+// API Fetch
+const response = await fetch('http://localhost:3000/episode');
+const data = await response.json();
+
+// Move info into existing global vars
+title = await data.title;
+script = await data.script;
+audio = await data.audio;
+
+
+
+
+//  ------------- [ GLOBAL VARS ] -----------------
+
+let duration;
+let introLength;
+let showStartTime;
+let creditsLength;
+let scriptLength;
+let korin;
+let themeLength;
+
+//  ------------- [ INTRO VARS ] -----------------
+let rendererIntro, intro, camIntro;
+let mesh;
+let firstRun = true
+
+
+
+//  ------------- [ DOM ELEMENTS ] -----------------
+
+const startScreen = document.getElementById('start-screen');
+const firstTime = document.getElementById('first-time');
+const playerCanvas = document.getElementById('player');
+const canvas = document.querySelector('#player');
+
+startScreen.style.display = 'none'
+
+// Hide player canvas initially
+playerCanvas.style.display = 'none';
+
+
+
+
+//  ------------- [ BROWSER SIZE ] -----------------
+
+let width = window.innerWidth;
+let height = window.innerHeight;
+
+
+
+
+//  ------------- [ RENDERER ] -----------------
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1))
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.outputEncoding = THREE.sRGBEncoding; 
+
+
+
+
+//  ------------- [ GLOBAL THREEJS ] -----------------
+
+const ttfLoader = new TTFLoader();
+const credits = new THREE.Scene()
+const objectLoader = new THREE.ObjectLoader();
+const clock = new THREE.Clock();
+const audioLoader = new THREE.AudioLoader()
+const fontLoader = new FontLoader();
+
+
+//  ------------- [ KACL CREATION ] -----------------
+
+// Create KACL scene
+const kaclScene = new THREE.Scene();
+
+// Load KACL Set
+objectLoader.load('scene.json', function ( kaclJson ) {
+    // Add the loaded object to the scene
+    kaclScene.add( kaclJson );
+});
+
+// Create camera
+const camera = new THREE.PerspectiveCamera(50, width/height, 0.1, 1000);
+
+// Default cam position
+// Set credits camera pos
+camera.position.set(2, 0, 0);
+camera.rotation.set(
+  -18.55 * Math.PI / 180,
+  -88.34 * Math.PI / 180,
+  -18.74 * Math.PI / 180);
+
+
+// Create audio listener and add to cameras
+const listenerKacl = new THREE.AudioListener();
+camera.add( listenerKacl );
+
+// Create sound
+const soundKacl = new THREE.Audio( listenerKacl );
+
+// Create title card geo + mesh
+fontLoader.load('korin.json', function ( fontdata ) {
+
+  korin = fontdata;
+
+  // Create episode Title Card geometry
+  const titleCard = new TextGeometry( `${title}`, {
+  font: korin,
+  size: .2,
+  height: .001
+  });
+
+  // Create title card mat + mesh
+  const titleCardMaterial = new THREE.MeshBasicMaterial();
+  const titleCardMesh = new THREE.Mesh(titleCard, titleCardMaterial);
+
+  // Position title card
+  titleCard.center();
+  titleCardMesh.position.set(9, 0, 0);
+  titleCardMesh.rotation.set(0,-1.56,0);
+
+  // add Title Card to scene
+  kaclScene.add(titleCardMesh);
+
+}); 
+
+
+
+
+
+
+
+//  ------------- [ CREDITS CREATION ] -----------------
+
+// Create credits camera
+const camCredits = new THREE.PerspectiveCamera(50, width/height, 0.1, 1000);
+
+const listenerCreds = new THREE.AudioListener();
+camCredits.add( listenerCreds );
+
+// Create audio source for creds
+const soundCreds = new THREE.Audio( listenerCreds );
+
+
+// Credits geometry + mesh
+fontLoader.load('korin.json', function ( fontdata ) {
+
+  // Create the credits geometry
+  const credit1Geo = new TextGeometry( `EXECUTIVE PRODUCER \n    Huge Greg`, {
+  font: korin,
+  size: .2,
+  height: .001
+    });
+
+  const credit2Geo = new TextGeometry( `BIG BOY \n   Small Greg`, {
+  font: korin,
+  size: .2,
+  height: .001
+    });
+
+  // Create 1st credit mat and mesh
+  const credit1Mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 })
+  const credit1Mesh = new THREE.Mesh(credit1Geo, credit1Mat)
+
+  // Position 1st credit
+  credit1Geo.center();
+  credit1Mesh.position.set(9, 0, 0);
+  credit1Mesh.rotation.set(0,-1.56,0);
+
+  // Create 2nd credit mat and mesh
+  const credit2Mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 });
+  const credit2Mesh = new THREE.Mesh(credit2Geo, credit2Mat);
+
+  // Position 2nd credit
+  credit2Geo.center();
+  credit2Mesh.position.set(9, 0, 0);
+  credit2Mesh.rotation.set(0,-1.56,0);
+
+  // Add credits to scene
+  credits.add(credit1Mesh);
+  credits.add(credit2Mesh);
+
+  // Set credits camera pos
+  camCredits.position.set(2, 0, 0);
+  camCredits.rotation.set(
+    -18.55 * Math.PI / 180,
+    -88.34 * Math.PI / 180,
+    -18.74 * Math.PI / 180);
+
+});
+
+
+
+// LENGTHS
+async function credLength() {
+  
+  // Get length of credits music (theme is different sometimes)
+  creditsLength = await new Promise((resolve) => {
+
+    audioLoader.load('/audio/themes/credits.mp3', function(buffer) {
+      
+      resolve(buffer); 
+
+    });
+    
+    return creditsLength
+
+  });
+}
+
+  
+// CREDITS ANIM LOOP
+function creditsAnimate() {
+  
+  if (clock.getElapsedTime() > clock.getElapsedTime() + creditsLength + 2){
+      fadeOut();
+      console.log('End Show');
+      return;
+    
+  } else {
+    TWEEN.update();
+    requestAnimationFrame(creditsAnimate);
+    renderer.render(credits, camCredits);
+  }
+}
+
+
+//  ------------- [ FUNCTIONS CREATION ] -----------------
+
+function fadeOutIntro() {
+  startScreen.style.opacity = 0;
+}
+
+
+// FADE IN FX
+function fadeIn() {
+  canvas.style.opacity = 1;
+}
+
+// FADE OUT FX
+function fadeOut() {
+  canvas.style.opacity = 0;
+}
+
+
+// RESIZE BROWSER FUNCTION
+function adjustSize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  renderer.setSize(width, height);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  camCredits.aspect = width/height;
+  camCredits.updateProjectionMatrix
+}
+
+// Add listener for window resizing to adjust size/camera
+window.addEventListener('resize', adjustSize);
+
+
+
+
+
+//  ------------- [ CREDITS SEQUENCE ] -----------------
+
+async function createCredits(){
+
+  let creditsLength = await credLength()
+  
+  // Start credits animation loop
+  renderer.render(credits, camCredits)
+  creditsAnimate();
+  
+  // Create TimelineMax timeline
+  const ctl = new TimelineMax();
+
+  // Fade in from black
+  ctl.add(fadeIn, 0.5);
+
+  // Fade credits + remove after finished
+  ctl.to(credit1Mat, 0.1, { opacity: 0 }, "+=3")
+        .add(() => {
+          credits.remove(credit1Mesh);
+        })
+        .to(credit2Mat, 0.1, { opacity: 1 })
+        .to(credit2Mat, 0.1, { opacity: 0 }, "+=2.5")
+        .add(() => {
+          credits.remove(credit2Mesh);
+        });
+
+  // Play timline
+  ctl.play();
+
+}
+
+
+
+// GET LATEST EP
+async function fetchEpisode() {
+
+  // Hit API
+  const response = await fetch('http://localhost:3000/episode');
+  const data = await response.json();
+  
+  // Move info into existing global vars
+  title = data.title;
+  script = data.script;
+  audio = data.audio;
+
+};
+
+
+
+// Move episode to 'used' db
+async function used() {
+  fetch('http://localhost:3000/move')
+  return console.log('episode deleted')
+};
+
+
+
+
+//  ------------- [ INTRO SEQUENCE ] -----------------
+
+
+
+async function initIntro() {
+
+  camIntro = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 10 );
+  camIntro.position.z = 2.5;
+
+  intro = new THREE.Scene();
+
+
+  const loader = new LottieLoader();
+  loader.setQuality( 2 );
+  loader.load( 'intro.json', function ( texture ) {
+
+
+    // texture = new THREE.TextureLoader().load( 'textures/uv_grid_directx.jpg' );
+
+    const introPlane = new THREE.PlaneGeometry( 2, 2 );
+    const planeMat = new THREE.MeshBasicMaterial( { map: texture } );
+    mesh = new THREE.Mesh( introPlane, planeMat );
+    intro.add( mesh );
+
+  } );
+
+  rendererIntro = new THREE.WebGLRenderer();
+  rendererIntro.setPixelRatio( window.devicePixelRatio );
+  rendererIntro.setSize( window.innerWidth, window.innerHeight );
+  document.getElementById('start-screen').appendChild( rendererIntro.domElement )
+
+  //
+
+  window.addEventListener( 'resize', onWindowResize );
+
+  // Wait for intro to finish loading
+  
+
+}
+
+
+function onWindowResize() {
+
+  camIntro.aspect = window.innerWidth / window.innerHeight;
+  camIntro.updateProjectionMatrix();
+
+  rendererIntro.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+//
+
+async function animLogo() {
+  
+  requestAnimationFrame( animLogo );
+
+
+  rendererIntro.render( intro, camIntro );
+
+}
+
+
+// ANIMATE KACL LOOP
+function animate() {
+
+  // // If the time passed
+  // if (clock.getElapsedTime() > showStartTime + scriptLength + 2){
+  //     fadeOut()
+  //     setTimeout(createCredits, 2700)
+  //     return;
+    
+  // } else {
+    
+  // Render the scene
+    requestAnimationFrame(animate);
+    renderer.render(kaclScene, camera);
+    }
+
+
+
+
+// CAMERA POSITIONS
+function cam1() {
+
+  camera.position.set(-0.10, 0.593, 0.019);
+  camera.rotation.set(
+    -68.43 * Math.PI / 180,
+    88.61 * Math.PI / 180,
+    68.62 * Math.PI / 180
+  );
+
+};
+
+function cam2() {
+
+  camera.position.set(0.522, 0.810, 1.378);
+  camera.rotation.set(
+    2.52 * Math.PI / 180,
+    51.2 * Math.PI / 180,
+    -1.77 * Math.PI / 180
+  );
+
+};
+
+function cam3() {
+
+  camera.position.set(-0.422, 0.664, -4.226);
+  camera.rotation.set(
+    173.62 * Math.PI / 180,
+    15.10 * Math.PI / 180,
+    -178.33 * Math.PI / 180
+  );
+
+};
+
+
+
+
+// LOAD THEME AND SET DURATION
+async function themeSong() {
+  
+  // Generate random # between 1-21
+  let n = Math.floor(Math.random() * (21 - 1) + 1);
+
+  // Check duration of mp3
+  let themeAudio = new Audio(`/audio/themes/theme${n}.mp3`);
+  
+  // Get audio duration
+  let introLengthPromise = new Promise((resolve, reject) => {
+
+    themeAudio.addEventListener('loadedmetadata', () => {
+      
+      // load duration into 'introLength'
+      resolve(themeAudio.duration); 
+    });
+    
+    themeAudio.addEventListener('error', reject);
+
+  });
+  
+  // Load and play theme
+  audioLoader.load(`/audio/themes/theme${n}.mp3`, function(buffer) {
+  soundKacl.setBuffer(buffer);
+  soundKacl.setLoop(false);
+  soundKacl.setVolume(0.5);
+  soundKacl.play();
+  
+  });
+  
+  return introLengthPromise;
+
+}
+
+
+
+//  ------------- [ MONOLOGUE LENGTH ] -----------------
+
+async function monologueLength() {
+
+let monoAudio = new Audio(`${audio}`);
+
+
+// Get audio duration
+let monoLengthPromise = new Promise((resolve, reject) => {
+
+  monoAudio.addEventListener('loadedmetadata', () => {
+    
+    // load duration into 'introLength'
+    resolve(monoAudio.duration); 
+  });
+  
+  monoAudio.addEventListener('error', reject);
+
+  });
+
+return monoLengthPromise;
+
+}
+
+
+
+
+//  ------------- [ MONOLOGUE SOUND ] -----------------
+
+async function monologue() {
+  
+audioLoader.load(`${audio}`, function( buffer_mono ) {
+soundKacl.setBuffer( buffer_mono );
+soundKacl.setLoop( false );
+soundKacl.setVolume( 0.5 );
+soundKacl.play();
+
+  });
+
+}
+
+//  ------------- [ FIRST RUN CHECK ] -----------------
+
+firstRun = true
+
+if (firstRun == true) {
+// Show "click to start"
+startScreen.style.display = ''
+
+// Add event listener to start screen
+firstTime.addEventListener('click', () => {
+  
+  // Hide start screen
+  firstTime.style.display = 'none';
+
+  // Show player canvas
+  playerCanvas.style.display = 'block';
+episode()
+});
+
+}
+
+
+
+
+//  ------------- [ EPISODE LOOP ] -----------------
+
+// Episode function
+async function episode() {
+
+  // Get the latest episode
+  await fetchEpisode();
+  
+  // Get monologue length
+  const monoLength = Math.ceil(await monologueLength()) -1.25
+
+  // Start clock and log time
+  showStartTime = clock.getElapsedTime();
+
+  // Start anim loop
+  initIntro();
+
+  const themeLength = Math.ceil(await themeSong()) -0.5
+
+  // Create timeline
+  const ktl = new TimelineMax();
+
+  // start intro logo
+  ktl.add(animLogo(), 0)
+
+  // fade out intro
+  ktl.add(fadeOutIntro, `+=${themeLength}`);
+
+  // fade in title card
+  ktl.add(fadeIn, "+=2.5")
+
+  ktl.add(animate, "+=0")
+
+  // fade out titlecard
+  ktl.add(fadeOut, `+=6`)
+
+  // switch to main camera
+  ktl.add(cam1, "+=2.5")
+
+  // fade in to kacl studio
+  ktl.add(fadeIn, "+=0.5")
+
+   // start monologue
+  ktl.add(monologue, "+=0")
+
+  // fade out post-monologue
+  ktl.add(fadeOut, `+=${monoLength}`)
+
+  // Play timeline and call credits 2.55s seconds after its over (2.5s on fadeout so cant do it right away)
+  ktl.play().eventCallback("onComplete", () => {
+  setTimeout(() => {
+    createCredits();
+  }, 2550); 
+});
+
+}
+if (firstRun == false)
+episode()
+    </script>
+
+  </body>
+</html>

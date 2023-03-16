@@ -1,0 +1,23 @@
+{
+  "name": "dr-sane",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.1.0"
+  },
+  "dependencies": {
+    "axios": "^1.3.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "gsap": "^3.11.4",
+    "mysql2": "^3.2.0",
+    "three": "^0.150.1"
+  }
+}
