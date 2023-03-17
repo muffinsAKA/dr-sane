@@ -1,7 +1,9 @@
-require('dotenv').config();
-const axios = require('axios');
-const fs = require('fs');
-const mysql = require('mysql2');
+import dotenv from 'dotenv';
+dotenv.config();
+import axios from 'axios';
+import fs from 'fs';
+
+import mysql from 'mysql2';
 
 // GPT env vars
 const gptKey = process.env.gptKey;
@@ -21,7 +23,7 @@ const sqlpass = process.env.sqlpass;
 
 
 // Fake test vars
-let prompt = 'Pretend to be Dr. Frasier Crane on his radio show giving a monologue to his audience about cinammon toast and format your reply two different entries called Title and Script. Title is the name of the episode and Script is where the monologue goes.';
+let prompt = 'Pretend to be Dr. Frasier Crane on his radio show giving a monologue to his audience about he thinks he is being stalked by the pizza guy and format your reply two different entries called Title and Script. Title is the name of the episode and Script is where the monologue goes. Please keep the monologue less than 180 characters';
 
 
 const connection = mysql.createConnection({
@@ -61,7 +63,7 @@ function dbWrite(gptTitle, gptScript, filename) {
 // Set chatgpt request + settings
 const data = {
   messages: [{ role: "user", content: `${prompt}`}],
-  max_tokens: 335,
+  max_tokens: 250,
   model: "gpt-3.5-turbo",
   temperature: 1,
   top_p: 1,
@@ -135,7 +137,7 @@ async function getVoice(gptTitle, gptHandoff, gptScript) {
     });
 
     const audioData = await response.arrayBuffer();
-    const filename = `/audio/${gptTitle}.mp3`.replace(/"/g, '').replace(/\s/g,'_');
+    const filename = `./audio/${gptTitle}.mp3`.replace(/"/g, '').replace(/\s/g,'_');
     fs.writeFile(filename, Buffer.from(audioData), (err) =>  {
       if (err) throw err;
       console.log(`File ${filename} has been saved.`);
