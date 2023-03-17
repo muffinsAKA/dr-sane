@@ -143,7 +143,7 @@ async function getVoice(gptTitle, gptHandoff, gptScript) {
       console.log(`File ${filename} has been saved.`);
     });
 
-    dbWrite(gptTitle, gptScript, filename);
+    dbWrite(gptTitle.replace(/"/g, '').replace(/\s/g,'_'), gptScript, filename);
 
   } catch (error) {
     console.error(error);
