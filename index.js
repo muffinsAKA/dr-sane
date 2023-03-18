@@ -2,13 +2,11 @@ import * as THREE from 'three';
 import { FontLoader } from 'three/addons/loaders/FontLoader';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry';
 import { gsap } from 'gsap';
-import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls';
 import { LottieLoader } from 'three/addons/loaders/LottieLoader';
 import animationData from './public/intro.json';
 
 
 //  ------------- [ DOM ELEMENTS ] -----------------
-
 const startScreen = document.getElementById('start-screen');
 const firstTime = document.getElementById('first-time');
 const canvas = document.querySelector('#player');
@@ -20,20 +18,10 @@ let episodeData;
 
 
 //  ------------- [ GLOBAL VARS ] -----------------
-let firstRun = true
-let width;
-let height;
-
-
-//  ------------- [ BROWSER SIZE ] -----------------
-
-width = window.innerWidth;
-height = window.innerHeight;
-
+let firstRun = true;
 
 
 //  ------------- [ GLOBAL OBJS ] -----------------
-
 const objectLoader = new THREE.ObjectLoader();
 const audioLoader = new THREE.AudioLoader();
 const fontLoader = new FontLoader();
@@ -43,47 +31,26 @@ const lottieLoader = new LottieLoader();
 
 
 //  ------------- [ SCENES ] -----------------
-
-// create intro scene
 const intro = new THREE.Scene();
-
-// create KACL scene
 const kaclScene = new THREE.Scene();
-
-// create credits scene
-const credits = new THREE.Scene()
-
+const credits = new THREE.Scene();
 
 
 
 
 //  ------------- [ CAMERAS ] -----------------
- 
-// Create credits camera
-const camCredits = new THREE.PerspectiveCamera(50, width/height, 0.1, 1000);
-  
-// Create KACL camera
-const camera = new THREE.PerspectiveCamera(50, width/height, 0.1, 1000);
-
-// Create cam intro
+const camCredits = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 1000);
 const camIntro = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 10 );
 
 
 
 
 //  ------------- [ AUDIO ] -----------------
-
-// Create credits listener
 const listenerCreds = new THREE.AudioListener();
-  
-// Create kacl listener
 const listenerKacl = new THREE.AudioListener();
   
-
-// Create credits sound
 const soundCreds = new THREE.Audio( listenerCreds );
-
-// Create KACL sound
 const soundKacl = new THREE.Audio( listenerKacl );
 
 
@@ -92,11 +59,10 @@ const soundKacl = new THREE.Audio( listenerKacl );
 //  ------------- [ TIMELINES ] -----------------
 
 // Create credits timeline
-const ctl = gsap.timeline()
+const ctl = gsap.timeline();
 
 // Create kacl timeline
-const ktl = gsap.timeline()
-
+const ktl = gsap.timeline();
 
 
 
@@ -104,7 +70,7 @@ const ktl = gsap.timeline()
 //  ------------- [ RENDERERS ] -----------------
 const rendererIntro = new THREE.WebGLRenderer({ canvas:startScreen, antialias: true});
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-const rendererCredits = new THREE.WebGLRenderer({canvas, antialias: true})
+const rendererCredits = new THREE.WebGLRenderer({canvas, antialias: true});
 
 
 
@@ -117,13 +83,14 @@ let mesh, introPlane, planeMat;
 let korin;
 
 
+
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 
-mainInit()
+mainInit();
 
 async function mainInit() {
 
-    // Load lottie front page
+    //  ------------- [ RENDERER ] ----------------
     const container = document.getElementById('first-time');
 
     const options = {
@@ -136,23 +103,20 @@ async function mainInit() {
 
     lottie.loadAnimation(options);
 
+
   //  ------------- [ RENDERER ] ----------------
 
-  renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 4));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputEncoding = THREE.sRGBEncoding;
 
 
-
- 
 
   // Adds audio listener to camera
   camCredits.add( listenerCreds );
   camera.add( listenerKacl );
 
   
-
-
   // Add listener for window resizing to adjust size/camera
   window.addEventListener('resize', adjustSize);
 
@@ -178,13 +142,13 @@ async function mainInit() {
       // Hide start screen
       firstTime.style.display = 'none';
       
-      episode()
+      episode();
 
     })
 
    } else {
 
-    episode()
+    episode();
 
    }
   }
@@ -198,8 +162,10 @@ async function createKacl() {
 
   // Load KACL Set
   objectLoader.load('scene.json', function ( kaclJson ) {
-      // Add the loaded object to the scene
+     
+    // Add the loaded object to the scene
       kaclScene.add( kaclJson );
+
   });
 }
 
@@ -209,84 +175,93 @@ async function createKacl() {
 
 async function createText() {
    
-  // TITLECARD TEXT
+  // --TITLECARD TEXT--
+
   // Create title card geo + mesh
   fontLoader.load('korin.json', function ( fontdata ) {
 
-  korin = fontdata;
+    korin = fontdata;
 
-  // Create episode Title Card geometry
-  titleCard = new TextGeometry( `${episodeData.title}`, {
-  font: korin,
-  size: .2,
-  height: .001
-  });
-
-  // Create title card mat + mesh
-  titleCardMaterial = new THREE.MeshBasicMaterial();
-  titleCardMesh = new THREE.Mesh(titleCard, titleCardMaterial);
-
-  // Position title card
-  titleCard.center();
-  titleCardMesh.position.set(9, 0, 0);
-  titleCardMesh.rotation.set(0,-1.56,0);
-
-  // add Title Card to scene
-  kaclScene.add(titleCardMesh);
-
-  // Credits geometry + mesh
-  fontLoader.load('korin.json', function ( fontdata ) {
-    
-
-  // CREDITS TEXT
-  // Create the credits geometry
-  credit1Geo = new TextGeometry( `EXECUTIVE PRODUCER \n    Huge Greg`, {
-  font: korin,
-  size: .2,
-  height: .001
+    // Create episode Title Card geometry
+    titleCard = new TextGeometry( `${episodeData.title}`, {
+        font: korin,
+        size: .2,
+        height: .001
     });
 
-  credit2Geo = new TextGeometry( `BIG BOY \n   Small Greg`, {
-  font: korin,
-  size: .2,
-  height: .001
+    // Create title card mat + mesh
+    titleCardMaterial = new THREE.MeshBasicMaterial();
+    titleCardMesh = new THREE.Mesh(titleCard, titleCardMaterial);
+
+    // Position title card
+    titleCard.center();
+    titleCardMesh.position.set(9, 0, 0);
+    titleCardMesh.rotation.set(0,-1.56,0);
+
+    // add Title Card to scene
+    kaclScene.add(titleCardMesh);
+
+
+    // --CREDITS TEXT--
+
+    // Create the credits geometry
+    credit1Geo = new TextGeometry( `EXECUTIVE PRODUCER \n    Huge Greg`, {
+        font: korin,
+        size: .2,
+        height: .001
     });
 
-  // Create 1st credit mat and mesh
-  credit1Mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 })
-  credit1Mesh = new THREE.Mesh(credit1Geo, credit1Mat)
+    credit2Geo = new TextGeometry( `BIG BOY \n   Small Greg`, {
+        font: korin,
+        size: .2,
+        height: .001
+    });
 
-  // Position 1st credit
-  credit1Geo.center();
-  credit1Mesh.position.set(9, 0, 0);
-  credit1Mesh.rotation.set(0,-1.56,0);
-  credit1Mesh.visible = false
+    // Create 1st credit mat and mesh
+    credit1Mat = new THREE.MeshBasicMaterial({ 
+        color: 0xffffff,
+        transparent: true,
+        opacity: 1 
+    });
 
-  // Create 2nd credit mat and mesh
-  credit2Mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 });
-  credit2Mesh = new THREE.Mesh(credit2Geo, credit2Mat);
+    credit1Mesh = new THREE.Mesh(credit1Geo, credit1Mat);
 
-  // Position 2nd credit
-  credit2Geo.center();
-  credit2Mesh.position.set(9, 0, 0);
-  credit2Mesh.rotation.set(0,-1.56,0);
-  credit2Mesh.visible = false
+    // Position 1st credit
+    credit1Geo.center();
+    credit1Mesh.position.set(9, 0, 0);
+    credit1Mesh.rotation.set(0,-1.56,0);
+    credit1Mesh.visible = false;
 
-  // Add credits to scene
-  credits.add(credit1Mesh);
-  credits.add(credit2Mesh);
+    // Create 2nd credit mat and mesh
+    credit2Mat = new THREE.MeshBasicMaterial({ 
+        color: 0xffffff,
+        transparent: true,
+        opacity: 1 
+    });
 
-  // Set credits camera pos
-  camCredits.position.set(2, 0, 0);
-  camCredits.rotation.set(
-    -18.55 * Math.PI / 180,
-    -88.34 * Math.PI / 180,
-    -18.74 * Math.PI / 180);
+    credit2Mesh = new THREE.Mesh(credit2Geo, credit2Mat);
 
-});
+    // Position 2nd credit
+    credit2Geo.center();
+    credit2Mesh.position.set(9, 0, 0);
+    credit2Mesh.rotation.set(0,-1.56,0);
+    credit2Mesh.visible = false;
 
-}); 
-}
+    // Add credits to scene
+    credits.add(credit1Mesh);
+    credits.add(credit2Mesh);
+
+    // Set credits camera pos
+    camCredits.position.set(2, 0, 0);
+    camCredits.rotation.set(
+        -18.55 * Math.PI / 180,
+        -88.34 * Math.PI / 180,
+        -18.74 * Math.PI / 180);
+
+    });
+
+} 
+
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
@@ -310,9 +285,7 @@ function fadeOutIntro() {
 }
 
 function fadeInIntro() {
-
   startScreen.style.opacity = 1;
-
 }
 
 
@@ -329,21 +302,19 @@ function fadeOut() {
 
 //  ------------- [ RESIZE ] -----------------
 function adjustSize() {
-  width = window.innerWidth;
-  height = window.innerHeight;
-  
-  camera.aspect = width / height;
+
+  camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(width, height);
+  renderer.setSize(window.innerWidth/window.innerHeight);
   
-  
-  camCredits.aspect = width/height;
+  camCredits.aspect = window.innerWidth/window.innerHeight;
   camCredits.updateProjectionMatrix();
-  rendererCredits.setSize(width, height);
+  rendererCredits.setSize(window.innerWidth/window.innerHeight);
   
   camIntro.aspect = window.innerWidth / window.innerHeight;
   camIntro.updateProjectionMatrix();
   rendererIntro.setSize( window.innerWidth, window.innerHeight );
+
 }
 
 
@@ -351,48 +322,44 @@ function adjustSize() {
 // 
 //  ------------- [ CREDITS SEQUENCE ] -----------------
 
-async function createCredits(){
+async function createCredits() {
 
-  let creditsLength = await credLength()
-  console.log(creditsLength)
-
+  let creditsLength = await credLength();
   
   // Start credits animation loop
-  rendererCredits.render(credits, camCredits)
   creditsAnimate();
 
-
   // Fade in from black
-  ctl.add(fadeIn, 0);
+  ctl.add(fadeIn, { duration: 0});
 
-  ctl.to(credit1Mesh, 0.1, { visible: true }, "+=1")
-  ctl.to(credit1Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit2Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit2Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit1Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit1Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit2Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit2Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit1Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit1Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit2Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit2Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit1Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit1Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit2Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit2Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit1Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit1Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit2Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit2Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit1Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit1Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit2Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit2Mesh, 0.1, { visible: false }, "+=2.5")
-  ctl.to(credit1Mesh, 0.1, { visible: true }, "+=0")
-  ctl.to(credit1Mesh, 0.1, { visible: false }, "+=2.5")
+  ctl.to(credit1Mesh, { duration: 0.1, visible: true }, "+=1");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: false }, "+=2.5")
+  ctl.to(credit2Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit2Mesh, { duration: 0.1, visible: false }, "+=2.5");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: true }, "+=0");
+  ctl.to(credit1Mesh, { duration: 0.1, visible: false }, "+=2.5");
 
-  ctl.add(episode, creditsLength + 4)
+  ctl.add(episode, creditsLength + 4);
   
   // Play timline
   ctl.play();
@@ -410,8 +377,8 @@ async function credLength() {
 
   credAudio.addEventListener('loadedmetadata', () => {
       
-      // load duration into 'creditsLength'
-      resolve(credAudio.duration); 
+    // load duration into 'creditsLength'
+    resolve(credAudio.duration); 
     });
     
     credAudio.addEventListener('error', reject);
@@ -421,15 +388,15 @@ async function credLength() {
 
     // Load and play theme
     audioLoader.load('/audio/themes/credits.mp3', function(buffer) {
-    soundCreds.setBuffer(buffer);
-    soundCreds.setLoop(false);
-    soundCreds.setVolume(0.4);
-    soundCreds.play();
+        soundCreds.setBuffer(buffer);
+        soundCreds.setLoop(false);
+        soundCreds.setVolume(0.4);
+        soundCreds.play();
     
     });
   
-// return credits length
-return credAudioPromise;
+    // return credits length
+    return credAudioPromise;
 
 }
 
@@ -468,6 +435,7 @@ async function initIntro() {
   
   rendererIntro.setPixelRatio( window.devicePixelRatio );
   rendererIntro.setSize( window.innerWidth, window.innerHeight );
+  
   canvas.style.display = 'none';
   
 }
@@ -481,7 +449,8 @@ async function animLogo() {
         requestAnimationFrame( animLogo );
 
     }, 1000 / 24 );
-  rendererIntro.render( intro, camIntro);
+
+    rendererIntro.render( intro, camIntro);
 
 }
 
@@ -546,7 +515,7 @@ async function fetchEpisode() {
     title: data.title,
     script: data.script,
     audio: data.audio
-  }
+  };
 
 };
 
@@ -568,6 +537,7 @@ async function themeSong() {
       
       // load duration into 'introLength'
       resolve(themeAudio.duration); 
+
     });
     
     themeAudio.addEventListener('error', reject);
@@ -576,10 +546,10 @@ async function themeSong() {
   
   // Load and play theme
   audioLoader.load(`/audio/themes/theme${n}.mp3`, function(buffer) {
-  soundKacl.setBuffer(buffer);
-  soundKacl.setLoop(false);
-  soundKacl.setVolume(1);
-  soundKacl.play();
+    soundKacl.setBuffer(buffer);
+    soundKacl.setLoop(false);
+    soundKacl.setVolume(1);
+    soundKacl.play();
   
   });
   
@@ -622,18 +592,20 @@ async function monologueLength() {
 async function monologue() {
   
   audioLoader.load(`${episodeData.audio}`, function( buffer_mono ) {
-  soundKacl.setBuffer( buffer_mono );
-  soundKacl.setLoop( false );
-  soundKacl.setVolume( 1 );
-  soundKacl.play();
+    soundKacl.setBuffer( buffer_mono );
+    soundKacl.setLoop( false );
+    soundKacl.setVolume( 1 );
+    soundKacl.play();
 
   });
 
 }
 
 async function canvasHide() {
+
     canvas.style.opacity = 0;
-  }
+
+}
 
 
 
@@ -641,25 +613,27 @@ async function canvasHide() {
 
 async function clear() {
 
-  ctl.clear()
-  ktl.clear()
+    // clear Timelines
+    ctl.clear();
+    ktl.clear();
 
-  credit1Geo.dispose();
-  credit2Geo.dispose();
+    // clear Geo
+    credit1Geo.dispose();
+    credit2Geo.dispose();
+    titleCard.dispose();
+    introPlane.dispose();
 
-  credit1Mat.dispose();
-  credit2Mat.dispose();
+    // clear Mats
+    credit1Mat.dispose();
+    credit2Mat.dispose();
+    titleCardMaterial.dispose();
+    planeMat.dispose();
 
-  credits.remove(credit1Mesh);
-  credits.remove(credit2Mesh);
-
-  titleCard.dispose();
-  titleCardMaterial.dispose();
-  kaclScene.remove(titleCardMesh);
-
-  introPlane.dispose();
-  planeMat.dispose();
-  intro.remove(mesh)
+    // clear Meshes
+    credits.remove(credit1Mesh);
+    credits.remove(credit2Mesh);
+    kaclScene.remove(titleCardMesh);
+    intro.remove(mesh);
 
 }
 
@@ -667,74 +641,81 @@ async function clear() {
 
 async function episode() {
 
-  // Set variables if not first run
-  if (firstRun == false) {
+     // Set variables if not first run
+    if (firstRun == false) {
 
-    await clear()
+        clear();
+
+        fadeInIntro();
+
+        startScreen.style.opacity = 1;
+        canvas.style.opacity = 1;
+
+    };
     
-    await fadeInIntro()
-
-    startScreen.style.opacity = 1;
-    canvas.style.opacity = 1;
-    }
-  
-  initIntro()
+    // Intro creation
+    initIntro();
 
     // Get the latest episode
-  await fetchEpisode().then(data => episodeData = data);
+    await fetchEpisode().then(data => episodeData = data);
 
-  await createText();
-  await createKacl();
-  await camTitle();
-  
-  // Show player canvas
-  startScreen.style.opacity = 1;
-  canvas.style.display = 'block';
+    await createText();
+
+    await createKacl();
+
+    camTitle();
+    
+    // Show player canvas
+    startScreen.style.opacity = 1;
+    canvas.style.display = 'block';
 
 
-  // Get monologue length
-  let monoLength = Math.ceil(await monologueLength()) -0.5
-  console.log(monoLength)
+    // Get monologue length
+    let monoLength = Math.ceil(await monologueLength()) -0.5;
 
-  // Set first run as complete
-  firstRun = false
+    // Set first run as complete
+    firstRun = false;
 
-  // Get theme song length
-  let themeLength = Math.ceil(await themeSong()) 
+    // Get theme song length
+    let themeLength = Math.ceil(await themeSong());
 
-  ktl.add(canvasHide, 0)
-  // start intro logo
-  ktl.add(animLogo(), "+=2.5s")
+    ktl.add(canvasHide, 0);
 
-  // fade out intro
-  ktl.add(fadeOutIntro, `+=${themeLength}`);
+    // start intro logo
+    ktl.add(animLogo(), "+=2.5s");
 
-  // fade in title card
-  ktl.add(fadeIn, "+=2.5")
+    // fade out intro
+    ktl.add(fadeOutIntro, `+=${themeLength}`);
 
-  ktl.add(animate, "+=0")
+    // fade in title card
+    ktl.add(fadeIn, "+=2.5");
 
-  // fade out titlecard
-  ktl.add(fadeOut, `+=5`)
+    ktl.add(animate, "+=0");
 
-  // switch to main camera
-  ktl.add(cam1, "+=2.5")
+    // fade out titlecard
+    ktl.add(fadeOut, `+=5`);
 
-  // fade in to kacl studio
-  ktl.add(fadeIn, "+=0.5")
+    // switch to main camera
+    ktl.add(cam1, "+=2.5");
 
-   // start monologue
-  ktl.add(monologue, "+=0")
+    // fade in to kacl studio
+    ktl.add(fadeIn, "+=0.5");
 
-  // fade out post-monologue
-  ktl.add(fadeOut, `+=${monoLength}`)
+    // start monologue
+    ktl.add(monologue, "+=0");
 
-  // Play timeline and call credits 2.55s seconds after its over (2.5s on fadeout so cant do it right away)
-  ktl.play().eventCallback("onComplete", () => {
-  setTimeout(() => {
-    createCredits();
-  }, 2550); 
+    // fade out post-monologue
+    ktl.add(fadeOut, `+=${monoLength}`);
 
-});
+    // Play timeline and call credits 2.55s seconds after its over (2.5s on fadeout so cant do it right away)
+    ktl.play().eventCallback("onComplete", () => {
+
+        setTimeout(() => {
+
+            createCredits();
+
+        }, 2550); 
+
+    });
 }
 
