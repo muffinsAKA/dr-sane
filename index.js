@@ -3,8 +3,18 @@ import { FontLoader } from 'three/addons/loaders/FontLoader';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry';
 import { gsap } from 'gsap';
 import { LottieLoader } from 'three/addons/loaders/LottieLoader';
-import animationData from './public/intro.json';
+import animationData from './src/intro.json';
+import dotenv from 'dotenv';
+//import { EffectComposer } from 'three/addons/postprocessing/EffectComposer';
+//import { ShaderPass } from 'three/addons/postprocessing/ShaderPass'
+//import { RenderPass } from 'three/addons/postprocessing/RenderPass';
+//import { GammaCorrectionShader } from 'three/addons/shaders/GammaCorrectionShader'
 
+dotenv.config();
+
+//  ------------- [ ENV KEYS ] -----------------
+const sceneName = process.dotenv.sceneName;
+const apiGetLatest = process.dotenv.apiGetLatest;
 
 //  ------------- [ DOM ELEMENTS ] -----------------
 const startScreen = document.getElementById('start-screen');
@@ -26,6 +36,7 @@ const objectLoader = new THREE.ObjectLoader();
 const audioLoader = new THREE.AudioLoader();
 const fontLoader = new FontLoader();
 const lottieLoader = new LottieLoader();
+
 
 
 
@@ -83,14 +94,13 @@ let mesh, introPlane, planeMat;
 let korin;
 
 
-
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 
 mainInit();
 
 async function mainInit() {
 
-    //  ------------- [ RENDERER ] ----------------
+    //  ------------- [ INTRO LOTTIE ] ----------------
     const container = document.getElementById('first-time');
 
     const options = {
@@ -128,7 +138,7 @@ async function mainInit() {
       -88.34 * Math.PI / 180,
       -18.74 * Math.PI / 180);
 
-  
+      
   //  ------------- [ FIRST RUN CHECK ] -----------------
 
   if (firstRun == true) {
@@ -161,7 +171,7 @@ async function mainInit() {
 async function createKacl() {
 
   // Load KACL Set
-  objectLoader.load('scene.json', function ( kaclJson ) {
+  objectLoader.load(`${sceneName}`, function ( kaclJson ) {
      
     // Add the loaded object to the scene
       kaclScene.add( kaclJson );
@@ -271,6 +281,7 @@ function animate() {
         requestAnimationFrame( animate );
 
     }, 1000 / 24 );
+    
 
     renderer.render(kaclScene, camera);
 
@@ -443,7 +454,7 @@ async function initIntro() {
 
 //  ------------- [ INTRO ANIMATE ] -----------------
 async function animLogo() {
-  
+
     setTimeout( function() {
 
         requestAnimationFrame( animLogo );
@@ -507,7 +518,7 @@ function cam3() {
 async function fetchEpisode() {
 
   // Hit API
-  const response = await fetch('http://localhost:3000/episode');
+  const response = await fetch(`${apiGetLatest}`);
   const data = await response.json();
 
 
