@@ -33,8 +33,13 @@ app.get('/episode', async (req, res) => {
         const title = rows[0].title;
         const script = rows[0].script;
         const audio = rows[0].audio;
+        const voice = rows[0].name;
+        const world = rows[0].voice;
+        const subject = rows[0].subject;
+        const name = rows[0].world;
+        const location = rows[0].location;
   
-        const data = { title, script, audio };
+        const data = { title, script, audio, voice, world, subject, name, location };
         res.send(data);
       } else {
         // No rows were returned

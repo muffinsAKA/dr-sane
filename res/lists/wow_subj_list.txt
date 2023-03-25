@@ -1,0 +1,823 @@
+Name
+Stormwind Bank
+Stormwind Flight Master
+Stormwind Inn
+Stormwind Rogue Trainer
+Stormwind Warrior & Hunter Trainer
+Stormwind Mage Trainer
+Lion's Rest
+Stormwind Cathedral
+Stormwind Hunter Trainer
+Stormwind Warlock Trainer
+Stormwind Guild Master
+Stormwind Leatherworking & Skinning
+Stormwind Alchemy & Herbalism
+Stormwind Tailoring
+Stormwind Engineering
+Stormwind Blacksmithing
+Stormwind Mining
+Stormwind Fishing
+Stormwind Enchanting
+Hall of Spirits
+Hunter's Hall
+Hall of Elders
+Holistic Herbalism
+Bena's Alchemy
+Dawnstrider Enchanters
+Thunder Bluff Armorers
+Karn's Smithy
+Stonehoof Geology
+Thunder Bluff Civic Information
+Mountaintop Bait & Tackle
+Pools of Vision
+Spiritual Healing
+Wind Rider Roost
+Thunder Bluff Bank
+Aska's Kitchen
+Orgrimmar Bank
+Orgrimmar Flight Master
+Horde Embassy
+Orgrimmar Inn
+Orgrimmar Alchemy
+The Burning Anvil
+Orgrimmar Cooking
+Orgrimmar Enchanting
+Survival of the Fittest
+Orgrimmar Fishing
+Orgrimmar Herbalism
+Orgrimmar Leatherworking
+Orgrimmar Mining
+Orgrimmar Tailoring
+Orgrimmar Engineering
+Orgrimmar Auction House
+Thunder Bluff Inn
+Thunder Bluff Mailbox
+Ironforge Gryphon Master
+Ironforge Physician
+Thistlefuzz Arcanery
+The Bronze Kettle
+Deepmountain Mining & Jewelcrafting
+Hall of Mysteries
+Hall of Arms
+The Vault
+Ironforge Mailbox
+Stonefire Tavern
+Ironforge Auction House
+Berryfizz's Potions and Mixed Drinks
+Springspindle's Gadgets
+Stonebrow's Clothier
+The Great Forge
+Ironforge Visitor's Center
+Traveling Fisherman
+Ironforge Warlock Trainer
+Ironforge Rogue Trainer
+Undercity Bat Handler
+Undercity Guild Master
+Undercity Inn
+Undercity Mailbox
+Undercity Mage Trainers
+Undercity Warlock Trainers
+Undercity Priest Trainers
+Undercity Warrior Trainers
+Undercity Rogue Trainers
+The Apothecarium
+Undercity Blacksmithing Trainer
+Undercity Mining Trainer
+Undercity Cooking Trainer
+Warrior's Terrace
+Undercity Tailoring Trainer
+Darnassus Herbalism
+Temple of the Moon
+Darnassus Bank
+Darnassus Inn
+Darnassus Tailoring
+Darnassus Leatherworking
+Darnassus Skinning
+Darnassus Enchanting
+Darnassus First Aid
+Undercity Enchanting Trainer
+Darnassus Alchemy
+Undercity Herbalism Trainer
+Darnassus Cooking
+Darnassus Hunter Trainer
+Undercity Leatherworking Trainer
+Undercity Skinning Trainer
+Undercity First Aid Trainer
+Undercity Engineering Trainer
+Darnassus Druid Trainer
+Undercity Fishing Trainer
+Undercity Bank
+Darnassus Fishing
+Darnassus Guild Master
+Darnassus Rogue Trainer
+Stormwind Auction House
+Stormwind Inn
+Stormwind Tram
+Mooranta
+Razor Hill Inn
+Thotar
+Un'Thuwa
+Tai'jin
+Kaplak
+Swart
+Tarshaw Jaggedscar
+Dhugru Gorelust
+Bloodhoof Village Inn
+Gennia Runetotem
+Narm Skychaser
+Yaw Sharpmane
+Krang Stonehoof
+Gallows' End Tavern
+Cain Firesong
+Dark Cleric Beryl
+Marion Call
+Rupert Boch
+Austil de Mon
+Zaldimar Wefhellt
+Priestess Josetta
+Maximillian Crowe
+Keryn Sylvius
+Lion's Pride Inn
+Brother Wilhelm
+Lyria Du Lac
+Magis Sparkmantle
+Azar Stronghammer
+Maxan Anvol
+Granis Swiftaxe
+Hogral Bakkan
+Thunderbrew Distillery
+Grif Wildheart
+Gimrizz Shadowcog
+Laurna Morninglight
+Kyra Windblade
+Jannok Breezesong
+Dazalar
+Kal
+Dolanaar Inn
+Ilyenia Moonfire
+Orgrimmar Eastern Zeppelin Tower
+Shoja'my
+Orgrimmar Stable Master
+Seikwa
+Bulrug
+Morganus
+Anya Maulray
+Ulbrek Firehand
+Shelby Stoneflint
+Erma
+Stormwind Stable Master
+Seriadne
+Alassin
+Finespindle's Leather Goods
+Stormwind First Aid
+Stormwind Champions' Hall
+Orgrimmar Hall of Legends
+Darnassus Mailbox
+Undercity Auction House
+Thunder Bluff Auction House
+Darnassus Auction House
+Silvermoon City, Inn
+Silvermoon City, Bank
+Silvermoon City, Auction House
+Silvermoon City, Druid Trainer
+Silvermoon City, First Aid
+Silvermoon City, Guild House
+Silvermoon City, Flight Master
+Silvermoon City, Leatherworking
+Silvermoon City, Shaman Trainer
+Silvermoon City, Paladin Trainer
+Silvermoon City, Auction House
+Silvermoon City, Bank
+Silvermoon City, Blacksmithing
+Silvermoon City, Hunter Trainer
+Silvermoon City, Engineering
+Silvermoon City, Warlock Trainer
+Silvermoon City, Tailoring
+Silvermoon City, Priest Trainer
+Silvermoon City, Alchemy
+Silvermoon City, Enchanting
+Silvermoon City, Rogue Trainer
+Silvermoon City, Mage Trainer
+Silvermoon City, Herbalism
+Silvermoon City, Skinning
+Silvermoon City, Jewelcrafting
+Silvermoon City, Fishing
+Silvermoon City, Stable Master
+Silvermoon City, Mining
+Silvermoon City, Mailbox
+Exodar, Hippogryph Master
+Exodar, Bank
+Exodar, Engineering
+Exodar, Auctioneer
+Exodar, Inn
+Exodar, Jewelcrafting
+Exodar, Enchanting
+Exodar, Shaman Trainer
+Exodar, Fishing
+Exodar, First Aid
+Exodar, Priest Trainers
+Exodar, Mage Trainers
+Exodar, Paladin Trainers
+Exodar, Herbalism
+Exodar, Alchemy
+Exodar, Battlemasters
+Exodar, Guild Master
+Exodar, Tailoring
+Exodar, Skinning
+Exodar, Leatherworking
+Exodar, Mining
+Exodar, Blacksmithing
+Exodar, Hunter Trainers
+Exodar, Warrior Trainers
+Exodar, Stable Master
+Exodar, Druid Trainer
+Silvermoon City, Inn
+Silvermoon City, Cooking
+Azure Watch, Shaman Trainer
+Azure Watch, Stable Master
+Azure Watch, Innkeeper
+Azure Watch, Paladin Trainer
+Azure Watch, Priest Trainer
+Azure Watch, Mage Trainer
+Azure Watch, Warrior Trainer
+Azure Watch, Hunter Trainer
+Stormwind Shaman Trainer
+Champion Cyssa Dawnrose
+Falconwing Square, Warlock Trainer
+Falconwing Square, Mage Trainer
+Falconwing Square, Priest Trainer
+Falconwing Square, Hunter Trainer
+Falconwing Square, Paladin Trainer
+Falconwing Square, Rogue Trainer
+Falconwing Square, Stable Master
+Falconwing Square, Innkeeper
+Battlemasters Ironforge
+Darnassus Battlemasters
+Orgrimmar Battlemasters
+Battlemasters Undercity
+Exodar, Mailbox
+Shattrath Bank Scryer
+Shattrath Bank Aldor
+Shattrath Cantina
+Shattrath Taxi
+Shattrath Battlemasters Alliance
+Shattrath Battlemasters Horde
+Shattrath Alchemist
+Shattrath Leatherworker
+Shattrath Skinner
+Shattrath Cook
+Shattrath Armor/Weapon Crafter
+Shattrath Enchanters
+Shattrath Jewelcrafter
+Shattrath First Aid
+Shattrath Inn Scryer
+Shattrath Inn Aldor
+Shattrath Stable Scryer
+Shattrath Stable Aldor
+Silvermoon City, Teleporter
+Exodar, Cooking
+Shattrath Alchemy Lab
+Scryer Gem Vendor
+Aldor Gem Vendor
+Ironforge Shaman Trainer
+Brewfest Ram Racing
+Brewfest Souvenirs
+Goblin Brewfest Ram Racing
+Goblin Brewfest Souvenirs
+Shattrath Arena Battlemasters
+Brew of the Month Club, Ironforge
+Brew of the Month Club, Orgrimmar
+Orgrimmar Western Zeppelin Tower
+Stormwind Harbor
+Dalaran Northern Bank
+Dalaran Southern Bank
+Dalaran Violet Citadel
+Dalaran Enchanting Trainer
+Dalaran Inscription Trainer
+Dalaran Herbalism Trainer
+Dalaran First Aid Trainer
+Dalaran Tailoring Trainer
+Dalaran Skinning Trainer
+Dalaran Leatherworking Trainer
+Dalaran Engineering Trainer
+Dalaran Mining Trainer
+Dalaran Blacksmithing Trainer
+Dalaran Alchemy Trainer
+Dalaran Jewelcrafting Trainer
+Dalaran Antonidas Memorial
+Dalaran Barber
+Dalaran Wine & Cheese
+Dalaran Pet Store
+Dalaran Mage Trainer
+Dalaran Ranged Weapons
+Dalaran Visitor Center
+Dalaran Melee Weapons
+Dalaran General & Trade Store
+Dalaran Leather & Mail Armor
+Dalaran Staves & Wands
+Dalaran Cloth Armor & Clothing
+Dalaran Toy Store
+Dalaran Inn
+Dalaran Fruit Vendor
+Dalaran Pie, Pastry & Cake
+Dalaran Western Sewer Entrance
+Dalaran Eastern Sewer Entrance
+Dalaran Violet Hold
+Dalaran Sunreaver's Sanctuary
+Dalaran Horde Inn
+Dalaran Silver Enclave
+Dalaran Alliance Inn
+Dalaran Runeweaver Square
+Dalaran Flowers
+Stormwind Barber
+Ironforge Inscription
+Dalaran Fishing Fountain
+Stormwind Inscription
+Ironforge Barber
+Darnassus Inscription
+Exodar, Inscription
+Orgrimmar Barber
+Orgrimmar Inscription
+Undercity Inscription
+Undercity Barber
+Thunder Bluff Inscription
+Silvermoon City Inscription
+Dalaran Sewer Bank
+Dalaran Sewer Inn
+Dalaran Sewer Tunnel
+Dalaran Sewer Arena
+Dalaran Sewer Vendors
+Dalaran Well
+Dalaran Eventide
+Dalaran Cemetary
+Dalaran Plate Armor & Shields
+Dalaran Reagents
+Dalaran Trade District
+Dalaran Flight Master
+Dalaran Krasus' Landing
+Dalaran Stable Master
+Dalaran Trinkets
+Undercity Locksmith
+Dalaran Locksmith
+Rut'theran Hippogryph Master
+Darnassus Mage Trainer
+Darnassus Paladin Trainer
+Stormwind Bank
+Stormwind Auction House
+Stormwind Druid Trainer
+Stormwind Stable Master
+Stormwind Inn
+Stormwind Keep
+Stormwind Stockade
+Stormwind Riding Trainer & Mounts
+Stormwind Flying Trainer & Mounts
+Stormwind Archaeology
+Stormwind Jewelcrafting
+Stormwind Heroism & Valor Quartermasters
+Stormwind Honor & Conquest Quartermasters
+Orgrimmar Inn
+Orgrimmar Auction House
+Orgrimmar Bank
+Orgrimmar Cataclysm Portals
+Stormwind Cataclysm Portals
+Silvermoon City, Archaeology
+Undercity Archaeology
+Dedlow Wormwood
+Ironforge Archaeology
+Orgrimmar Archaeology
+Orgrimmar Ethereals
+Darnassus Archaeology
+Sunwalker Lodge
+Thunder Bluff Archaeology
+Exodar, Archaeology
+Shattrath Archaeology
+Dalaran Archaeology Trainer
+Silvermoon City, Warrior Trainer
+Benjamin Foxworthy
+Halbin Frosthammer
+Falconwing Square, Warrior Trainer
+Seer Alsoomse
+Sunwalker Iopi
+Undercity Hunter Trainer
+Irriende
+Darnassus Warlock Trainer
+Orgrimmar Flying Trainer
+Orgrimmar Riding Trainer
+Orgrimmar Jewelcrafting
+Darnassus Hippogryph Master
+Shattrath Guild Services
+Shattrath City Center
+Darnassus Shaman Trainer
+Undercity Druid Trainer
+Undercity Shaman Trainer
+Ironforge Druid Trainer
+Undercity Jewelcrafting Trainer
+Darnassus Blacksmithing
+Darnassus Jewelcrafting
+Darnassus Mining
+Darnassus Engineering
+Thunder Bluff Engineering
+Thunder Bluff Jewelcrafting
+Theramore Skinning
+Theramore Leatherworking
+Theramore Shaman
+Theramore Archaeology
+Theramore Jewelcrafting
+Theramore Alchemy
+Theramore Herbalism
+Theramore Blacksmithing
+Theramore Riding
+Theramore Tailoring
+Theramore Hunter
+Theramore Paladin
+Theramore Priest
+Theramore Warrior
+Theramore Rogue
+Theramore Mining
+Theramore Engineering
+Theramore Warlock
+Theramore Mage
+Theramore Enchanting
+Theramore Inscription
+Theramore Cooking
+Theramore First Aid
+Theramore Fishing
+Theramore Banker
+The Seer's Library
+Aldor Inscription Trainer
+Aldor Engineering Trainer
+Aldor Herbalism Trainer
+Aldor Mining Trainer
+Aldor Tailoring Trainer
+Jabul
+The Three Winds
+AAA Whack-a-Gnoll
+AAA Cannon
+AAA Shooting Gallery
+AAA Tonk Arena
+AAA Fortune Teller
+AAA Ring Toss
+Darkmoon Game Tokens
+Ella's House
+Old Hillpaw's House
+Chee Chee's House
+Sho's House
+Haohan Mudclaw's House
+Tina Mudclaw's House
+Farmer Fung's House
+Fish Fellreed's House
+Jogu's House
+Undercity Monk Trainer
+Stormwind Monk Trainer
+Ironforge Monk Trainer
+Darnassus Monk Trainer
+Thunder Bluff Monk Trainer
+Silvermoon City, Monk Trainer
+Exodar, Monk Trainers
+Shrine of Seven Stars Bank
+Shrine of Seven Stars Flight Master
+Shrine of Seven Stars Inn
+Shrine of Seven Stars Stable Master
+Shrine of Seven Stars Trade Goods
+Shrine of Seven Stars General Goods
+Shrine of Seven Stars Reagents
+Shrine of Seven Stars Ethereal Corridor
+Shrine of Seven Stars Enchanting Goods
+Shrine of Seven Stars Inscription Supplies
+Shrine of Seven Stars Herb Garden
+Shrine of Seven Stars Apothecary
+Shrine of Seven Stars Cooking Corner
+Shrine of Seven Stars Blacksmithy
+Shrine of Seven Stars Mining Supplies
+Shrine of Seven Stars Engineering Supplies
+Shrine of Seven Stars First Aid Supplies
+Shrine of Seven Stars Jewelers
+Shrine of Seven Stars Food & Drink
+Shrine of Seven Stars Brews
+Shrine of Seven Stars Bakery
+Shrine of Seven Stars Meats
+Shrine of Seven Stars Pet Battle Trainer
+Shrine of Seven Stars Fireworks Vendor
+Klaxxi'vess Alchemy
+Seat of Knowledge Archaeology
+Setting Sun Garrison Blacksmith
+Halfhill Cooking
+Dawn's Blossom Enchanting
+Nesingwary's Safari Engineering
+Nesingwary's Safari Skinning
+Shrine of Seven Stars First Aid
+Anglers Wharf Fishing
+Seat of Knowledge Inscription
+Greenstone Village Jewelcrafting
+Greenstone Quarry Mining
+Silken Fields Tailoring
+Serpent's Spine Alliance Conquest Quartermasters
+Valor & Justice Quartermaster
+Niuzao Temple Justice Quartermaster
+Anglers Wharf Anglers Quartermaster
+Shrine of Seven Stars August Celestials Quartermaster
+Mogu'shan Palace Golden Lotus Quartermaster - Alliance
+Klaxxi'vess Klaxxi Quartermaster
+Seat of Knowledge Lorewalkers Quartermaster
+Halfhill Tillers Quartermaster
+Shrine of Seven Stars Fishing
+Shrine of Seven Stars Leatherworking
+Shrine of Seven Stars Sweets
+Shado-Pan Garrison Quartermaster
+Conquest & Honor Quartermaster
+The Arboretum Order of the Cloud Serpent Quartermaster
+Stormwind Battle Pet Trainer
+Orgrimmar Battle Pet Trainer
+Aldor Enchanting Trainer
+Aldor Jewelcrafting Trainer
+Old Man Barlo
+Gokk'lok Shallows
+Shrine of Seven Stars Tailor
+Lien Farner
+Wembil Taskwidget
+Nedric Sallow
+Runda
+Iranis Shadebloom
+Falconwing Square, Profession Trainer
+Azure Watch, Profession Trainer
+Lalum Darkmane
+Battle Pet Trainer
+Ethereal Services
+Auction House
+Apexis Crystal Vendors
+Fishing Trainer
+Mailbox
+Reputation Vendors
+General Goods
+Stable Master
+Mailbox
+Hero's Rest Inn
+Cooking Trainer
+Alchemy Trainer
+Herbalism Trainer
+Blacksmithing Trainer
+Mining Trainer
+Jewelcrafting Trainer
+First Aid Trainer
+Engineering Trainer
+Flightmaster
+Bronzebeard's Vault
+Skinning Trainer
+Leatherworking Trainer
+Tailoring Trainer
+Inscription Trainer
+Archaeology Trainer
+Trade Goods
+Portal to Darnassus
+Portal to Ironforge
+Portal to Stormwind
+Mailbox
+Enchanting Trainer
+Item Upgrade
+Dalaran Eastern Sewer Entrance
+Dalaran Western Sewer Entrance
+Dalaran Well
+Dalaran Southern Bank
+Dalaran Northern Bank
+Dalaran Barber
+Dalaran Flight Master
+Dalaran Visitor Center
+Dalaran Alliance Inn
+Dalaran Horde Inn
+Dalaran Inn
+Dalaran Krasus' Landing
+Dalaran Greyfang's Enclave
+Dalaran Windrunner's Sanctuary
+Dalaran Violet Citadel
+Dalaran Violet Hold
+Dalaran Stable Master
+Dalaran Cemetary
+Dalaran Eventide
+Dalaran Chamber of the Guardian
+Dalaran Antonidas Memorial
+Dalaran Trade District
+Dalaran Alchemy Trainer
+Dalaran Archaeology Trainer
+Dalaran Blacksmithing Trainer
+Dalaran Enchanting Trainer
+Dalaran First Aid Trainer
+Dalaran Tailoring Trainer
+Dalaran Leatherworking Trainer
+Dalaran Engineering Trainer
+Dalaran Jewelcrafting Trainer
+Dalaran Skinning Trainer
+Dalaran Herbalism Trainer
+Dalaran Inscription Trainer
+Dalaran Mining Trainer
+Dalaran Fishing Fountain
+Dalaran Cloth Armor & Clothing
+Dalaran Flowers
+Dalaran Fruit Vendor
+Dalaran Pie, Pastry & Cake
+Dalaran Wine & Cheese
+Dalaran General & Trade Store
+Dalaran Pet Store
+Dalaran Toy Store
+Dalaran Transmogrifier
+Stormwind Portal to Blasted Lands
+Stormwind Portal to Hellfire Peninsula
+Stormwind Portal to Paw'don Village
+Stormwind Ship to Rut'theran Village
+Stormwind Ship to Valiance Keep
+Orgrimmar Zeppelin to Thunder Bluff
+Orgrimmar Zeppelin to Tirisfal Glades
+Orgrimmar Zeppelin to Stranglethorn Vale
+Undercity Zeppelin to Orgrimmar
+Undercity Zeppelin to Grom'gol
+Undercity Zeppelin to Northrend
+Undercity Teleporter to Silvermoon City
+Undercity Portal to Hellfire Peninsula
+Ironforge Tram Entrance
+Darnassus Portal to the Exodar
+Darnassus Portal to Rut'theran Village
+Darnassus Ship to Stormwind
+Darnassus Ship to the Exodar
+Exodar, Exit to Azuremyst Isle
+Boralus Transmogrifier
+Proudmoore Admiralty Emissary
+Tortollan Seekers Emissary
+Tradewinds Market Flight Master
+Boralus Inn
+Boralus Ferry Master
+Boralus Scrapper
+Boralus Alchemy Trainer
+Boralus Archaeology Trainer
+Boralus Blacksmithing Trainer
+Boralus Cooking Trainer
+Boralus Enchanting Trainer
+Boralus Engineering Trainer
+Boralus Fishing Trainer
+Boralus Herbalism Trainer
+Boralus Inscription Trainer
+Boralus Jewelcrafting Trainer
+Boralus Leatherworking Trainer
+Boralus Mining Trainer
+Boralus Skinning Trainer
+Boralus Tailoring Trainer
+Boralus Bank
+Boralus General Goods Vendor
+Boralus Repair Vendor
+Boralus Trade Goods Vendor
+Boralus Barber
+Boralus Stable Master
+Boralus Guild Master & Vendor
+Boralus Training Dummies
+Boralus Ship to Stormwind
+Order of Embers Emissary
+Storm's Wake Emissary
+Boralus Portals
+Alliance Ship to Zandalar
+Stormwind Ship to Kul Tiras
+Ship to Zandalar
+Stormwind Portal Room
+Orgrimmar Portal Room
+Portal to Stormwind City
+Portal to Orgrimmar
+Brewfest Chowdown
+Brewfest Chowdown
+The Enclave
+Transmogrification
+Bank
+Appearance Agitator
+Flight Master
+Inn
+Mailbox
+Stable Master
+Orgrimmar Druid Trainer
+Orgrimmar Shaman Trainer
+Orgrimmar Hunter Trainer
+Orgrimmar Mage Trainer
+Orgrimmar Monk Trainer
+Orgrimmar Rogue Trainer
+Orgrimmar Warlock Trainer
+Orgrimmar Warrior Trainer
+Orgrimmar Paladin Trainer
+Orgrimmar Priest Trainer
+Stormwind Warrior Trainer
+Stormwind Paladin Trainer
+Stormwind Priest Trainer
+Stormwind Shaman Trainer
+Stormwind Hunter Trainer
+Stormwind Monk Trainer
+Stormwind Mage Trainer
+Stormwind Druid Trainer
+Stormwind Warlock Trainer
+Stormwind Rogue Trainer
+Alchemy Trainer
+Herbalism Trainer
+Engineering Trainer
+Jewelcrafting Trainer
+Inscription Trainer
+Mining Trainer
+Blacksmithing Trainer
+Skinning Trainer
+Leatherworking Trainer
+Tailoring Trainer
+Cooking Trainer
+Fishing Trainer
+Enchanting Trainer
+Portal to Orgrimmar
+Master of Conflict
+Alchemist Mallory
+Smith Argus
+Tomas
+Michelle Belle
+Lee Brown
+Adele Fielder
+Helene Peltskinner
+Eldrin
+The Deeprun Tram
+The Gilded Rose
+Jenova Stoneshield
+Woo Ping
+Champions' Hall
+The Park
+Hunter Lodge
+Wizard's Sanctum
+Cathedral Of Light
+Farseer Umbrua
+The Slaughtered Lamb
+Alchemy Needs
+Therum Deepforge
+Pig and Whistle Tavern
+Lucan Cordell
+Lilliam Sparkspindle
+Shaina Fuller
+Arnold Leland
+The Protective Hide
+Gelman Stonehand
+Duncan's Textiles
+Deeprun Tram
+Tognus Flintfire
+Gremlock Pilsnor
+Thamner Pol
+Paxton Ganter
+Cyndra Kindwhisper
+Zarrin
+Alanna Raveneye
+Byancie
+Malorne Bladeleaf
+Nadyia Maneweaver
+Radnaal Maneweaver
+Dalaran Skinning Trainer
+Bank of Orgrimmar
+The Sky Tower
+Sayoc & Hanashi
+Xon'cha
+Odesyus' Landing, Blacksmith
+Odesyus' Landing, Cook
+Ammen Ford, Fisherwoman
+Stillpine Hold, Leatherworker
+Stillpine Hold, Skinner
+Odesyus' Landing, Tailor
+Herbalist Pomeroy
+Ansekhwa
+Battlemasters Thunder Bluff
+Thunder Bluff Zeppelin
+Orgrimmar Hunter's Hall
+Darkbriar Lodge
+Spirit Lodge
+Thrall's Fortress
+Shadowswift Brotherhood
+Darkfire Enclave
+Hall of the Brave
+Yelmak's Alchemy and Potions
+Borstan's Firepit
+Godan's Runeworks
+Nogg's Machine Shop
+Lumak's Fishing
+Jandi's Arboretum
+Red Canyon Mining
+Kodohide Leatherworkers
+Magar's Cloth Goods
+Archibald
+Undercity Zeppelin
+Eversong Woods, Leatherworker
+Eversong Woods, Skinner
+Saltheril's Haven, Tailor
+Yarr Hammerstone
+Miao'zan
+Dwukk
+Mukdrak
+Rawrk
+Lau'Tiki
+Mishiki
+Krunn
+Pyall Silentstride
+Vira Younghoof
+Uthan Stillwater
+Chaw Stronghide
+Yonn Deepcut
+Carolai Anise
+Vance Undergloom
+Nurse Neela
+Clyde Kellen
+Faruza
+Shelene Rhobart
+Rand Rhobart
+Bowen Brisboise

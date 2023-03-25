@@ -47,3 +47,28 @@ html, body {
       opacity: 1;
       transition: opacity 2.5s;
     }
+    #title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: white;
+      opacity: 0;
+      transition: opacity 2.5s;
+      font-family: "Korin", sans-serif;
+      display: block;
+      text-align: center;
+    }
+    #credits {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: white;
+      opacity: 1;
+      font-family: "Korin", sans-serif;
+      display: none;
+      text-align: center;
+    }
