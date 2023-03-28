@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const tokens = 100
+const tokens = 200
 const charLimit = tokens * 2.25
 
 const nounFile = fs.readFileSync('./res/lists/nounlist.txt', 'utf-8');
@@ -109,7 +109,7 @@ export async function defaultPrompt() {
     const defaultStr = Handlebars.compile(
         "Pretend to be {{{person}}} on his radio show giving a monologue to his audience about {{{subject}}}. \
 End the monologue with 'This is Dr. Frasier Crane signing off and wishing you good mental health' \
-Separate the title and script in your response. \
+Separate the title, which should be creative, and script in your response. \
 Keep your total response under {{charLimit}} characters. Reply in only json with no other text");
 
     const prompt = defaultStr({ 
@@ -156,7 +156,7 @@ export async function locPrompt() {
     const locStr = Handlebars.compile(
         "Pretend to be {{{name}}} filling in for Dr. Frasier Crane on his radio show, giving a monologue to his audience about {{{subject}}}. \
 End the monologue with 'This is {{{name}}} signing off and wishing you good mental health' \
-Separate the title and script in your response. \
+Separate the title, which should be creative, and script in your response. \
 Keep your total response under {{charLimit}} characters. Reply in only json with no other text");
 
     const prompt = locStr({ 

@@ -191,10 +191,6 @@ async function createKacl() {
 
 
 
-//  ------------- [ TEXT CREATION ] -----------------
-
-
-
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
   if (animateActive) {
@@ -252,10 +248,8 @@ function adjustSize() {
 }
 
 async function credTextGen(line1, line2) {
-  return function() {
     creditsDiv.innerHTML = `${line1} <br> ${line2}`;
   }
-}
 
 async function titleCard(epTitle) {
     titleDiv.innerHTML = `${epTitle}`;
@@ -270,16 +264,16 @@ async function createCredits() {
   
   // Start credits animation loop
   animateActive = false;
-
-  ctl.add(credTextGen('EXECUTIVE PRODUCER', 'Kelsey Grumpy'), "+=2.5")
-  ctl.add(credTextGen('EXECUTIVE PRODUCER', 'Grunky Doby'), "+=2.5")
-  
   creditsDiv.style.display = "block";
+
+  ctl.add(() => credTextGen('EXECUTIVE PRODUCER', 'Kelsey Grumpy'), 0);
+  ctl.add(() => credTextGen('EXECUTIVE PRODUCER', 'Grunky Doby'), 2.5);
+  
 
   ctl.add(episode, creditsLength + 4);
 
-  
-  
+  ctl.add(() => creditsDiv.style.display = "none", creditsLength - 2 )
+
   // Play timline
   ctl.play();
   
@@ -519,24 +513,6 @@ async function clear() {
     // clear Timelines
     ctl.clear();
     ktl.clear();
-
-    // clear Geo
-    credit1Geo.dispose();
-    credit2Geo.dispose();
-    titleCard.dispose();
-    introPlane.dispose();
-
-    // clear Mats
-    credit1Mat.dispose();
-    credit2Mat.dispose();
-    titleCardMaterial.dispose();
-    planeMat.dispose();
-
-    // clear Meshes
-    credits.remove(credit1Mesh);
-    credits.remove(credit2Mesh);
-    kaclScene.remove(titleCardMesh);
-    intro.remove(mesh);
 
 }
 
