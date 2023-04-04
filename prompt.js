@@ -105,6 +105,7 @@ export async function defaultPrompt() {
     const world = 'frasier'
     const name = 'Dr. Frasier Crane'
     const location = 'kacl'
+    const model = 'fraz'
 
     const defaultStr = Handlebars.compile(
         "Pretend to be {{{person}}} on his radio show giving a monologue to his audience about {{{subject}}}. \
@@ -122,7 +123,7 @@ Keep your total response under {{charLimit}} characters. Reply in only json with
 
 
 
-    return {voice, world, prompt, subject, name, location, tokens}
+    return {voice, world, prompt, subject, name, location, tokens, model}
 }
 
 export async function locPrompt() {
@@ -147,6 +148,7 @@ export async function locPrompt() {
 
     const voice = npc[0];
     const name = npc[1];
+    const model = npc[2];
 
     const locLength = worlds[`${world}`]["location"].length;
     const randomLocIndex = randInt(0, locLength -1);
@@ -166,5 +168,5 @@ Keep your total response under {{charLimit}} characters. Reply in only json with
     });
 
 
-    return { prompt, world, subject, name, voice, location, tokens }
+    return { prompt, world, subject, name, voice, location, tokens, model }
 }

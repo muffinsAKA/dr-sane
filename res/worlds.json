@@ -1,7 +1,7 @@
 {
     "wow": {
         "npc": [
-            ["ziirt3Mvx8WwoRCl8aAQ", "Illidan Stormrage"]
+            ["ziirt3Mvx8WwoRCl8aAQ", "Illidan Stormrage", "illidan"]
         ],
         "subject": [
             "the shadowlands",
@@ -831,7 +831,7 @@
     
         ],
         "location": [
-            "teldrassil"
+            "blacktemple"
         ]
     },
     "darksouls": {

@@ -34,12 +34,12 @@ app.get('/episode', async (req, res) => {
         const script = rows[0].script;
         const audio = rows[0].audio;
         const voice = rows[0].name;
-        const world = rows[0].voice;
+        const world = rows[0].world;
         const subject = rows[0].subject;
-        const name = rows[0].world;
+        const model = rows[0].model;
         const location = rows[0].location;
   
-        const data = { title, script, audio, voice, world, subject, name, location };
+        const data = { title, script, audio, voice, world, subject, model, location };
         res.send(data);
       } else {
         // No rows were returned
@@ -53,33 +53,6 @@ app.get('/episode', async (req, res) => {
     }
   });
 
-  // Route to move first row from sanedb to another table
-app.get('/move', async (req, res) => {
-  const sqlhost = process.env.sqlhost;
-  const sqldb = process.env.sqldb;
-  const sqluser = process.env.sqluser;
-  const sqlpass = process.env.sqlpass;
-
-  try {
-    const connection = await mysql.createConnection({
-      host: sqlhost,
-      user: sqluser,
-      password: sqlpass,
-      database: sqldb
-    });
-
-    // Move first row from sanedb to another table
-    await connection.query('INSERT INTO old SELECT * FROM sanedb LIMIT 1');
-    await connection.query('DELETE FROM sanedb LIMIT 1');
-
-    await connection.end();
-    res.send('First row moved to old');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal server error');
-  }
-});
-  
   // Start the API server
   app.listen(port, () => {
     console.log(`API server running on port ${port}`);

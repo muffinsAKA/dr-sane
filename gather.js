@@ -39,10 +39,10 @@ async function gather() {
   const promptInfo = await promptGen();
 
   const voice = promptInfo.voice;
-  const npcName = promptInfo.name;
   const subject = promptInfo.subject;
   const world = promptInfo.world;
   const location = promptInfo.location;
+  const model = promptInfo.model;
 
   const voiceUrl = elevenReqUrl + voice;
   
@@ -72,7 +72,7 @@ async function gather() {
         }
       }
       console.log(voice)
-      return getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, npcName, location, voiceUrl);
+      return getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl);
         })
 
       .then(() => {
@@ -88,7 +88,7 @@ async function gather() {
 
 
 
-function dbWrite(gptTitle, gptScript, filename, voice, world, subject, npcName, location ) {
+function dbWrite(gptTitle, gptScript, filename, voice, world, subject, model, location ) {
   connection.connect((err) => {
     if (err) throw err;
     console.log('Connected to MySQL database!');
@@ -101,7 +101,7 @@ function dbWrite(gptTitle, gptScript, filename, voice, world, subject, npcName, 
     voice: voice,
     world: world,
     subject: subject,
-    name: npcName,
+    model: model,
     location: location
 
 };
@@ -149,7 +149,7 @@ async function getScript(data) {
 
 
 
-async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, npcName, location, voiceUrl) {
+async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl) {
   
   try {
     const response = await fetch(voiceUrl, {
@@ -168,7 +168,7 @@ async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, 
     });
 
     console.log(voice)
-    dbWrite(gptTitle, gptScript, filename, voice, world, subject, npcName, location);
+    dbWrite(gptTitle, gptScript, filename, voice, world, subject, model, location);
 
   } catch (error) {
     console.error(error);
