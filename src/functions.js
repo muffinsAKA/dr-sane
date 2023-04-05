@@ -171,6 +171,6 @@ export async function setRenderer(canvas, renderer, rendererCredits, canvasWidth
 
 export async function titleFade(titleDiv) {
   titleDiv.style.opacity = 1;
-  await new Promise(resolve => setTimeout(resolve, 5000)); // wait for 7 seconds
+  await new Promise(resolve => setTimeout(resolve, 3000));
   titleDiv.style.opacity = 0;
 }

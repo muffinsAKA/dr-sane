@@ -21,9 +21,10 @@ const canvas = document.querySelector('#player');
 const creditsDiv = document.querySelector('#credits');
 const creditsText = creditsDiv.querySelector('p')
 const titleDiv = document.querySelector('#title');
+const video = document.getElementById( 'video' );
 
 
-let canvasWidth = window.innerWidth * 0.6
+let canvasWidth = window.innerWidth * 0.4
 let canvasHeight = window.innerHeight * 0.6
 
 
@@ -35,6 +36,7 @@ let world;
 //  ------------- [ ANIM TRIGGERS ] -----------------
 let animateActive = true;
 let creditsAnimateActive = false;
+let animateIntro = true;
 let mixer;
 
 //  ------------- [ GLOBAL VARS ] -----------------
@@ -43,14 +45,13 @@ let firstRun = true;
 
 //  ------------- [ GLOBAL OBJS ] -----------------
 const audioLoader = new THREE.AudioLoader();
-const fontLoader = new FontLoader();
 const lottieLoader = new LottieLoader();
 const clock = new THREE.Clock();
 
 
 
 //  ------------- [ SCENES ] -----------------
-const intro = new THREE.Scene();
+let intro = new THREE.Scene();
 let credits = new THREE.Scene();
 
 
@@ -58,21 +59,13 @@ let credits = new THREE.Scene();
 
 //  ------------- [ CAMERAS ] -----------------
 const camCredits = new THREE.PerspectiveCamera(50, canvasWidth/canvasHeight, 0.01, 1000);
-const camera = new THREE.PerspectiveCamera(50, canvasWidth/canvasHeight, 0.01, 5000);
 const camIntro = new THREE.PerspectiveCamera( 50, canvasWidth / canvasHeight, 0.01, 10 );
 //const controls = new OrbitControls(camera, canvas);
 
 
 //  ------------- [ AUDIO ] -----------------
-const listenerCreds = new THREE.AudioListener();
 const listenerKacl = new THREE.AudioListener();
-  
-const soundCreds = new THREE.Audio( listenerCreds );
 const soundKacl = new THREE.Audio( listenerKacl );
-
-// Adds audio listener to camera
-camCredits.add( listenerCreds );
-camera.add( listenerKacl );
 
 
 //  ------------- [ TIMELINES ] -----------------
@@ -157,27 +150,24 @@ function animate() {
 
      requestAnimationFrame(animate);
 
-    //controls.update();
-
     const delta = clock.getDelta();
     world.mixer.update( delta );
-    
-    
+        
     // depending on the scene, adjust camera behavior for things that need updates (e.g. zooms)
     switch (world.location)  {
   
       case 'blacktemple':
       
-      if (camera.position.x >= 1.25) {
+      if (world.camera.position.x >= 1.25) {
 
-          camera.position.x -= 0.0025;
+          world.camera.position.x -= 0.0025;
         }
         
          break;
     }
     
-    renderer.render(world.scene, camera);
-    camera.updateMatrixWorld();
+    renderer.render(world.scene, world.camera);
+    world.camera.updateMatrixWorld();
 
     }, 1000 / 24 ); 
   }
@@ -189,11 +179,11 @@ function animate() {
 async function adjustSize() {
 
 
-  canvasWidth = window.innerWidth * 0.6;
+  canvasWidth = window.innerWidth * 0.4;
   canvasHeight = window.innerHeight * 0.6;
   
-  camera.aspect = canvasWidth / canvasHeight;
-  camera.updateProjectionMatrix();
+  world.camera.aspect = canvasWidth / canvasHeight;
+  world.camera.updateProjectionMatrix();
   renderer.setSize(canvasWidth, canvasHeight);
   
   camCredits.aspect = canvasWidth / canvasHeight;
@@ -214,42 +204,101 @@ async function titleCard(epTitle) {
     titleDiv.innerHTML = `${epTitle}`;
 }
 
-console.log(creditsText.innerHTML)
+
 //  ------------- [ CREDITS SEQUENCE ] -----------------
 
 async function createCredits() {
 
-  let creditsLength = await credLength(audioLoader, soundCreds);
+  let creditsLength = await credLength(audioLoader, soundKacl);
+  console.log(creditsLength)
   
-  // Start credits animation loop
-  //animateActive = false;
+  // animateActive = false;  //this was previously used to flag the credits had started in order to stop the main animate function, since the credits scene used to use a different canvas/renderer
+  
+  // tbh not sure if this is needed but why fuck with it
   creditsDiv.style.display = "flex";
   creditsDiv.style.opacity = 1;
 
-  ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), 0);
-  ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
-  ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
-  ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
-  ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
-  ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
-  ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
-  ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
-  ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
-;
-  
-  ctl.add(() => fadeOut(canvas), creditsLength - 2);
-  ctl.add(episode, creditsLength + 3);
 
+  const creditsData = [
+    ['Executiver Gamer', 'Executive Producer', 'Assistant Boy', 'Ball Grip', 'Mayo Catering', 'Deviant Scholar', 'Elder Council', 'Dashing Charmer'],
+    ['MR. MARBLES', 'JOE BIDEN', 'GELSEY KRAMMER', 'MARK', 'MY FATHER-IN-LAW', 'DRACULA', 'TIM APPLE', 'DR. HOMEWORK', 'MYSTERY MAN (GREG)'],
+  ]
+
+  function getRandomCredit(type) {
+           
+    if (type === 'title') {
+      
+      const randomTitle = Math.floor(Math.random() * (creditsData[0].length - 1));
+      return creditsData[0][randomTitle];
+
+    } else if (type === 'person') {
+
+      const randomName = Math.floor(Math.random() * (creditsData[1].length - 1));      
+      return creditsData[1][randomName];
+    }
+  }
+  // add credits to timeline
+
+  const numberOfCredits = Math.floor(creditsLength/2.5 - 1)
+
+  for (let i = 0.5; i <= numberOfCredits; i++) {
+
+   const ctlTime = i * 2.5;
+
+   ctl.add(() => {
+
+    const title1 = getRandomCredit('title');
+    const name1 = getRandomCredit('person');
+    const title2 = getRandomCredit('title');
+    const name2 = getRandomCredit('person');
+    
+    credTextGen(title1, name1, title2, name2); 
+  
+  }, ctlTime)
+
+  }
+  
+
+  ctl.add(() => fadeIn(canvas), 0.5);
+  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), 1.5);
+  // ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
+  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
+  // ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
+  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
+  // ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
+  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
+  // ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
+  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
+  
+  // fade out after credits
+  ctl.add(() => fadeOut(canvas), creditsLength - 3);
+  
+  // hide credits after final credits have shown
   ctl.add(() => creditsDiv.style.display = "none", creditsLength - 2 );
+
+  // start next episode
+  ctl.add(episode, creditsLength + 2);
   
   // Play timline
   ctl.play();
   
-  fadeIn(canvas);
-  world.scene.dispose();
+  async function chooseCredits(worldType) {
+    switch (worldType) {
+      case 'creditsDance':
+        return new World('credits', 'creditsDance', 'creditsDance');
+      case 'creditsFall':
+        return new World('credits', 'creditsFall', 'creditsFall');
+      default:
+        throw new Error(`Unknown world type: ${worldType}`);
+    }
+  }
 
-  world = new World('frasier', 'kacl', 'fraz');
-  world.createWorld();
+  const creditsOptions = ['creditsDance', 'creditsFall'];
+
+  // create credits world
+  const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
+  world = await chooseCredits(creditsOptions[creditsChoice]);
+  world.createCreditsWorld();
   
 }
 
@@ -263,13 +312,12 @@ async function animLogo() {
 
     setTimeout( function() {
 
-        requestAnimationFrame( animLogo );
+      requestAnimationFrame( animLogo );
 
-    }, 1000 / 24 );
+  }, 1000 / 24 );
 
-    rendererIntro.render( intro, camIntro);
-
-}
+  rendererIntro.render( intro, camIntro);
+  }
 
 
 
@@ -300,20 +348,24 @@ async function fetchEpisode() {
 //  ------------- [ CLEAR SCENE ] -----------------
 
 async function resetScene() {
-
+  
     // clear Timelines
     ctl.clear();
     ktl.clear();
 
-    // dispose of scene and recreate
-    world.scene.dispose();
-    intro.dispose();
-    creditsAnimateActive.
+    startScreen.style.opacity = 1;
+    canvas.style.opacity = 0;
 
-    // clear vars
-    world = null
-    
-}
+    animateActive = true;
+    creditsAnimateActive = false;
+    animateIntro = true;
+
+    // dispose of scene and recreate
+     intro = null;
+     world = null;
+
+     intro = new THREE.Scene();
+  }
 
 
 //  ------------- [ EPISODE LOOP ] -----------------
@@ -323,27 +375,21 @@ async function episode() {
   // Set variables if not first run
   if (firstRun === false) {
 
-      resetScene();
-
-      fadeIn(startScreen);
-
-      startScreen.style.opacity = 1;
-      canvas.style.opacity = 1;
-
-      animateActive = true;
-      creditsAnimateActive = false;
+   await resetScene();
 
   };
   
   // Get the latest episode
   await fetchEpisode().then(data => episodeData = data);
   
-  // Intro creation
-  initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
 
   world = new World(episodeData.world, episodeData.location, episodeData.model);
   await world.createWorld();
-    
+
+  // Intro creation
+  await initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
+  
+  console.log(world)
   // Set first run as complete
   firstRun = false;
 
@@ -360,31 +406,35 @@ async function episode() {
     console.log(`monologue length: ${monoLength}`);
 
 
-  ktl.add(() => fadeOut(canvas), 0 );
-
   // start intro logo
-  ktl.add(animLogo(), "+=0");
+  ktl.add(animLogo(), 0.5);
 
   // fade out intro
   ktl.add(() => fadeOut(startScreen), `+=${themeLength}` );
-
+  
   // create title card
   ktl.add(() => titleCard(episodeData.title), "+=0");
 
    // fade in title card
-  ktl.add(() => titleFade(titleDiv), "+=2.5");
+  ktl.add(() => titleFade(titleDiv), "+=2");
   
-  console.log(`world.location: ${world.location}`)
-  ktl.add(() => animate(world.location), "+=0");
+ console.log(canvas.style.opacity)
 
-  // fade out titlecard
-  ktl.add(() => fadeOut(canvas), `+=5`);
+  // begin animation
+  ktl.add(() => animate(world.location), "+=6");
 
-  // fade in to kacl studio
-  ktl.add(() => fadeIn(canvas), "+=1.5");
+   // fade in to kacl studio
+   ktl.add(() => fadeIn(canvas), "+=0");
 
   // start monologue
   ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
+
+ 
+
+
+
+
+
 
   // fade out post-monologue
   ktl.add(() => fadeOut(canvas), `+=${monoLength}`);
@@ -407,21 +457,155 @@ class World {
     this.worldName = worldName;
     this.location = location;
     this.character = character;
-    this.camera = camera;
+    this.camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
+
+    this.glLoader = new GLTFLoader();
     
     this.scene = new THREE.Scene();
     
     this.mixer = null;
   }
 
+  async createCreditsWorld() {
+
+    // Load Set
+    switch (world.location) {
+      
+      case 'creditsFall':
+        this.glLoader.load(`${baseWorldsDir}${this.worldName}/locations/${this.location}.glb`, (gltf) => {
+          
+          video.play()
+          video.loop = true;
+          video.muted = true;
+
+          console.log(gltf.scene)
+          this.scene.add(gltf.scene);
+    
+          let clip, cone, texture;
+    
+          clip = gltf.animations[0]
+    
+          this.mixer = new THREE.AnimationMixer(gltf.scene);
+    
+          const action = this.mixer.clipAction(clip);
+          
+          action.setLoop(THREE.LoopRepeat);
+    
+          action.play();
+    
+          cone = gltf.scene.children[0].children[0]
+    
+          texture = new THREE.VideoTexture(video);
+    
+          texture.repeat.y = -1;
+    
+          const material = new THREE.MeshStandardMaterial({ map: texture, color: 0x5E1327, emissive: texture, emissiveMap: texture });
+          
+          cone.material = material;
+    
+          cone.material.emissiveIntensity = 3;
+
+          this.camera.position.set(0, 6.25 , 0.5);
+          this.camera.rotation.x = -1.5;
+
+          function animateCreds(scene, camera, mixer) {
+            if (creditsAnimateActive === true) {
+              requestAnimationFrame(animate)
+            
+              const delta = clock.getDelta();
+            
+              mixer.update( delta );
+              cone.rotation.y += 0.01;
+              texture.needsUpdate = true;
+              renderer.render(scene, camera)
+            
+            } else {
+
+              return;
+
+            }
+          
+            
+          }
+          
+          animateCreds(this.scene, this.camera, this.mixer);
+        
+         }
+         
+         );
+
+          break;
+
+         case 'creditsDance':
+
+          this.glLoader.load(`${baseWorldsDir}${this.worldName}/locations/${this.location}.glb`, (creditsDanceGltf) => {
+          
+          
+          this.scene.add(creditsDanceGltf.scene);
+          console.log(creditsDanceGltf)
+    
+          let clip
+    
+          clip = creditsDanceGltf.animations[33]
+    
+          this.mixer = new THREE.AnimationMixer(creditsDanceGltf.scene);
+    
+          const action = this.mixer.clipAction(clip);
+          
+          action.setLoop(THREE.LoopRepeat);
+    
+          action.play();
+
+          this.camera.position.set(-3.1, 0.89 , 1.94);
+          this.camera.rotation.set(
+            18.74 * Math.PI / 180,
+            -67.87 * Math.PI / 180,
+            17.45 * Math.PI / 180)
+
+            creditsDanceGltf.scene.traverse(function (child) {
+              if (child.isMesh) {
+                child.material.roughness = 1;
+              }
+            });
+    
+            creditsDanceGltf.scene.traverse(function (obj) {
+              obj.frustumCulled = false;
+            });
+
+          function animateCreds(scene, camera, mixer) {
+            if (creditsAnimateActive === true) {
+              requestAnimationFrame(animate)
+            
+              const delta = clock.getDelta();
+            
+              mixer.update( delta );
+              renderer.render(scene, camera)
+            
+            } else {
+
+              return;
+
+            }
+          
+            
+          }
+          
+          animateCreds(this.scene, this.camera, this.mixer);
+        
+         });
+           break;
+        }
+      
+    }
+
   async createWorld() {
 
-    //const objectLoader = new THREE.ObjectLoader();
-    const glLoader = new GLTFLoader();
+    // Adds audio listener to camera
+    this.camera.add( listenerKacl );
     
     // Load Set
-    glLoader.load(
-      `${baseWorldsDir}${this.worldName}/sets/${this.location}.glb`,
+    this.glLoader.load(
+      `${baseWorldsDir}${this.worldName}/locations/${this.location}.glb`,
       (gltf) => {
       
         this.scene.add(gltf.scene);
@@ -430,13 +614,14 @@ class World {
 
         switch (this.location) {
           case 'blacktemple':
-            camBlackTemple(camera);
+            camBlackTemple(this.camera);
             break;
           
           case 'kacl':
             worldSet.position.set(0, 0, 0)
-            camKaclTopDown(camera);
+            camKaclTopDown(this.camera);
             break;
+          
         }
 
         worldSet.traverse(function (child) {
@@ -452,8 +637,8 @@ class World {
       }
     );
 
-    // Add fraz model
-    glLoader.load(
+    // Add hero model
+    this.glLoader.load(
       `${baseWorldsDir}${this.worldName}/characters/${this.character}.glb`,
       (gltf) => {
         this.scene.add(gltf.scene);
@@ -496,6 +681,7 @@ class World {
           case 'fraz':
             clip = gltf.animations[1]; // talk animation
             break;
+          
         }
         
 

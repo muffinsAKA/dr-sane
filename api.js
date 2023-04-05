@@ -25,7 +25,7 @@ app.get('/episode', async (req, res) => {
         database: sqldb
       });
   
-      const [rows, fields] = await connection.execute('SELECT * FROM sanedb ORDER BY id DESC LIMIT 1');
+      const [rows, fields] = await connection.execute('SELECT * FROM sanedb ORDER BY RAND() LIMIT 1');
   
       // Check if any rows were returned by the query
       if (rows.length > 0) {
