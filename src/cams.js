@@ -13,11 +13,22 @@ export async function camKaclTopDown(camera) {
   
 export async function camKaclFront(camera) {
   
-    camera.position.set(-21.170, 18.084, -37.943);
+    camera.position.set(-1.1, 0.546, -0.560);
     camera.rotation.set(
-      -162.07 * Math.PI / 180,
-      -48.03 * Math.PI / 180,
-      -166.48 * Math.PI / 180
+      118.32 * Math.PI / 180,
+      -88.28 * Math.PI / 180,
+      118.33 * Math.PI / 180
+  
+    );
+  };
+
+  export async function camKaclWindow(camera) {
+  
+    camera.position.set(-0.660, 1.096, 4.296);
+    camera.rotation.set(
+      -0.53 * Math.PI / 180,
+      -21.20 * Math.PI / 180,
+      -0.19 * Math.PI / 180
   
     );
   };
@@ -32,4 +43,7 @@ export async function camKaclFront(camera) {
   
     );
   };
+  
+
+
   

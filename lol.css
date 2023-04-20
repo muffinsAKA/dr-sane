@@ -11,7 +11,7 @@ html, body {
     }
     #player {
       position: absolute;
-      width: 40vw;
+      width: 50vw;
       height: 60vh;
       top: 50%;
       left: 50%;
@@ -23,7 +23,7 @@ html, body {
     }
     #start-screen {
       position: absolute;
-      width: 40vw;
+      width: 50vw;
       height: 60vh;
       top: 50%;
       left: 50%;
@@ -35,7 +35,7 @@ html, body {
     }
     #first-time {
       position: absolute;
-      width: 40vw;
+      width: 50vw;
       height: 60vh;
       top: 50%;
       left: 50%;
@@ -52,7 +52,7 @@ html, body {
     }
     #title {
       position: fixed;
-      width: 40vw;
+      width: 50vw;
       height: 60vh;
       top: 50%;
       left: 50%;
@@ -71,7 +71,7 @@ html, body {
       
     }
     #credits {
-      width: 40vw;
+      width: 50vw;
       height: 60vh;
       position: fixed;
       display: flex;
@@ -105,7 +105,7 @@ html, body {
     }
     #border {
       position: absolute;
-      width: 40vw;
+      width: 50vw;
       height: 60vh;
       top: 50%;
       left: 50%;

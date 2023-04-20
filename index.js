@@ -4,8 +4,8 @@ import { gsap } from 'gsap';
 import { LottieLoader } from 'three/addons/loaders/LottieLoader';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import animationData from './src/intro.json';
-import { camKaclFront, camKaclTopDown, camBlackTemple } from './src/cams.js';
-import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, initIntro, setRenderer, titleFade } from './src/functions.js';
+import { camKaclFront, camKaclTopDown, camKaclWindow, camBlackTemple, kaclCamRandomzier } from './cams.js';
+import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, initIntro, setRenderer, titleFade } from './functions.js';
 
 //import { TextGeometry } from 'three/addons/geometries/TextGeometry';
 //import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -24,7 +24,7 @@ const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
 
 
-let canvasWidth = window.innerWidth * 0.4
+let canvasWidth = window.innerWidth * 0.5
 let canvasHeight = window.innerHeight * 0.6
 
 
@@ -179,7 +179,7 @@ function animate() {
 async function adjustSize() {
 
 
-  canvasWidth = window.innerWidth * 0.4;
+  canvasWidth = window.innerWidth * 0.5;
   canvasHeight = window.innerHeight * 0.6;
   
   world.camera.aspect = canvasWidth / canvasHeight;
@@ -619,7 +619,7 @@ class World {
           
           case 'kacl':
             worldSet.position.set(0, 0, 0)
-            camKaclTopDown(this.camera);
+            kaclCamRandomzier(this.camera, animateActive);
             break;
           
         }
