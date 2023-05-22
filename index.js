@@ -1,18 +1,10 @@
 import * as THREE from 'three';
-import { FontLoader } from 'three/addons/loaders/FontLoader';
 import { gsap } from 'gsap';
 import { LottieLoader } from 'three/addons/loaders/LottieLoader';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import animationData from './src/intro.json';
-import { camKaclFront, camKaclTopDown, camKaclWindow, camBlackTemple, kaclCamRandomzier } from './cams.js';
+import { camBlackTemple, kaclCamRandomzier } from './cams.js';
 import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, initIntro, setRenderer, titleFade } from './functions.js';
-
-//import { TextGeometry } from 'three/addons/geometries/TextGeometry';
-//import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-//import { EffectComposer } from 'three/addons/postprocessing/EffectComposer';
-//import { ShaderPass } from 'three/addons/postprocessing/ShaderPass'
-//import { RenderPass } from 'three/addons/postprocessing/RenderPass';
-//import { GammaCorrectionShader } from 'three/addons/shaders/GammaCorrectionShader'
 
 //  ------------- [ DOM ELEMENTS ] -----------------
 const startScreen = document.getElementById('start-screen');
@@ -327,14 +319,14 @@ async function animLogo() {
 async function fetchEpisode() {
 
   // Hit API
-  const response = await fetch(`http://localhost:3000/episode`);
+  const response = await fetch(`http://localhost:3000/gather`);
   const data = await response.json();
 
   
   return {
-    title: data.title,
-    script: data.script,
-    audio: data.audio,
+    title: data.gptTitle,
+    script: data.gptScript,
+    audio: data.filename,
     voice: data.voice,
     world: data.world,
     model: data.model,
@@ -381,6 +373,8 @@ async function episode() {
   
   // Get the latest episode
   await fetchEpisode().then(data => episodeData = data);
+
+  console.log(episodeData);
   
 
   world = new World(episodeData.world, episodeData.location, episodeData.model);

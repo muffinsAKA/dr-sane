@@ -13,30 +13,16 @@ const gptReqUrl = "https://api.openai.com/v1/chat/completions";
 const elevenKey = process.env.elevenKey;
 const elevenReqUrl = "https://api.elevenlabs.io/v1/text-to-speech/";
 
-// SQL env keys
-const sqlhost = process.env.sqlhost;
-const sqldb = process.env.sqldb;
-const sqluser = process.env.sqluser;
-const sqlpass = process.env.sqlpass;
-
-
-// SQL connection cmd
-const connection = mysql.createConnection({
-  host: sqlhost,
-  user: sqluser,
-  password: sqlpass,
-  database: sqldb
-});
-
 const elevenHeader = {
   'accept': 'audio/mpeg',
   'xi-api-key': elevenKey,
   'Content-Type': 'application/json'
 };
 
-async function gather() {
-  
+export async function gather() {
   const promptInfo = await promptGen();
+
+  console.log(`promptInfo: ${promptInfo}`)
 
   const voice = promptInfo.voice;
   const subject = promptInfo.subject;
@@ -46,81 +32,36 @@ async function gather() {
 
   const voiceUrl = elevenReqUrl + voice;
   
-  
-  // Set chatgpt request + settings
   const data = {
-  messages: [{ role: "user", content: `${promptInfo.prompt}`}],
-  max_tokens: promptInfo.tokens,
-  model: "gpt-3.5-turbo",
-  temperature: 1,
-  top_p: 1,
-  stream: false
-
+    messages: [{ role: "user", content: `${promptInfo.prompt}`}],
+    max_tokens: promptInfo.tokens,
+    model: "gpt-3.5-turbo",
+    temperature: 1,
+    top_p: 1,
+    stream: false
   };
 
-  getScript(data)
-      .then(({ gptTitle, gptScript }) => {
+  try {
+    const { gptTitle, gptScript } = await getScript(data);
 
-        console.log('Title: ' + gptTitle )
-        console.log('Script: ' + gptScript )
-
-      const gptHandoff = {
-        "text": `${gptScript}`,
-        "voice_settings": {
-          "stability": 0.2,
-          "similarity_boost": 1
-        }
+    const gptHandoff = {
+      "text": `${gptScript}`,
+      "voice_settings": {
+        "stability": 0.2,
+        "similarity_boost": 1
       }
-      console.log(voice)
-      return getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl);
-        })
+    }
 
-      .then(() => {
-          console.log("Audio file saved");
-      })
-      .catch((error) => {
-      console.error(error);
-      });
+    const voiceData = await getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl);
 
+
+    return { gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, filename: voiceData.filename };
+
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
-
-
-
-
-
-function dbWrite(gptTitle, gptScript, filename, voice, world, subject, model, location ) {
-  connection.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to MySQL database!');
-  });
-
-  const newEntry = {
-    title: gptTitle,
-    script: gptScript,
-    audio: filename,
-    voice: voice,
-    world: world,
-    subject: subject,
-    model: model,
-    location: location
-
-};
-
-  const sql = 'INSERT INTO sanedb SET ?';
-
-  connection.query(sql, newEntry, (err, result) => {
-    if (err) throw err;
-    console.log('New entry added:', result);
-
-  });
-
-  connection.end((err) => {
-    if (err) throw err;
-    console.log('Disconnected from Sane database')
-  })
-  };
-
-
 
 
 async function getScript(data) {
@@ -142,6 +83,8 @@ async function getScript(data) {
 
   const gptTitle = content.title;
   const gptScript = content.script;
+
+  console.log(`title: ${gptTitle}, script: ${gptScript}`)
 
   return { gptTitle, gptScript };
 }
@@ -167,12 +110,9 @@ async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, 
       console.log(`File ${filename} has been saved.`);
     });
 
-    console.log(voice)
-    dbWrite(gptTitle, gptScript, filename, voice, world, subject, model, location);
+    return { gptTitle,gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl, filename }
 
   } catch (error) {
     console.error(error);
   }
 }
-
-gather()
