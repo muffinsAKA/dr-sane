@@ -252,16 +252,7 @@ async function createCredits() {
   
 
   ctl.add(() => fadeIn(canvas), 0.5);
-  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), 1.5);
-  // ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
-  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
-  // ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
-  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
-  // ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
-  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
-  // ctl.add(() => credTextGen('Gun Remover', 'PINTUS BLONT', 'Spindle Wombler', 'CARDUS WINDERTON'), "+=2.5");
-  // ctl.add(() => credTextGen('Executive Producer', 'KELPY GRAMPER', 'Huge Assistant', 'SPERN TANTLY' ), "+=2.5");
-  
+
   // fade out after credits
   ctl.add(() => fadeOut(canvas), creditsLength - 3);
   
@@ -318,8 +309,10 @@ async function animLogo() {
 
 async function fetchEpisode() {
 
+  const apiUrl = `https://frasier.muffins.zone.day/api/gather`
+
   // Hit API
-  const response = await fetch(`http://localhost:3000/gather`);
+  const response = await fetch(apiUrl);
   const data = await response.json();
 
   

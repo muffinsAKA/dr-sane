@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
-import mysql from 'mysql2';
-import { promptGen } from './prompt.js';
+import { promptGen } from '../prompt.js';
 
 dotenv.config();
 
@@ -114,5 +113,15 @@ async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, 
 
   } catch (error) {
     console.error(error);
+  }
+}
+
+export default async (req, res) => {
+  try {
+    const result = await gather();
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while running gather()' });
   }
 }
