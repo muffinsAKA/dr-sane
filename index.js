@@ -92,6 +92,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// Intro flow vars
 let inputCount = 0;
 let userName;
 
@@ -116,8 +117,6 @@ function mainInit() {
         userName = question.value;
         question.placeholder = '';
 
-        console.log(`input count === 1: ${inputCount}`);
-  
         setTimeout(() => {
           question.style.opacity = 1;
           question.placeholder = `What's your question, ${userName}?`;
@@ -128,8 +127,6 @@ function mainInit() {
       } else if (inputCount === 1) {
 
         const questionText = question.value;
-        
-        console.log(questionText, userName);
 
         inputCount++;
         
