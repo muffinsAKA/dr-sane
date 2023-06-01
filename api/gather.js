@@ -205,22 +205,19 @@ export async function retrieveAudio() {
 
 export default async (req, res) => {
   try {
-    const { endpoint } = req.query;
+    const { endpoint, questionText } = req.query;
 
     if (endpoint === 'gather') {
       const result = await gather(questionText);
       res.setHeader('Access-Control-Allow-Credentials', true);
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.json(result);
-
     } else if (endpoint === 'retrieve-audio') {
       res.setHeader('Access-Control-Allow-Credentials', true);
       res.setHeader('Access-Control-Allow-Origin', '*');
       const audioData = await retrieveAudio();
       res.send(audioData);
-
     } else {
-
       res.status(404).json({ error: 'Invalid endpoint' });
     }
   } catch (err) {
