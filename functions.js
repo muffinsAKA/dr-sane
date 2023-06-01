@@ -13,81 +13,64 @@ export function fadeOut(canvas) {
 
 //  ------------- [ MONOLOGUE LENGTH ] -----------------
 export async function monologueLength(audio) {
+  let monoAudio = new Audio(`data:audio/mpeg;base64,${audio}`);
 
-    let monoAudio = new Audio(audio);
-  
-  
-    // Get audio duration
-    let monoLengthPromise = new Promise((resolve, reject) => {
-  
-      monoAudio.addEventListener('loadedmetadata', () => {
-        
-        // load duration into 'introLength'
-        resolve(monoAudio.duration); 
-      });
-      
-      monoAudio.addEventListener('error', reject);
-  
-      });
-      
-    return monoLengthPromise;
-    
-  
-  }
+  return new Promise((resolve, reject) => {
+    monoAudio.addEventListener('loadedmetadata', () => {
+      resolve(monoAudio.duration);
+    });
+
+    monoAudio.addEventListener('error', reject);
+  });
+}
   
   //  ------------- [ LOAD THEME + SET DURATION ] -----------------
 
-export async function themeSong(themesDir, soundKacl, audioLoader) {
-
-
-    // Generate random # between 1-21
-    let n = Math.floor(Math.random() * (21 - 1) + 1);
+  export async function themeSong(theme, soundKacl, audioLoader) {
+    const audioData = `data:audio/mpeg;base64,${theme}`;
   
-    // Check duration of mp3
-    let themeAudio = new Audio(`${themesDir}/theme${n}.mp3`);
-    
+    // Create a new Audio object
+    const themeAudio = new Audio(audioData);
+  
     // Get audio duration
-    let introLengthPromise = new Promise((resolve, reject) => {
-  
+    const introLengthPromise = new Promise((resolve, reject) => {
       themeAudio.addEventListener('loadedmetadata', () => {
-        
-        // load duration into 'introLength'
-        resolve(themeAudio.duration); 
-  
+        // Load duration into 'introLength'
+        resolve(themeAudio.duration);
       });
-      
       themeAudio.addEventListener('error', reject);
-  
     });
-    
+  
     // Load and play theme
-    audioLoader.load(`${themesDir}/theme${n}.mp3`, function(buffer) {
+    audioLoader.load(audioData, function (buffer) {
       soundKacl.setBuffer(buffer);
       soundKacl.setLoop(false);
       soundKacl.setVolume(1);
       soundKacl.play();
-    
     });
-    
-    // return theme song length
-    return introLengthPromise;
   
+    // Return theme song length
+    return introLengthPromise;
   }
-
 
   //  ------------- [ MONOLOGUE SOUND ] -----------------
 
-export async function monologue(audioLoader, audio, soundKacl) {
+  export async function monologue(audioLoader, audio, soundKacl) {
+    const audioData = `data:audio/mpeg;base64,${audio}`;
   
-  audioLoader.load(audio, function( buffer_mono ) {
-    soundKacl.setBuffer( buffer_mono );
-    soundKacl.setLoop( false );
-    soundKacl.setVolume( 1 );
-    soundKacl.play();
-
-  });
-
-}
+    return new Promise((resolve, reject) => {
+      audioLoader.load(audioData, (buffer_mono) => {
+        soundKacl.setBuffer(buffer_mono);
+        soundKacl.setLoop(false);
+        soundKacl.setVolume(1);
+        soundKacl.onEnded(() => {
+          resolve();
+        });
+        soundKacl.play();
+      }, undefined, reject);
+    });
+  }
+  
 
 //  ------------- [ PLAY CREDITS THEME + GET LENGTH ] -----------------
 export async function credLength(audioLoader, soundCreds) {

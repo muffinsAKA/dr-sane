@@ -14,6 +14,7 @@ const creditsDiv = document.querySelector('#credits');
 const creditsText = creditsDiv.querySelector('p')
 const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
+const question = document.getElementById('question');
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -70,10 +71,10 @@ const ktl = gsap.timeline();
 
 
 //  ------------- [ DIRECTORIES ] -----------------
-const baseWorldsDir = './res/3d/worlds/'
-const wowWorldDir = './res/3d/worlds/wow';
-const frasierWorldDir = './res/3d/worlds/frasier';
-const themesDir = './audio/themes/';
+const frazGlbUrl = 'https://muffinsaka.s3.amazonaws.com/3d/fraz.glb';
+const frazSetGlbUrl = 'https://muffinsaka.s3.amazonaws.com/3d/kacl.glb';
+const creditsFall = 'https://muffinsaka.s3.amazonaws.com/3d/creditsFall.glb';
+const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
 
 //  ------------- [ RENDERERS ] -----------------
@@ -84,52 +85,46 @@ let rendererCredits = new THREE.WebGLRenderer({canvas, antialias: true});
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 
-mainInit();
+window.addEventListener('DOMContentLoaded', () => {
+  mainInit();
+});
 
 
 function mainInit() {
+  // ------------- [ INTRO LOTTIE ] ----------------
+  const container = document.getElementById('first-time');
 
-    //  ------------- [ INTRO LOTTIE ] ----------------
-    const container = document.getElementById('first-time');
-
-    const options = {
-        container: container,
-        renderer: 'svg',
-        loop: false,
-        autoplay: true,
-        transparent: true,
-        animationData: animationData
-    };
-
-    lottie.loadAnimation(options);
+  const options = {
+    container: container,
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    transparent: true,
+    animationData: animationData
+  };
+  lottie.loadAnimation(options);
 
   setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
 
- 
-  //  ------------- [ FIRST RUN CHECK ] -----------------
+  // ------------- [ FIRST RUN CHECK ] -----------------
 
-  if (firstRun == true) {
-    
-    // Hide player canvas initially
-    canvas.style.display = 'none';
-    
-    // Add event listener to start screen
-    firstTime.addEventListener('click', () => {
-      
+  
+  // Hide player canvas initially
+  canvas.style.display = 'none';
+  
+  question.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
       // Hide start screen
+      const firstTime = document.getElementById('first-time');
       firstTime.style.display = 'none';
       firstTime.style.opacity = 0;
-      
-      episode();
-
-    })
-
-   } else {
-
-    episode();
-
-   }
-  }
+      question.style.opacity = 0;
+      const questionText = question.value;
+      question.value = '';
+      episode(questionText);
+    }
+  });
+}
 
   // Add listener for window resizing to adjust size/camera
   window.addEventListener('resize', adjustSize);
@@ -307,27 +302,32 @@ async function animLogo() {
 
 //  ------------- [ GET LATEST EP ] -----------------
 
-async function fetchEpisode() {
+async function fetchEpisode(questionText) {
+  const apiUrl = `https://frasier.muffins.zone.day/api/?endpoint=gather&question=${encodeURIComponent(questionText)}`;
+  const themeUrl = `https://frasier.muffins.zone.day/api/?endpoint=retrieve-audio`
 
-  const apiUrl = `https://frasier.muffins.zone.day/api/gather`
+  try {
+    const response = await fetch(apiUrl);
+    const responseTheme = await fetch(themeUrl);
+        
+    const data = await response.json();
+    const themeData = await responseTheme.text();
 
-  // Hit API
-  const response = await fetch(apiUrl);
-  const data = await response.json();
-
-  
-  return {
-    title: data.gptTitle,
-    script: data.gptScript,
-    audio: data.filename,
-    voice: data.voice,
-    world: data.world,
-    model: data.model,
-    location: data.location
-
-  };
-};
-
+    return {
+      title: data.gptTitle,
+      script: data.gptScript,
+      audio: data.audioBase64,
+      theme: themeData,
+      voice: data.voice,
+      world: data.world,
+      model: data.model,
+      location: data.location,
+    };
+  } catch (error) {
+    console.error(error);
+    // Handle error case
+  }
+}
 
 
 //  ------------- [ CLEAR SCENE ] -----------------
@@ -355,7 +355,7 @@ async function resetScene() {
 
 //  ------------- [ EPISODE LOOP ] -----------------
 
-async function episode() {
+async function episode(questionText) {
 
   // Set variables if not first run
   if (firstRun === false) {
@@ -365,7 +365,7 @@ async function episode() {
   };
   
   // Get the latest episode
-  await fetchEpisode().then(data => episodeData = data);
+  await fetchEpisode(questionText).then(data => episodeData = data);
 
   console.log(episodeData);
   
@@ -385,11 +385,11 @@ async function episode() {
   canvas.style.display = 'flex';
   
   // Get theme song lengt
-  let themeLength = Math.ceil(await themeSong(themesDir, soundKacl, audioLoader));
+  let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
     console.log(`theme length: ${themeLength}`);
   
     // Get monologue length
-  let monoLength = Math.ceil(await monologueLength(episodeData.audio)) -0.5;
+  let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
     console.log(`monologue length: ${monoLength}`);
 
 
@@ -414,7 +414,7 @@ async function episode() {
    ktl.add(() => fadeIn(canvas), "+=0");
 
   // start monologue
-  ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
+  ktl.add(() => monologue(audioLoader, episodeData.audioBase64, soundKacl), "+=0");
 
  
 
@@ -459,7 +459,11 @@ class World {
     switch (world.location) {
       
       case 'creditsFall':
-        this.glLoader.load(`${baseWorldsDir}${this.worldName}/locations/${this.location}.glb`, (gltf) => {
+        fetch(creditsFall)
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => {
+              const glbData = new Uint8Array(arrayBuffer);
+              this.glLoader.parse(glbData, '', (creditsDanceGltf) => {
           
           video.play()
           video.loop = true;
@@ -517,16 +521,18 @@ class World {
           
           animateCreds(this.scene, this.camera, this.mixer);
         
-         }
-         
-         );
+         });
+        });
 
           break;
 
          case 'creditsDance':
 
-          this.glLoader.load(`${baseWorldsDir}${this.worldName}/locations/${this.location}.glb`, (creditsDanceGltf) => {
-          
+            fetch(creditsDance)
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => {
+              const glbData = new Uint8Array(arrayBuffer);
+              this.glLoader.parse(glbData, '', (creditsDanceGltf) => {
           
           this.scene.add(creditsDanceGltf.scene);
           console.log(creditsDanceGltf)
@@ -580,10 +586,12 @@ class World {
           animateCreds(this.scene, this.camera, this.mixer);
         
          });
+        });
            break;
-        }
-      
     }
+  };
+  
+  
 
   async createWorld() {
 
@@ -591,9 +599,11 @@ class World {
     this.camera.add( listenerKacl );
     
     // Load Set
-    this.glLoader.load(
-      `${baseWorldsDir}${this.worldName}/locations/${this.location}.glb`,
-      (gltf) => {
+    fetch(frazSetGlbUrl)
+  .then(response => response.arrayBuffer())
+  .then(arrayBuffer => {
+    const glbData = new Uint8Array(arrayBuffer);
+    this.glLoader.parse(glbData, '', (gltf) => {
       
         this.scene.add(gltf.scene);
 
@@ -622,12 +632,13 @@ class World {
         });
 
       }
-    );
+    )});
 
-    // Add hero model
-    this.glLoader.load(
-      `${baseWorldsDir}${this.worldName}/characters/${this.character}.glb`,
-      (gltf) => {
+    fetch(frazGlbUrl)
+  .then(response => response.arrayBuffer())
+  .then(arrayBuffer => {
+    const glbData = new Uint8Array(arrayBuffer);
+    this.glLoader.parse(glbData, '', (gltf) => {
         this.scene.add(gltf.scene);
 
         switch (this.character) {
@@ -679,5 +690,5 @@ class World {
         action.play();
       }
     );
-  }
-}
+  })}
+};

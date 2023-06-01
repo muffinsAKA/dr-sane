@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
-import fs from 'fs';
-import { promptGen } from '../prompt.js';
+import AWS from 'aws-sdk';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
@@ -18,8 +18,41 @@ const elevenHeader = {
   'Content-Type': 'application/json'
 };
 
-export async function gather() {
-  const promptInfo = await promptGen();
+AWS.config.update({
+  accessKeyId: process.env.s3access,
+  secretAccessKey: process.env.s3secret,
+});
+
+
+async function defaultPrompt(questionText) {
+
+  const voice = process.env.frazID;
+  const world = 'frasier';
+  const name = 'Dr. Frasier Crane';
+  const location = 'kacl';
+  const model = 'fraz';
+  const charLimit = 400;
+  const tokens = 900;
+  const subject = questionText;
+
+  const defaultStr = Handlebars.compile(
+      "Pretend to be Dr. Frasier Crane on his radio show giving response to a calller asking about {{{subject}}}. \
+End the monologue with 'This is Dr. Frasier Crane signing off and wishing you good mental health' \
+Separate the title, which should be creative, and script in your response. \
+Keep your response under {{charLimit}} characters. Reply in only json with no other text");
+
+  const prompt = defaultStr({ 
+      subject: `${subject}`,
+      charLimit: charLimit
+  });
+
+
+  return {voice, world, prompt, subject, name, location, tokens, model}
+}
+
+export async function gather(questionText) {
+
+  const promptInfo = await defaultPrompt(questionText);
 
   console.log(`promptInfo: ${promptInfo}`)
 
@@ -53,9 +86,17 @@ export async function gather() {
 
     const voiceData = await getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl);
 
-
-    return { gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, filename: voiceData.filename };
-
+    return {
+      gptTitle,
+      gptHandoff,
+      gptScript,
+      voice,
+      world,
+      subject,
+      model,
+      location,
+      audioBase64: voiceData.audioBase64
+    };
   } catch (error) {
     console.error(error);
     throw error;
@@ -92,7 +133,6 @@ async function getScript(data) {
 
 
 async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl) {
-  
   try {
     const response = await fetch(voiceUrl, {
       method: 'POST',
@@ -101,27 +141,86 @@ async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, 
     });
 
     const audioData = await response.arrayBuffer();
-    const filenameRaw = gptTitle.replace(/"/g, '').replace(/\s/g,'_');
-    const filename = `./audio/${world}/${filenameRaw}.mp3`
 
-    fs.writeFile(filename, Buffer.from(audioData), (err) =>  {
-      if (err) throw err;
-      console.log(`File ${filename} has been saved.`);
-    });
+    // Store the audio data in a variable or process it further as needed
+    const audioBase64 = Buffer.from(audioData).toString('base64');
 
-    return { gptTitle,gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl, filename }
-
+    return { gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl, audioBase64 };
   } catch (error) {
     console.error(error);
   }
 }
 
-export default async (req, res) => {
+export async function retrieveAudio() {
   try {
-    const result = await gather();
-    res.json(result);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'An error occurred while running gather()' });
+    const bucketName = 'muffinsaka';
+    const audioFiles = [
+      'theme1.mp3',
+      'theme2.mp3',
+      'theme3.mp3',
+      'theme4.mp3',
+      'theme5.mp3',
+      'theme6.mp3',
+      'theme7.mp3',
+      'theme8.mp3',
+      'theme9.mp3',
+      'theme10.mp3',
+      'theme11.mp3',
+      'theme12.mp3',
+      'theme13.mp3',
+      'theme14.mp3',
+      'theme15.mp3',
+      'theme16.mp3',
+      'theme17.mp3',
+      'theme18.mp3',
+      'theme19.mp3',
+      'theme20.mp3',
+      'theme21.mp3'
+    ];
+
+    // Select a random audio file
+    const randomIndex = Math.floor(Math.random() * audioFiles.length);
+    const selectedAudioFile = audioFiles[randomIndex];
+
+    // Set the appropriate S3 bucket name and file key
+    const fileKey = selectedAudioFile;
+
+    // Get the object from S3
+    const s3Params = {
+      Bucket: bucketName,
+      Key: fileKey,
+    };
+
+    const s3Object = await s3.getObject(s3Params).promise();
+
+    // Retrieve the audio data as a base64 string
+    const audioData = s3Object.Body.toString('base64');
+
+    return audioData;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 }
+
+export default async (req, res) => {
+  try {
+    const { endpoint } = req.query;
+
+    if (endpoint === 'gather') {
+      const result = await gather(questionText);
+      res.json(result);
+
+    } else if (endpoint === 'retrieve-audio') {
+      const audioData = await retrieveAudio();
+      res.send(audioData);
+
+    } else {
+
+      res.status(404).json({ error: 'Invalid endpoint' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred.' });
+  }
+};
