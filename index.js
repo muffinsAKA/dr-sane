@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { LottieLoader } from 'three/addons/loaders/LottieLoader';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import animationData from './src/intro.json';
+import animationData from './public/intro.json';
 import { camBlackTemple, kaclCamRandomzier } from './cams.js';
 import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, initIntro, setRenderer, titleFade } from './functions.js';
 

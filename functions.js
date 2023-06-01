@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import animationData from './src/intro.json';
+import animationData from './public/intro.json';
 
 //  ------------- [ FADES ] -----------------
 
