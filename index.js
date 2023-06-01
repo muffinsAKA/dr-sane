@@ -91,18 +91,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 function mainInit() {
-  // ------------- [ INTRO LOTTIE ] ----------------
-  const container = document.getElementById('first-time');
-
-  const options = {
-    container: container,
-    renderer: 'svg',
-    loop: false,
-    autoplay: true,
-    transparent: true,
-    animationData: animationData
-  };
-  lottie.loadAnimation(options);
 
   setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
 
