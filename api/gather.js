@@ -76,14 +76,14 @@ export async function gather(questionText) {
     const voiceData = await getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, model, location, voiceUrl);
 
     return {
-      gptTitle,
-      gptHandoff,
-      gptScript,
-      voice,
-      world,
-      subject,
-      model,
-      location,
+      gptTitle: voiceData.gptTitle,
+      gptHandoff: voiceData.gptHandoff,
+      gptScript: voiceData.gptScript,
+      voice: voiceData.voice,
+      world: voiceData.world,
+      subject: voiceData.subject,
+      model: voiceData.model,
+      location: voiceData.location
       //audioBase64: voiceData.audioBase64
     };
   } catch (error) {
