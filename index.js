@@ -414,15 +414,15 @@ async function episode(questionText) {
   ktl.add(() => fadeOut(canvas), `+=${monoLength}`);
 
   // Play timeline and call credits 2.55s seconds after its over (2.5s on fadeout so cant do it right away)
-  ktl.play().eventCallback("onComplete", () => {
+  // ktl.play().eventCallback("onComplete", () => {
 
-      setTimeout(() => {
+  //     setTimeout(() => {
 
-          createCredits();
+  //         createCredits();
 
-      }, 2650); 
+  //     }, 2650); 
 
-  });
+  // });
 }
 
 
@@ -440,143 +440,143 @@ class World {
     this.mixer = null;
   }
 
-  async createCreditsWorld() {
+  // async createCreditsWorld() {
 
-    // Load Set
-    switch (world.location) {
+  //   // Load Set
+  //   switch (world.location) {
       
-      case 'creditsFall':
-        fetch(creditsFall)
-            .then(response => response.arrayBuffer())
-            .then(arrayBuffer => {
-              const glbData = new Uint8Array(arrayBuffer);
-              this.glLoader.parse(glbData, '', (gltf) => {
+  //     case 'creditsFall':
+  //       fetch(creditsFall)
+  //           .then(response => response.arrayBuffer())
+  //           .then(arrayBuffer => {
+  //             const glbData = new Uint8Array(arrayBuffer);
+  //             this.glLoader.parse(glbData, '', (gltf) => {
           
-          video.play()
-          video.loop = true;
-          video.muted = true;
+  //         video.play()
+  //         video.loop = true;
+  //         video.muted = true;
 
-          console.log(gltf.scene)
-          this.scene.add(gltf.scene);
+  //         console.log(gltf.scene)
+  //         this.scene.add(gltf.scene);
     
-          let clip, cone, texture;
+  //         let clip, cone, texture;
     
-          clip = gltf.animations[0]
+  //         clip = gltf.animations[0]
     
-          this.mixer = new THREE.AnimationMixer(gltf.scene);
+  //         this.mixer = new THREE.AnimationMixer(gltf.scene);
     
-          const action = this.mixer.clipAction(clip);
+  //         const action = this.mixer.clipAction(clip);
           
-          action.setLoop(THREE.LoopRepeat);
+  //         action.setLoop(THREE.LoopRepeat);
     
-          action.play();
+  //         action.play();
     
-          cone = gltf.scene.children[0].children[0]
+  //         cone = gltf.scene.children[0].children[0]
     
-          texture = new THREE.VideoTexture(video);
+  //         texture = new THREE.VideoTexture(video);
     
-          texture.repeat.y = -1;
+  //         texture.repeat.y = -1;
     
-          const material = new THREE.MeshStandardMaterial({ map: texture, color: 0x5E1327, emissive: texture, emissiveMap: texture });
+  //         const material = new THREE.MeshStandardMaterial({ map: texture, color: 0x5E1327, emissive: texture, emissiveMap: texture });
           
-          cone.material = material;
+  //         cone.material = material;
     
-          cone.material.emissiveIntensity = 3;
+  //         cone.material.emissiveIntensity = 3;
 
-          this.camera.position.set(0, 6.25 , 0.5);
-          this.camera.rotation.x = -1.5;
+  //         this.camera.position.set(0, 6.25 , 0.5);
+  //         this.camera.rotation.x = -1.5;
 
-          function animateCreds(scene, camera, mixer) {
-            if (creditsAnimateActive === true) {
-              requestAnimationFrame(animate)
+  //         function animateCreds(scene, camera, mixer) {
+  //           if (creditsAnimateActive === true) {
+  //             requestAnimationFrame(animate)
             
-              const delta = clock.getDelta();
+  //             const delta = clock.getDelta();
             
-              mixer.update( delta );
-              cone.rotation.y += 0.01;
-              texture.needsUpdate = true;
-              renderer.render(scene, camera)
+  //             mixer.update( delta );
+  //             cone.rotation.y += 0.01;
+  //             texture.needsUpdate = true;
+  //             renderer.render(scene, camera)
             
-            } else {
+  //           } else {
 
-              return;
+  //             return;
 
-            }
+  //           }
           
             
-          }
+  //         }
           
-          animateCreds(this.scene, this.camera, this.mixer);
+  //         animateCreds(this.scene, this.camera, this.mixer);
         
-         });
-        });
+  //        });
+  //       });
 
-          break;
+  //         break;
 
-         case 'creditsDance':
+  //        case 'creditsDance':
 
-            fetch(creditsDance)
-            .then(response => response.arrayBuffer())
-            .then(arrayBuffer => {
-              const glbData = new Uint8Array(arrayBuffer);
-              this.glLoader.parse(glbData, '', (creditsDanceGltf) => {
+  //           fetch(creditsDance)
+  //           .then(response => response.arrayBuffer())
+  //           .then(arrayBuffer => {
+  //             const glbData = new Uint8Array(arrayBuffer);
+  //             this.glLoader.parse(glbData, '', (creditsDanceGltf) => {
           
-          this.scene.add(creditsDanceGltf.scene);
-          console.log(creditsDanceGltf)
+  //         this.scene.add(creditsDanceGltf.scene);
+  //         console.log(creditsDanceGltf)
     
-          let clip
+  //         let clip
     
-          clip = creditsDanceGltf.animations[33]
+  //         clip = creditsDanceGltf.animations[33]
     
-          this.mixer = new THREE.AnimationMixer(creditsDanceGltf.scene);
+  //         this.mixer = new THREE.AnimationMixer(creditsDanceGltf.scene);
     
-          const action = this.mixer.clipAction(clip);
+  //         const action = this.mixer.clipAction(clip);
           
-          action.setLoop(THREE.LoopRepeat);
+  //         action.setLoop(THREE.LoopRepeat);
     
-          action.play();
+  //         action.play();
 
-          this.camera.position.set(-3.1, 0.89 , 1.94);
-          this.camera.rotation.set(
-            18.74 * Math.PI / 180,
-            -67.87 * Math.PI / 180,
-            17.45 * Math.PI / 180)
+  //         this.camera.position.set(-3.1, 0.89 , 1.94);
+  //         this.camera.rotation.set(
+  //           18.74 * Math.PI / 180,
+  //           -67.87 * Math.PI / 180,
+  //           17.45 * Math.PI / 180)
 
-            creditsDanceGltf.scene.traverse(function (child) {
-              if (child.isMesh) {
-                child.material.roughness = 1;
-              }
-            });
+  //           creditsDanceGltf.scene.traverse(function (child) {
+  //             if (child.isMesh) {
+  //               child.material.roughness = 1;
+  //             }
+  //           });
     
-            creditsDanceGltf.scene.traverse(function (obj) {
-              obj.frustumCulled = false;
-            });
+  //           creditsDanceGltf.scene.traverse(function (obj) {
+  //             obj.frustumCulled = false;
+  //           });
 
-          function animateCreds(scene, camera, mixer) {
-            if (creditsAnimateActive === true) {
-              requestAnimationFrame(animate)
+  //         function animateCreds(scene, camera, mixer) {
+  //           if (creditsAnimateActive === true) {
+  //             requestAnimationFrame(animate)
             
-              const delta = clock.getDelta();
+  //             const delta = clock.getDelta();
             
-              mixer.update( delta );
-              renderer.render(scene, camera)
+  //             mixer.update( delta );
+  //             renderer.render(scene, camera)
             
-            } else {
+  //           } else {
 
-              return;
+  //             return;
 
-            }
+  //           }
           
             
-          }
+  //         }
           
-          animateCreds(this.scene, this.camera, this.mixer);
+  //         animateCreds(this.scene, this.camera, this.mixer);
         
-         });
-        });
-           break;
-    }
-  };
+  //        });
+  //       });
+  //          break;
+  //   }
+  // };
   
   
 
