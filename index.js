@@ -307,8 +307,8 @@ async function fetchEpisode(questionText) {
   const themeUrl = `https://frasier.muffins.zone/api/retrieve-audio`;
   console.log(questionText);
   try {
-    const response = await fetch(apiUrl);
-    const responseTheme = await fetch(themeUrl);
+    const response = await fetch(apiUrl, {mode: 'cors'});
+    const responseTheme = await fetch(themeUrl, {mode: 'cors'});
 
     const data = await response.json();
     const themeData = await responseTheme.text();
