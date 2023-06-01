@@ -622,18 +622,9 @@ class World {
     this.glLoader.parse(glbData, '', (gltf) => {
         this.scene.add(gltf.scene);
 
-        switch (this.character) {
-
-          case 'illidan':
-            gltf.scene.position.set( -0.318, 0, 0 );
-            break;
-
-          case 'fraz':
-            gltf.scene.position.set( 0.061, 0, -0.127 );
-            gltf.scene.scale.set( 1, 1, 1 );
-            gltf.scene.rotation.set( 0 , -180 * Math.PI / 180, 0 );
-            break;
-        }
+         gltf.scene.position.set( 0.061, 0, -0.127 );
+         gltf.scene.scale.set( 1, 1, 1 );
+         gltf.scene.rotation.set( 0 , -180 * Math.PI / 180, 0 );
 
         const model = gltf.scene;
 
@@ -651,17 +642,7 @@ class World {
 
         let clip;
 
-        switch (this.character) {
-
-          case 'illidan':
-            clip = gltf.animations[0]; // talk animation
-            break;
-          
-          case 'fraz':
-            clip = gltf.animations[1]; // talk animation
-            break;
-          
-        }
+        clip = gltf.animations[1]; // talk animation
         
 
         const action = this.mixer.clipAction(clip);
