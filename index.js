@@ -141,17 +141,6 @@ function animate() {
     world.mixer.update( delta );
         
     // depending on the scene, adjust camera behavior for things that need updates (e.g. zooms)
-    switch (world.location)  {
-  
-      case 'blacktemple':
-      
-      if (world.camera.position.x >= 1.25) {
-
-          world.camera.position.x -= 0.0025;
-        }
-        
-         break;
-    }
     
     renderer.render(world.scene, world.camera);
     world.camera.updateMatrixWorld();
@@ -325,7 +314,7 @@ async function fetchEpisode(questionText) {
       location: data.location,
     };
   } catch (error) {
-    console.error(error);
+    console.error(`fetch error:${error}`);
     // Handle error case
   }
 }
@@ -408,7 +397,7 @@ async function episode(questionText) {
  console.log(canvas.style.opacity)
 
   // begin animation
-  ktl.add(() => animate(world.location), "+=6");
+  ktl.add(() => animate('fraz'), "+=6");
 
    // fade in to kacl studio
    ktl.add(() => fadeIn(canvas), "+=0");
@@ -609,17 +598,9 @@ class World {
 
         const worldSet = gltf.scene;
 
-        switch (this.location) {
-          case 'blacktemple':
-            camBlackTemple(this.camera);
-            break;
-          
-          case 'kacl':
             worldSet.position.set(0, 0, 0)
             kaclCamRandomzier(this.camera, animateActive);
-            break;
-          
-        }
+  
 
         worldSet.traverse(function (child) {
           if (child.isMesh) {
