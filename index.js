@@ -132,7 +132,6 @@ function mainInit() {
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
-  if (animateActive) {
     setTimeout( function() {
 
      requestAnimationFrame(animate);
@@ -146,8 +145,7 @@ function animate() {
     world.camera.updateMatrixWorld();
 
     }, 1000 / 24 ); 
-  }
-}
+  };
 
 
 
@@ -374,11 +372,11 @@ async function episode(questionText) {
   canvas.style.display = 'flex';
   
   // Get theme song lengt
-  //let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
+  let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
     console.log(`theme length: ${themeLength}`);
   
     // Get monologue length
-  //let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
+  let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
     console.log(`monologue length: ${monoLength}`);
 
 
@@ -397,7 +395,7 @@ async function episode(questionText) {
  console.log(canvas.style.opacity)
 
   // begin animation
-  ktl.add(() => animate('fraz'), "+=6");
+  ktl.add(() => animate(), "+=6");
 
    // fade in to kacl studio
    ktl.add(() => fadeIn(canvas), "+=0");
@@ -583,74 +581,65 @@ class World {
   
 
   async createWorld() {
-
     // Adds audio listener to camera
-    this.camera.add( listenerKacl );
-    
+    this.camera.add(listenerKacl);
+  
     // Load Set
     fetch(frazSetGlbUrl)
-  .then(response => response.arrayBuffer())
-  .then(arrayBuffer => {
-    const glbData = new Uint8Array(arrayBuffer);
-    this.glLoader.parse(glbData, '', (gltf) => {
-      
-        this.scene.add(gltf.scene);
-
-        const worldSet = gltf.scene;
-
-            worldSet.position.set(0, 0, 0)
-            kaclCamRandomzier(this.camera, animateActive);
+      .then(response => response.arrayBuffer())
+      .then(arrayBuffer => {
+        const glbData = new Uint8Array(arrayBuffer);
+        this.glLoader.parse(glbData, '', (gltf) => {
+          this.scene.add(gltf.scene);
   
-
-        worldSet.traverse(function (child) {
-          if (child.isMesh) {
-            child.material.roughness = 1;
-          }
+          const worldSet = gltf.scene;
+          worldSet.position.set(0, 0, 0);
+          kaclCamRandomzier(this.camera, animateActive);
+  
+          worldSet.traverse(function (child) {
+            if (child.isMesh) {
+              child.material.roughness = 1;
+            }
+          });
+  
+          worldSet.traverse(function (obj) {
+            obj.frustumCulled = false;
+          });
         });
-
-        worldSet.traverse(function (obj) {
-          obj.frustumCulled = false;
-        });
-
-      }
-    )});
-
+      });
+  
+    // Add hero model
     fetch(frazGlbUrl)
-  .then(response => response.arrayBuffer())
-  .then(arrayBuffer => {
-    const glbData = new Uint8Array(arrayBuffer);
-    this.glLoader.parse(glbData, '', (gltf) => {
-        this.scene.add(gltf.scene);
-
-         gltf.scene.position.set( 0.061, 0, -0.127 );
-         gltf.scene.scale.set( 1, 1, 1 );
-         gltf.scene.rotation.set( 0 , -180 * Math.PI / 180, 0 );
-
-        const model = gltf.scene;
-
-        model.traverse(function (child) {
-          if (child.isMesh) {
-            child.material.roughness = 1;
-          }
+      .then(response => response.arrayBuffer())
+      .then(arrayBuffer => {
+        const glbData = new Uint8Array(arrayBuffer);
+        this.glLoader.parse(glbData, '', (gltf) => {
+          this.scene.add(gltf.scene);
+  
+          gltf.scene.position.set(0.061, 0, -0.127);
+          gltf.scene.scale.set(1, 1, 1);
+          gltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
+  
+          const model = gltf.scene;
+  
+          model.traverse(function (child) {
+            if (child.isMesh) {
+              child.material.roughness = 1;
+            }
+          });
+  
+          model.traverse(function (obj) {
+            obj.frustumCulled = false;
+          });
+  
+          this.mixer = new THREE.AnimationMixer(gltf.scene);
+          let clip = gltf.animations[1]; // talk animation
+  
+          const action = this.mixer.clipAction(clip);
+          action.setLoop(THREE.LoopRepeat);
+          action.play();
         });
-
-        model.traverse(function (obj) {
-          obj.frustumCulled = false;
-        });
-
-        this.mixer = new THREE.AnimationMixer(gltf.scene);
-
-        let clip;
-
-        clip = gltf.animations[1]; // talk animation
-        
-
-        const action = this.mixer.clipAction(clip);
-
-        action.setLoop(THREE.LoopRepeat);
-
-        action.play();
-      }
-    );
-  })}
+      });
+  }
+  
 };
