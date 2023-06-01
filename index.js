@@ -361,7 +361,7 @@ async function episode(questionText) {
   await world.createWorld();
 
   // Intro creation
-  await initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
+  //wait initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
   
   console.log(world)
   // Set first run as complete
@@ -376,12 +376,12 @@ async function episode(questionText) {
     console.log(`theme length: ${themeLength}`);
   
     // Get monologue length
-  let monoLength = 14; //Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
+  let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
     console.log(`monologue length: ${monoLength}`);
 
 
   // start intro logo
-  ktl.add(animLogo(), 0.5);
+  //ktl.add(animLogo(), 0.5);
 
   // fade out intro
   ktl.add(() => fadeOut(startScreen), `+=${themeLength}` );
