@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import Handlebars from 'handlebars';
 
 dotenv.config();
 
@@ -29,16 +28,10 @@ async function defaultPrompt(questionText) {
   const tokens = 900;
   const subject = questionText;
 
-  const defaultStr = Handlebars.compile(
-      "Pretend to be Dr. Frasier Crane on his radio show giving response to a calller asking about {{{subject}}}. \
+  const prompt = `Pretend to be Dr. Frasier Crane on his radio show giving response to a calller asking about ${subject}
 End the monologue with 'This is Dr. Frasier Crane signing off and wishing you good mental health' \
 Separate the title, which should be creative, and script in your response. \
-Keep your response under {{charLimit}} characters. Reply in only json with no other text");
-
-  const prompt = defaultStr({ 
-      subject: `${subject}`,
-      charLimit: charLimit
-  });
+Keep your response under ${charLimit} characters. Reply in only json with no other text`
 
 
   return {voice, world, prompt, subject, name, location, tokens, model}
