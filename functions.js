@@ -111,7 +111,6 @@ export async function credLength(audioLoader, soundCreds) {
 export async function initIntro(animationData, container, canvas) {
 
   // ------------- [ INTRO LOTTIE ] ----------------
-  const container = document.getElementById('first-time');
 
   const options = {
     container: container,
