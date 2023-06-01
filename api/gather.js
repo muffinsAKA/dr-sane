@@ -152,6 +152,7 @@ export default async (req, res) => {
       const result = await gather(questionText);
       res.setHeader('Access-Control-Allow-Credentials', true);
       res.setHeader('Access-Control-Allow-Origin', '*');
+      console.log(result);
       res.json(result);
   
   } catch (err) {
