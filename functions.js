@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import animationData from './public/intro.json';
 
 //  ------------- [ FADES ] -----------------
 
@@ -109,7 +108,7 @@ export async function credLength(audioLoader, soundCreds) {
 
 //  ------------- [ INTRO SEQUENCE ] -----------------
 
-export async function initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro) {
+export async function initIntro(animationData, camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro) {
 
   let mesh, introPlane, planeMat;
 
