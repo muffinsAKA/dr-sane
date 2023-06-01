@@ -370,7 +370,7 @@ async function episode(questionText) {
   console.log(`episode data: ${episodeData.script}`);
   
 
-  world = new World(episodeData.world, episodeData.location, episodeData.model);
+  world = new World('frasier', 'kacl', 'fraz');
   await world.createWorld();
 
   // Intro creation
@@ -436,7 +436,7 @@ async function episode(questionText) {
       }, 2650); 
 
   });
-}
+};
 
 
 class World {
