@@ -108,6 +108,8 @@ async function getScript(data) {
 
   const message = result.choices[0].message;
 
+  console.log(message);
+  
   const content = JSON.parse(message.content);
 
   const gptTitle = content.title;
