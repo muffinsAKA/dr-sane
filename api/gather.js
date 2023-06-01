@@ -111,6 +111,7 @@ async function getScript(data) {
   console.log(message);
 
   const content = JSON.parse(message.content);
+  console.log(`message content: ${message.content}`);
 
   const gptTitle = content.title;
   const gptScript = content.response;
