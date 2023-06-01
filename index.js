@@ -359,11 +359,11 @@ async function episode(questionText) {
   console.log(`episode data: ${episodeData.script}`);
   
 
-  //world = new World('frasier', 'kacl', 'fraz');
-  //await world.createWorld();
+  world = new World('frasier', 'kacl', 'fraz');
+  await world.createWorld();
 
   // Intro creation
-  //await initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
+  await initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
   
   console.log(world)
   // Set first run as complete
@@ -374,11 +374,11 @@ async function episode(questionText) {
   canvas.style.display = 'flex';
   
   // Get theme song lengt
-  let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
+  //let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
     console.log(`theme length: ${themeLength}`);
   
     // Get monologue length
-  let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
+  //let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
     console.log(`monologue length: ${monoLength}`);
 
 
