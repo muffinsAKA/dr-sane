@@ -122,8 +122,6 @@ export async function initIntro(animationData, container, canvas) {
   };
   lottie.loadAnimation(options);
   
-  canvas.style.display = 'none';
-  
 }
 
   //  ------------- [ RENDERER ] ----------------
