@@ -83,8 +83,8 @@ export async function gather(questionText) {
       world: voiceData.world,
       subject: voiceData.subject,
       model: voiceData.model,
-      location: voiceData.location
-      //audioBase64: voiceData.audioBase64
+      location: voiceData.location,
+      audioBase64: voiceData.audioBase64
     };
   } catch (error) {
     console.error(error);
