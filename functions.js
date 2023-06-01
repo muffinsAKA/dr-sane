@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import animationData from './src/intro.json';
 
 //  ------------- [ FADES ] -----------------
 
@@ -115,7 +116,7 @@ export async function initIntro(camIntro, lottieLoader, rendererIntro, canvasWid
   camIntro.position.z = 1;
 
   lottieLoader.setQuality( 4 );
-  lottieLoader.load( 'intro.json', function ( texture ) {
+  lottieLoader.load( animationData, function ( texture ) {
 
     const bgPlane = new THREE.PlaneGeometry( 10, 10 );
     const bgMat = new THREE.MeshBasicMaterial( { color:'#050505'} );
