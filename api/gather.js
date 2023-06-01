@@ -209,9 +209,13 @@ export default async (req, res) => {
 
     if (endpoint === 'gather') {
       const result = await gather(questionText);
+      res.setHeader('Access-Control-Allow-Credentials', true);
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.json(result);
 
     } else if (endpoint === 'retrieve-audio') {
+      res.setHeader('Access-Control-Allow-Credentials', true);
+      res.setHeader('Access-Control-Allow-Origin', '*');
       const audioData = await retrieveAudio();
       res.send(audioData);
 
