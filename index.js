@@ -361,7 +361,7 @@ async function episode(questionText) {
   //await world.createWorld();
 
   // Intro creation
-  //wait initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
+  await initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
   
   //console.log(world)
   // Set first run as complete
