@@ -367,7 +367,7 @@ async function episode(questionText) {
   // Get the latest episode
   episodeData = await fetchEpisode(questionText);
 
-  console.log(episodeData);
+  console.log(`episode data: ${episodeData}`);
   
 
   world = new World(episodeData.world, episodeData.location, episodeData.model);
@@ -463,7 +463,7 @@ class World {
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
               const glbData = new Uint8Array(arrayBuffer);
-              this.glLoader.parse(glbData, '', (creditsDanceGltf) => {
+              this.glLoader.parse(glbData, '', (gltf) => {
           
           video.play()
           video.loop = true;
