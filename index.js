@@ -367,7 +367,7 @@ async function episode(questionText) {
   // Get the latest episode
   episodeData = await fetchEpisode(questionText);
 
-  console.log(`episode data: ${episodeData}`);
+  console.log(`episode data: ${episodeData.script}`);
   
 
   world = new World(episodeData.world, episodeData.location, episodeData.model);
