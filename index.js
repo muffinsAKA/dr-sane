@@ -357,7 +357,7 @@ async function episode(questionText) {
   console.log(`episode data: ${episodeData.script}`);
   
 
-  world = new World('frasier', 'kacl', 'fraz');
+  world = new World();
   await world.createWorld();
 
   // Intro creation
@@ -427,10 +427,8 @@ async function episode(questionText) {
 
 
 class World {
-  constructor(worldName, location, character) {
-    this.worldName = worldName;
-    this.location = location;
-    this.character = character;
+  constructor() {
+ 
     this.camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
 
     this.glLoader = new GLTFLoader();
