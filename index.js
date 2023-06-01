@@ -359,8 +359,8 @@ async function episode(questionText) {
   console.log(`episode data: ${episodeData.script}`);
   
 
-  world = new World('frasier', 'kacl', 'fraz');
-  await world.createWorld();
+  //world = new World('frasier', 'kacl', 'fraz');
+  //await world.createWorld();
 
   // Intro creation
   //await initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
