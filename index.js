@@ -15,6 +15,7 @@ const creditsText = creditsDiv.querySelector('p')
 const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
 const question = document.getElementById('question');
+const container = document.getElementById('first-time');
 
 
 let canvasWidth = window.innerWidth * 0.5
