@@ -357,13 +357,13 @@ async function episode(questionText) {
   console.log(`episode data: ${episodeData.script}`);
   
 
-  world = new World();
-  await world.createWorld();
+  //world = new World();
+  //await world.createWorld();
 
   // Intro creation
   //wait initIntro(camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro);
   
-  console.log(world)
+  //console.log(world)
   // Set first run as complete
   firstRun = false;
 
@@ -372,12 +372,12 @@ async function episode(questionText) {
   canvas.style.display = 'flex';
   
   // Get theme song lengt
-  let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
-    console.log(`theme length: ${themeLength}`);
+  //let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
+    //console.log(`theme length: ${themeLength}`);
   
     // Get monologue length
-  let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
-    console.log(`monologue length: ${monoLength}`);
+  //let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
+    //console.log(`monologue length: ${monoLength}`);
 
 
   // start intro logo
@@ -401,7 +401,7 @@ async function episode(questionText) {
    ktl.add(() => fadeIn(canvas), "+=0");
 
   // start monologue
-  ktl.add(() => monologue(audioLoader, episodeData.audioBase64, soundKacl), "+=0");
+  //ktl.add(() => monologue(audioLoader, episodeData.audioBase64, soundKacl), "+=0");
 
  
 
@@ -411,7 +411,7 @@ async function episode(questionText) {
 
 
   // fade out post-monologue
-  ktl.add(() => fadeOut(canvas), `+=${monoLength}`);
+  //ktl.add(() => fadeOut(canvas), `+=${monoLength}`);
 
   // Play timeline and call credits 2.55s seconds after its over (2.5s on fadeout so cant do it right away)
   // ktl.play().eventCallback("onComplete", () => {
