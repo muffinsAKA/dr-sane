@@ -381,7 +381,7 @@ async function episode(questionText) {
   canvas.style.display = 'flex';
   
   // Get theme song lengt
-  //let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
+  let themeLength = 8;//Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
     //console.log(`theme length: ${themeLength}`);
   
     // Get monologue length
@@ -393,7 +393,7 @@ async function episode(questionText) {
   //ktl.add(animLogo(), 0.5);
 
   // fade out intro
-  //ktl.add(() => fadeOut(startScreen), `+=${themeLength}` );
+  ktl.add(() => fadeOut(startScreen), `+=${themeLength}` );
   
   // create title card
   ktl.add(() => titleCard(episodeData.title), "+=0");
