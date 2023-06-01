@@ -90,7 +90,7 @@ export async function gather(questionText) {
     console.error(error);
     throw error;
   }
-}
+};
 
 
 async function getScript(data) {
@@ -107,14 +107,10 @@ async function getScript(data) {
   const result = await response.json();
 
   const message = result.choices[0].message;
-
-  console.log(message);
-
   const content = JSON.parse(message.content);
-  console.log(`message content: ${message.content}`);
 
   const gptTitle = content.title;
-  const gptScript = content.response;
+  const gptScript = content.script;
 
   console.log(`title: ${gptTitle}, script: ${gptScript}`)
 
