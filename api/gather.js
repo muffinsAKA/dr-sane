@@ -63,6 +63,8 @@ export async function gather(questionText) {
   try {
     const { gptTitle, gptScript } = await getScript(data);
 
+    console.log(`script check: ${gptScript}`)
+
     const gptHandoff = {
       "text": `${gptScript}`,
       "voice_settings": {
@@ -82,7 +84,7 @@ export async function gather(questionText) {
       subject,
       model,
       location,
-      audioBase64: voiceData.audioBase64
+      //audioBase64: voiceData.audioBase64
     };
   } catch (error) {
     console.error(error);
