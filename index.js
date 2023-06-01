@@ -319,7 +319,7 @@ async function fetchEpisode(questionText) {
       audio: data.audioBase64,
       theme: themeData,
       voice: data.voice,
-      world: data.world,
+      world: 'fraz',
       model: data.model,
       location: data.location,
     };
