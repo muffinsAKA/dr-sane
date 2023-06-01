@@ -426,17 +426,17 @@ async function episode(questionText) {
 }
 
 
-class World {
-  constructor() {
+// class World {
+//   constructor() {
  
-    this.camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
+//     this.camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
 
-    this.glLoader = new GLTFLoader();
+//     this.glLoader = new GLTFLoader();
     
-    this.scene = new THREE.Scene();
+//     this.scene = new THREE.Scene();
     
-    this.mixer = null;
-  }
+//     this.mixer = null;
+//   }
 
   // async createCreditsWorld() {
 
@@ -578,66 +578,66 @@ class World {
   
   
 
-  async createWorld() {
-    // Adds audio listener to camera
-    this.camera.add(listenerKacl);
+//   async createWorld() {
+//     // Adds audio listener to camera
+//     this.camera.add(listenerKacl);
   
-    // Load Set
-    fetch(frazSetGlbUrl)
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => {
-        const glbData = new Uint8Array(arrayBuffer);
-        this.glLoader.parse(glbData, '', (gltf) => {
-          this.scene.add(gltf.scene);
+//     // Load Set
+//     fetch(frazSetGlbUrl)
+//       .then(response => response.arrayBuffer())
+//       .then(arrayBuffer => {
+//         const glbData = new Uint8Array(arrayBuffer);
+//         this.glLoader.parse(glbData, '', (gltf) => {
+//           this.scene.add(gltf.scene);
   
-          const worldSet = gltf.scene;
-          worldSet.position.set(0, 0, 0);
-          kaclCamRandomzier(this.camera, animateActive);
+//           const worldSet = gltf.scene;
+//           worldSet.position.set(0, 0, 0);
+//           kaclCamRandomzier(this.camera, animateActive);
   
-          worldSet.traverse(function (child) {
-            if (child.isMesh) {
-              child.material.roughness = 1;
-            }
-          });
+//           worldSet.traverse(function (child) {
+//             if (child.isMesh) {
+//               child.material.roughness = 1;
+//             }
+//           });
   
-          worldSet.traverse(function (obj) {
-            obj.frustumCulled = false;
-          });
-        });
-      });
+//           worldSet.traverse(function (obj) {
+//             obj.frustumCulled = false;
+//           });
+//         });
+//       });
   
-    // Add hero model
-    fetch(frazGlbUrl)
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => {
-        const glbData = new Uint8Array(arrayBuffer);
-        this.glLoader.parse(glbData, '', (gltf) => {
-          this.scene.add(gltf.scene);
+//     // Add hero model
+//     fetch(frazGlbUrl)
+//       .then(response => response.arrayBuffer())
+//       .then(arrayBuffer => {
+//         const glbData = new Uint8Array(arrayBuffer);
+//         this.glLoader.parse(glbData, '', (gltf) => {
+//           this.scene.add(gltf.scene);
   
-          gltf.scene.position.set(0.061, 0, -0.127);
-          gltf.scene.scale.set(1, 1, 1);
-          gltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
+//           gltf.scene.position.set(0.061, 0, -0.127);
+//           gltf.scene.scale.set(1, 1, 1);
+//           gltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
   
-          const model = gltf.scene;
+//           const model = gltf.scene;
   
-          model.traverse(function (child) {
-            if (child.isMesh) {
-              child.material.roughness = 1;
-            }
-          });
+//           model.traverse(function (child) {
+//             if (child.isMesh) {
+//               child.material.roughness = 1;
+//             }
+//           });
   
-          model.traverse(function (obj) {
-            obj.frustumCulled = false;
-          });
+//           model.traverse(function (obj) {
+//             obj.frustumCulled = false;
+//           });
   
-          this.mixer = new THREE.AnimationMixer(gltf.scene);
-          let clip = gltf.animations[1]; // talk animation
+//           this.mixer = new THREE.AnimationMixer(gltf.scene);
+//           let clip = gltf.animations[1]; // talk animation
   
-          const action = this.mixer.clipAction(clip);
-          action.setLoop(THREE.LoopRepeat);
-          action.play();
-        });
-      });
-  }
+//           const action = this.mixer.clipAction(clip);
+//           action.setLoop(THREE.LoopRepeat);
+//           action.play();
+//         });
+//       });
+//   }
   
-};
+// };
