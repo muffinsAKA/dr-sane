@@ -303,8 +303,8 @@ async function animLogo() {
 //  ------------- [ GET LATEST EP ] -----------------
 
 async function fetchEpisode(questionText) {
-  const apiUrl = `https://frasier.muffins.zone/api?endpoint=gather&question=${encodeURIComponent(questionText)}`;
-  const themeUrl = `https://frasier.muffins.zone/api?endpoint=retrieve-audio`
+  const apiUrl = `https://frasier.muffins.zone/api/?endpoint=gather&question=${encodeURIComponent(questionText)}`;
+  const themeUrl = `https://frasier.muffins.zone/api/?endpoint=retrieve-audio`
   console.log(questionText);
   try {
     const response = await fetch(apiUrl);
