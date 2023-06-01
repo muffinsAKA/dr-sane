@@ -1,7 +1,5 @@
 {
     "functions": {
-      "directory": {
-        "path": "api"
-      }
+      "directory": "api"
     }
   }
