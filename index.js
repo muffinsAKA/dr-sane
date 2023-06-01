@@ -365,7 +365,7 @@ async function episode(questionText) {
   };
   
   // Get the latest episode
-  await fetchEpisode(questionText).then(data => episodeData = data);
+  episodeData = await fetchEpisode(questionText);
 
   console.log(episodeData);
   
