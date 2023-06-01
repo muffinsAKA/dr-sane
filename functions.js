@@ -106,23 +106,6 @@ export async function credLength(audioLoader, soundCreds) {
 
 }
 
-//  ------------- [ INTRO SEQUENCE ] -----------------
-
-export async function initIntro(animationData, container, canvas) {
-
-  // ------------- [ INTRO LOTTIE ] ----------------
-
-  const options = {
-    container: container,
-    renderer: 'svg',
-    loop: false,
-    autoplay: true,
-    transparent: true,
-    animationData: animationData
-  };
-  lottie.loadAnimation(options);
-  
-}
 
   //  ------------- [ RENDERER ] ----------------
 export async function setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight) {

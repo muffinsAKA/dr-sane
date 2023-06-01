@@ -137,6 +137,20 @@ function animate() {
   };
 
 
+function initIntro() {
+  const container = document.getElementById('first-time');
+
+  const options = {
+      container: container,
+      renderer: 'svg',
+      loop: false,
+      autoplay: true,
+      transparent: true,
+      animationData: animationData
+  };
+
+  lottie.loadAnimation(options);
+}
 
 //  ------------- [ RESIZE ] -----------------
 async function adjustSize() {
@@ -360,7 +374,7 @@ async function episode(questionText) {
   //await world.createWorld();
 
   // Intro creation
-  await initIntro(animationData, container, canvas);
+  initIntro(animationData, container, canvas);
   
   //console.log(world)
   // Set first run as complete
