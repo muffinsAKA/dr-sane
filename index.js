@@ -358,11 +358,11 @@ async function resetScene() {
 async function episode(questionText) {
 
   // Set variables if not first run
-  if (firstRun === false) {
+  // if (firstRun === false) {
 
-   await resetScene();
+  //  await resetScene();
 
-  };
+  // };
   
   // Get the latest episode
   episodeData = await fetchEpisode(questionText);
