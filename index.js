@@ -104,9 +104,6 @@ function mainInit() {
   question.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       // Hide start screen
-      const firstTime = document.getElementById('first-time');
-      firstTime.style.display = 'none';
-      firstTime.style.opacity = 0;
       question.style.opacity = 0;
       const questionText = question.value;
       question.value = '';
@@ -118,6 +115,32 @@ function mainInit() {
   // Add listener for window resizing to adjust size/camera
   window.addEventListener('resize', adjustSize);
 
+
+  question.addEventListener("focus", function() {
+    
+    const border = document.getElementById('border')
+    border.style.opacity = 1;
+    question.classList.add("fade");
+
+    setTimeout(() => {
+      question.placeholder = "What's your question, caller?";
+      question.classList.remove("fade");
+    }, 1000);
+
+    
+    
+  });
+    
+  document.addEventListener("click", function(event) {
+    if (event.target !== question) {
+      question.classList.add("fade");
+      border.style.opacity = 0;
+      setTimeout(() => {
+        question.placeholder = "I'm listening";
+        question.classList.remove("fade");
+      }, 1000);
+    }
+  });
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
@@ -138,7 +161,6 @@ function animate() {
 
 
 function initIntro() {
-  const container = document.getElementById('first-time');
 
   const options = {
       container: container,
@@ -150,6 +172,9 @@ function initIntro() {
   };
 
   lottie.loadAnimation(options);
+
+  firstTime.style.opacity = 1;
+  firstTime.style.display = flex;
 }
 
 //  ------------- [ RESIZE ] -----------------
