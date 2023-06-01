@@ -365,7 +365,6 @@ async function episode(questionText) {
   
   //console.log(world)
   // Set first run as complete
-  firstRun = false;
 
   // Show player canvas
   startScreen.style.opacity = 1;
@@ -384,18 +383,16 @@ async function episode(questionText) {
   //ktl.add(animLogo(), 0.5);
 
   // fade out intro
-  ktl.add(() => fadeOut(startScreen), `+=${themeLength}` );
+  //ktl.add(() => fadeOut(startScreen), `+=${themeLength}` );
   
   // create title card
   ktl.add(() => titleCard(episodeData.title), "+=0");
 
    // fade in title card
   ktl.add(() => titleFade(titleDiv), "+=2");
-  
- console.log(canvas.style.opacity)
 
   // begin animation
-  ktl.add(() => animate(), "+=6");
+  //ktl.add(() => animate(), "+=6");
 
    // fade in to kacl studio
    ktl.add(() => fadeIn(canvas), "+=0");
