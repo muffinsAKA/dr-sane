@@ -304,12 +304,12 @@ async function animLogo() {
 
 async function fetchEpisode(questionText) {
   const apiUrl = `https://frasier.muffins.zone/api/gather?questionText=${encodeURIComponent(questionText)}`;
-  const themeUrl = `https://frasier.muffins.zone/api/retrieve-audio`
+  const themeUrl = `https://frasier.muffins.zone/api/retrieve-audio`;
   console.log(questionText);
   try {
     const response = await fetch(apiUrl);
     const responseTheme = await fetch(themeUrl);
-        
+
     const data = await response.json();
     const themeData = await responseTheme.text();
 
@@ -328,7 +328,6 @@ async function fetchEpisode(questionText) {
     // Handle error case
   }
 }
-
 
 //  ------------- [ CLEAR SCENE ] -----------------
 
@@ -436,7 +435,7 @@ async function episode(questionText) {
       }, 2650); 
 
   });
-};
+}
 
 
 class World {
