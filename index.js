@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { LottieLoader } from 'three/addons/loaders/LottieLoader';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import animationData from './public/intro.json';
+import animationData from './src/intro.json';
 import { camBlackTemple, kaclCamRandomzier } from './cams.js';
 import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, setRenderer, titleFade } from './functions.js';
 
@@ -16,6 +16,7 @@ const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
 const question = document.getElementById('question');
 const container = document.getElementById('first-time');
+const waitingDiv = document.getElementById("waiting");
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -91,6 +92,10 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+let inputCount = 0;
+let userName;
+
+
 function mainInit() {
 
   setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
@@ -101,46 +106,105 @@ function mainInit() {
   // Hide player canvas initially
   canvas.style.display = 'none';
   
-  question.addEventListener('keydown', (event) => {
+  const handleEnterKey = (event) => {
     if (event.key === 'Enter') {
-      // Hide start screen
-      question.style.opacity = 0;
-      const questionText = question.value;
-      question.value = '';
-      episode(questionText);
+  
+      if (inputCount === 0) {
+  
+        question.style.opacity = 0;
+        inputCount++;
+        userName = question.value;
+        question.placeholder = '';
+
+        console.log(`input count === 1: ${inputCount}`);
+  
+        setTimeout(() => {
+          question.style.opacity = 1;
+          question.placeholder = `What's your question, ${userName}?`;
+        }, 1500);
+        
+        question.value = '';
+  
+      } else if (inputCount === 1) {
+
+        const questionText = question.value;
+        
+        console.log(questionText, userName);
+
+        inputCount++;
+        
+        console.log(`input count === 2: ${inputCount}`);
+        
+        question.value = '';
+        question.placeholder = '';
+        question.style.opacity = 0;
+        
+        setTimeout(() => {
+          waitingDiv.style.opacity = 1;
+        }, 2000)
+
+        // episode(questionText, userName);
+      }
     }
-  });
-}
+  };
 
   // Add listener for window resizing to adjust size/camera
   window.addEventListener('resize', adjustSize);
 
 
-  question.addEventListener("focus", function() {
+  const handleQuestionFocus = () => {
     
     const border = document.getElementById('border')
     border.style.opacity = 1;
     question.classList.add("fade");
 
-    setTimeout(() => {
-      question.placeholder = "What's your question, caller?";
-      question.classList.remove("fade");
-    }, 1000);
+    
+      if ( inputCount === 0 ) {
+        setTimeout(() => {
+        question.placeholder = "What's your name, caller?";
+        question.classList.remove("fade");
+      }, 1000);
 
-    
-    
-  });
-    
-  document.addEventListener("click", function(event) {
-    if (event.target !== question) {
-      question.classList.add("fade");
-      border.style.opacity = 0;
-      setTimeout(() => {
-        question.placeholder = "I'm listening";
+      } else if ( inputCount === 1) {
+        setTimeout(() => {
+        question.placeholder = `What's your question, ${userName}`;
         question.classList.remove("fade");
       }, 1000);
     }
-  });
+
+      if (inputCount > 1) {
+        question.placeholder = '';
+        question.classList.add("fade");
+        question.style.opacity = 0;
+      }
+    
+  
+  };
+    
+  const handleFocusOut = () => {
+   
+      question.classList.add("fade");
+      border.style.opacity = 0;
+
+      if (inputCount <= 1) {
+      setTimeout(() => {
+        question.placeholder = "I'm listening.";
+        question.classList.remove("fade");
+      }, 1000);
+
+    } else if (inputCount > 1) {
+      question.placeholder = '';
+      question.style.opacity = 0;
+      question.classList.add("fade")
+    }
+    }
+
+    
+  question.addEventListener('keydown', handleEnterKey);
+  question.addEventListener('focus', handleQuestionFocus);
+  document.addEventListener('focusout', handleFocusOut);
+
+  };
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
