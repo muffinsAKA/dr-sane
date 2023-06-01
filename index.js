@@ -313,6 +313,7 @@ async function fetchEpisode(questionText) {
     const data = await response.json();
     const themeData = await responseTheme.text();
 
+    console.log(`gptScript: ${data.gptScript}`)
     return {
       title: data.gptTitle,
       script: data.gptScript,

@@ -48,7 +48,7 @@ export async function gather(questionText) {
 
   const promptInfo = await defaultPrompt(questionText);
 
-  console.log(`promptInfo: ${promptInfo}`)
+  console.log(`promptInfo: ${promptInfo.prompt}`)
 
   const voice = promptInfo.voice;
   const subject = promptInfo.subject;
