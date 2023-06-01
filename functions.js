@@ -108,31 +108,20 @@ export async function credLength(audioLoader, soundCreds) {
 
 //  ------------- [ INTRO SEQUENCE ] -----------------
 
-export async function initIntro(animationData, camIntro, lottieLoader, rendererIntro, canvasWidth, canvasHeight, canvas, intro) {
+export async function initIntro(animationData, container, canvas) {
 
-  let mesh, introPlane, planeMat;
+  // ------------- [ INTRO LOTTIE ] ----------------
+  const container = document.getElementById('first-time');
 
-  camIntro.position.z = 1;
-
-  lottieLoader.setQuality( 4 );
-  lottieLoader.load( animationData, function ( texture ) {
-
-    const bgPlane = new THREE.PlaneGeometry( 10, 10 );
-    const bgMat = new THREE.MeshBasicMaterial( { color:'#050505'} );
-    const bgMesh = new THREE.Mesh( bgPlane, bgMat);
-
-    introPlane = new THREE.PlaneGeometry( 1, 1 );
-    planeMat = new THREE.MeshBasicMaterial( { map: texture, transparent: true } );
-    mesh = new THREE.Mesh( introPlane, planeMat );
-    intro.add( mesh );
-    intro.add( bgMesh );
-
-    bgMesh.position.z = -3;
-
-  });
-  
-  rendererIntro.setPixelRatio( window.devicePixelRatio );
-  rendererIntro.setSize( canvasWidth, canvasHeight );
+  const options = {
+    container: container,
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    transparent: true,
+    animationData: animationData
+  };
+  lottie.loadAnimation(options);
   
   canvas.style.display = 'none';
   
