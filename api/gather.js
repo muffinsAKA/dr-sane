@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
-import AWS from 'aws-sdk';
-import fetch from 'node-fetch';
+import Handlebars from 'handlebars';
 
 dotenv.config();
 
@@ -17,11 +16,6 @@ const elevenHeader = {
   'xi-api-key': elevenKey,
   'Content-Type': 'application/json'
 };
-
-AWS.config.update({
-  accessKeyId: process.env.s3access,
-  secretAccessKey: process.env.s3secret,
-});
 
 
 async function defaultPrompt(questionText) {
@@ -151,75 +145,15 @@ async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, 
   }
 }
 
-export async function retrieveAudio() {
-  try {
-    const bucketName = 'muffinsaka';
-    const audioFiles = [
-      'theme1.mp3',
-      'theme2.mp3',
-      'theme3.mp3',
-      'theme4.mp3',
-      'theme5.mp3',
-      'theme6.mp3',
-      'theme7.mp3',
-      'theme8.mp3',
-      'theme9.mp3',
-      'theme10.mp3',
-      'theme11.mp3',
-      'theme12.mp3',
-      'theme13.mp3',
-      'theme14.mp3',
-      'theme15.mp3',
-      'theme16.mp3',
-      'theme17.mp3',
-      'theme18.mp3',
-      'theme19.mp3',
-      'theme20.mp3',
-      'theme21.mp3'
-    ];
-
-    // Select a random audio file
-    const randomIndex = Math.floor(Math.random() * audioFiles.length);
-    const selectedAudioFile = audioFiles[randomIndex];
-
-    // Set the appropriate S3 bucket name and file key
-    const fileKey = selectedAudioFile;
-
-    // Get the object from S3
-    const s3Params = {
-      Bucket: bucketName,
-      Key: fileKey,
-    };
-
-    const s3Object = await s3.getObject(s3Params).promise();
-
-    // Retrieve the audio data as a base64 string
-    const audioData = s3Object.Body.toString('base64');
-
-    return audioData;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
 export default async (req, res) => {
   try {
-    const { endpoint, questionText } = req.query;
+    const { questionText } = req.query;
 
-    if (endpoint === 'gather') {
       const result = await gather(questionText);
       res.setHeader('Access-Control-Allow-Credentials', true);
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.json(result);
-    } else if (endpoint === 'retrieve-audio') {
-      res.setHeader('Access-Control-Allow-Credentials', true);
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      const audioData = await retrieveAudio();
-      res.send(audioData);
-    } else {
-      res.status(404).json({ error: 'Invalid endpoint' });
-    }
+  
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'An error occurred.' });
