@@ -458,7 +458,7 @@ async function episode(questionText, name) {
   // Intro creation
 
   
-  console.log(`world: ${world}`)
+  console.log(`world: ${world.scene}`)
   // Set first run as complete
 
   // Show player canvas
