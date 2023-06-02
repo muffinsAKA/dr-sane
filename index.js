@@ -92,7 +92,7 @@ async function resetScene() {
 
   firstTime.style.opacity = 1;
   canvas.style.opacity = 0;
-  question.maxLength = 20;
+  question.maxLength = 30;
   border.style.opacity = 0;
 
   animateActive = true;
@@ -149,7 +149,7 @@ async function mainInit() {
         question.placeholder = '';
 
         setTimeout(() => {
-          question.maxLength = 80;
+          question.maxLength = 100;
           question.style.opacity = 1;
           question.placeholder = `What's your question, ${userName}?`;
         }, 1500);
@@ -208,7 +208,11 @@ async function mainInit() {
     
   
   };
-    
+
+  const handleTyping = () => {
+    question.style.textAlign = 'center'
+  };
+
   const handleFocusOut = () => {
    
       question.classList.add("fade");
@@ -228,12 +232,14 @@ async function mainInit() {
     }
 
     const removeEventListeners = () => {
+      //question.removeEventListener('input', handleTyping);
       question.removeEventListener('keydown', handleEnterKey);
       question.removeEventListener('focus', handleQuestionFocus);
       document.removeEventListener('keydown', handleEnterKey);
       document.removeEventListener('focusout', handleFocusOut);
     };
     
+  //question.addEventListener('input', handleTyping);
   question.addEventListener('keydown', handleEnterKey);
   question.addEventListener('focus', handleQuestionFocus);
   document.addEventListener('focusout', handleFocusOut);
