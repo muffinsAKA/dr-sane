@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import animationData from './src/intro.json';
 import { kaclCamRandomzier } from './cams.js';
 import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, setRenderer, titleFade } from './functions.js';
+import VimeoPlayer from '@vimeo/player';
 
 //  ------------- [ DOM ELEMENTS ] -----------------
 const firstTime = document.getElementById('first-time');
@@ -452,8 +453,7 @@ async function fetchEpisode(questionText, userName) {
 
 async function episode(questionText, name) {
 
-  question.blur();
-  
+
   // Get the latest episode
   episodeData = await fetchEpisode(questionText, userName);
 
@@ -537,18 +537,27 @@ class World {
     switch (world.location) {
       
       case 'creditsFall':
-        fetch('https://muffinsaka.s3.amazonaws.com/blues.mp4')
-  .then(response => response.blob())
-  .then(blob => {
-    const videoUrl = URL.createObjectURL(blob);
+
+      const vimeoPlayer = new Vimeo.Player('vimeo-player', {
+        id: '832786463',
+        autoplay: false,
+        controls: false,
+        loop: true,
+        responsive: true,
+      });
+
+      vimeoPlayer.getVideoUrl().then(videoUrl => {
+        const video = document.createElement('video');
+        video.src = videoUrl;
+        video.crossOrigin = 'anonymous';
+        video.play();
+        video.loop = true;
+        video.muted = true;
+
         this.glLoader.load(
           `${creditsFall}`,
           (gltf) => {
           
-            video.src = videoUrl;
-            video.play();
-            video.loop = true;
-            video.muted = true;
 
           this.scene.add(gltf.scene);
     
