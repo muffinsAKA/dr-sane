@@ -115,19 +115,20 @@ window.addEventListener('DOMContentLoaded', () => {
   mainInit();
 });
 
-  // Set variables if not first run
-  if (firstRun === false) {
-
-    await resetScene();
-  
-    };
 
 // Intro flow vars
 let inputCount = 0;
 let userName;
 
 
-function mainInit() {
+async function mainInit() {
+
+    // Set variables if not first run
+    if (firstRun === false) {
+
+      await resetScene();
+    
+      };
 
   setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
 
