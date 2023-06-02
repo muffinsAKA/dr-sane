@@ -82,6 +82,28 @@ const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 let renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 let rendererCredits = new THREE.WebGLRenderer({canvas, antialias: true});
 
+//  ------------- [ CLEAR SCENE ] -----------------
+
+async function resetScene() {
+  
+  // clear Timelines
+  ctl.clear();
+  ktl.clear();
+
+  firstTime.style.opacity = 1;
+  canvas.style.opacity = 0;
+  question.maxLength = 20;
+  border.style.opacity = 0;
+
+  animateActive = true;
+  creditsAnimateActive = false;
+  animateIntro = true;
+
+  // dispose of scene and recreate
+   world = null;
+   location.reload();
+
+}
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 
@@ -89,6 +111,12 @@ window.addEventListener('DOMContentLoaded', () => {
   mainInit();
 });
 
+  // Set variables if not first run
+  if (firstRun === false) {
+
+    await resetScene();
+  
+    };
 
 // Intro flow vars
 let inputCount = 0;
@@ -344,7 +372,7 @@ async function createCredits() {
   ctl.add(() => creditsDiv.style.display = "none", creditsLength - 2 );
 
   // start next episode
-  ctl.add(episode, creditsLength + 2);
+  ctl.add(mainInit(), creditsLength + 2);
   
   // Play timline
   ctl.play();
@@ -398,39 +426,11 @@ async function fetchEpisode(questionText, userName) {
   }
 }
 
-//  ------------- [ CLEAR SCENE ] -----------------
-
-async function resetScene() {
-  
-    // clear Timelines
-    ctl.clear();
-    ktl.clear();
-
-    firstTime.style.opacity = 1;
-    canvas.style.opacity = 0;
-    question.maxLength = 20;
-
-    animateActive = true;
-    creditsAnimateActive = false;
-    animateIntro = true;
-
-    // dispose of scene and recreate
-     intro = null;
-     world = null;
-
-     intro = new THREE.Scene();
-  }
 
 //  ------------- [ EPISODE LOOP ] -----------------
 
 async function episode(questionText, name) {
 
-  // Set variables if not first run
-  if (firstRun === false) {
-
-  await resetScene();
-
-  };
   
   // Get the latest episode
   episodeData = await fetchEpisode(questionText, userName);
