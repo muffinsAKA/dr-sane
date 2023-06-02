@@ -71,7 +71,8 @@ export async function credLength(audioLoader, soundCreds) {
   // Get audio duration
   const credAudioPromise = new Promise((resolve, reject) => {
     audioLoader.load(audioUrl, (buffer) => {
-      // Resolve with the audio duration
+      
+      console.log(`buffer duration: ${buffer.duration}`)
       resolve(buffer.duration);
     }, undefined, reject);
   });
