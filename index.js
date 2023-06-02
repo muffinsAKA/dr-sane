@@ -113,6 +113,9 @@ async function resetScene() {
   question.style.width = "7vw";
   question.style.textAlign = "left";
   question.style.fontSize = "24px";
+  question.placeholder = "I'm listening."
+  question.style.opacity = 1;
+  
 }
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
