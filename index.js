@@ -482,7 +482,7 @@ async function episode(questionText, name) {
   // start intro logo
     await fakeLoad()
 
-      // Get theme song length
+  // Get theme song length
   let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
   console.log(`theme length: ${themeLength}`);
   
@@ -510,7 +510,7 @@ async function episode(questionText, name) {
    ktl.add(() => fadeIn(canvas), "+=0");
 
   // start monologue
-  ktl.add(() => monologue(audioLoader, episodeData.audioBase64, soundKacl), "+=0");
+  ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
 
  
   // fade out post-monologue
