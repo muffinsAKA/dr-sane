@@ -459,7 +459,7 @@ async function episode(questionText, name) {
   console.log(`theme length: ${themeLength}`);
   
     // Get monologue length
-  let monoLength = Math.ceil(await monologueLength(episodeData.audioBase64)) -0.5;
+  let monoLength = Math.ceil(await monologueLength(episodeData.audio)) -0.5;
   console.log(`monologue length: ${monoLength}`);
 
   border.style.opacity = 1;
