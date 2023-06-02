@@ -97,10 +97,8 @@ async function resetScene() {
 
   animateActive = true;
   creditsAnimateActive = false;
-  animateIntro = true;
 
   // dispose of scene and recreate
-   world = null;
    inputCount = 0;
    userName = null;
    episodeData = null;
