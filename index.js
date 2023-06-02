@@ -288,7 +288,7 @@ async function createCredits() {
   let creditsLength = await credLength(audioLoader, soundKacl);
   console.log(creditsLength)
   
-  // animateActive = false;  //this was previously used to flag the credits had started in order to stop the main animate function, since the credits scene used to use a different canvas/renderer
+  //animateActive = false;  //this was previously used to flag the credits had started in order to stop the main animate function, since the credits scene used to use a different canvas/renderer
   
   // tbh not sure if this is needed but why fuck with it
   creditsDiv.style.display = "flex";
@@ -503,7 +503,11 @@ async function episode(questionText, name) {
 
 
 class World {
-  constructor() {
+  constructor(worldName, location, character) {
+
+    this.worldName = worldName;
+    this.location = location;
+    this.character = character;
  
     this.camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
 
