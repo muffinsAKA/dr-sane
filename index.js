@@ -116,6 +116,7 @@ function mainInit() {
         question.placeholder = '';
 
         setTimeout(() => {
+          question.maxLength = 80;
           question.style.opacity = 1;
           question.placeholder = `What's your question, ${userName}?`;
         }, 1500);
@@ -210,6 +211,7 @@ function mainInit() {
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
+  if (animateActive) {
     setTimeout( function() {
 
      requestAnimationFrame(animate);
@@ -221,6 +223,7 @@ function animate() {
     world.camera.updateMatrixWorld();
 
     }, 1000 / 60 ); 
+  }
   };
 
 
@@ -405,6 +408,7 @@ async function resetScene() {
 
     firstTime.style.opacity = 1;
     canvas.style.opacity = 0;
+    question.maxLength = 20;
 
     animateActive = true;
     creditsAnimateActive = false;
