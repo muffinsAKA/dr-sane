@@ -104,7 +104,7 @@ async function resetScene() {
    inputCount = 0;
    userName = null;
    episodeData = null;
-   location.reload();
+   //location.reload();
 
 
 }
