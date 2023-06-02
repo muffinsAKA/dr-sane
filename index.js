@@ -538,94 +538,70 @@ class World {
   }
 
   async createCreditsWorld() {
+  // Load Set
+  switch (world.location) {
+    case 'creditsFall':
+      video.src = '/src/loop.gif';
+      video.play();
+      video.loop = true;
+      video.muted = true;
 
-    // Load Set
-    switch (world.location) {
-      
-      case 'creditsFall':
+      this.glLoader.load(`${creditsFall}`, (gltf) => {
+        this.scene.add(gltf.scene);
 
-      const vimeoPlayer = new Vimeo.Player('vimeo-player', {
-        id: '832786463',
-        autoplay: false,
-        controls: false,
-        loop: true,
-        responsive: true,
-      });
+        let clip, cone, texture;
 
-      vimeoPlayer.getVideoUrl().then(videoUrl => {
-        const video = document.createElement('video');
-        video.src = videoUrl;
-        video.crossOrigin = 'anonymous';
-        video.play();
-        video.loop = true;
-        video.muted = true;
+        clip = gltf.animations[0];
 
-        this.glLoader.load(
-          `${creditsFall}`,
-          (gltf) => {
-          
+        this.mixer = new THREE.AnimationMixer(gltf.scene);
 
-          this.scene.add(gltf.scene);
-    
-          let clip, cone, texture;
-    
-          clip = gltf.animations[0]
-    
-          this.mixer = new THREE.AnimationMixer(gltf.scene);
-    
-          const action = this.mixer.clipAction(clip);
-          
-          action.setLoop(THREE.LoopRepeat);
-    
-          action.play();
-    
-          cone = gltf.scene.children[0].children[0]
-    
-          texture = new THREE.VideoTexture(video);
-    
-          texture.repeat.y = -1;
-    
-          const material = new THREE.MeshStandardMaterial({ map: texture, color: 0x5E1327, emissive: texture, emissiveMap: texture });
-          
-          cone.material = material;
-    
-          cone.material.emissiveIntensity = 3;
+        const action = this.mixer.clipAction(clip);
 
-          this.camera.position.set(0, 6.25 , 0.5);
-          this.camera.rotation.x = -1.5;
+        action.setLoop(THREE.LoopRepeat);
 
-          function animateCreds(scene, camera, mixer) {
-            if (creditsAnimateActive === true) {
-              requestAnimationFrame(animate)
-            
-              const delta = clock.getDelta();
-            
-              mixer.update( delta );
-              cone.rotation.y += 0.01;
-              texture.needsUpdate = true;
-              renderer.render(scene, camera)
-            
-            
-            } else {
+        action.play();
 
-              return;
+        cone = gltf.scene.children[0].children[0];
 
-            }
-          
-            
-        }
-          
-          animateCreds(this.scene, this.camera, this.mixer);
-        
-         });
-        })
-        .catch(error => {
-          console.error('Error loading video:', error);
+        texture = new THREE.VideoTexture(video);
+
+        texture.repeat.y = -1;
+
+        const material = new THREE.MeshStandardMaterial({
+          map: texture,
+          color: 0x5E1327,
+          emissive: texture,
+          emissiveMap: texture,
         });
 
-          break;
+        cone.material = material;
 
-         case 'creditsDance':
+        cone.material.emissiveIntensity = 3;
+
+        this.camera.position.set(0, 6.25, 0.5);
+        this.camera.rotation.x = -1.5;
+
+        function animateCreds(scene, camera, mixer) {
+          if (creditsAnimateActive === true) {
+            requestAnimationFrame(animateCreds);
+
+            const delta = clock.getDelta();
+
+            mixer.update(delta);
+            cone.rotation.y += 0.01;
+            texture.needsUpdate = true;
+            renderer.render(scene, camera);
+          } else {
+            return;
+          }
+        }
+
+        animateCreds(this.scene, this.camera, this.mixer);
+      });
+
+      break;
+  
+      case 'creditsDance':
 
          this.glLoader.load(
           `${creditsDance}`,
