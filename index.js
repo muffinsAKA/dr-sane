@@ -685,7 +685,9 @@ class World {
       const setGlbData = new Uint8Array(setArrayBuffer);
       const setGltf = await this.glLoader.parseAsync(setGlbData);
       this.scene.add(setGltf.scene);
-  
+
+      console.log('Set GLTF:', setGltf);
+
       const worldSet = setGltf.scene;
       worldSet.position.set(0, 0, 0);
       kaclCamRandomzier(this.camera, animateActive);
@@ -706,7 +708,9 @@ class World {
       const modelGlbData = new Uint8Array(modelArrayBuffer);
       const modelGltf = await this.glLoader.parseAsync(modelGlbData);
       this.scene.add(modelGltf.scene);
-  
+
+    console.log('Model GLTF:', modelGltf);
+    
       modelGltf.scene.position.set(0.061, 0, -0.127);
       modelGltf.scene.scale.set(1, 1, 1);
       modelGltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
