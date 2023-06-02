@@ -36,6 +36,7 @@ let mixer;
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
+let lottieIntroInstance = null;
 
 
 //  ------------- [ GLOBAL OBJS ] -----------------
@@ -92,18 +93,26 @@ async function resetScene() {
 
   firstTime.style.opacity = 1;
   canvas.style.opacity = 0;
-  question.maxLength = 30;
+
   border.style.opacity = 0;
+  creditsDiv.style.opacity = 1;
+  waitingDiv.style.opacity = 0;
 
   animateActive = true;
   creditsAnimateActive = false;
 
   // dispose of scene and recreate
-   inputCount = 0;
-   userName = null;
-   episodeData = null;
+  inputCount = 0;
+  userName = null;
+  episodeData = null;
+  lottieIntroInstance.destroy();
+  lottieIntroInstance = null;
 
-
+  question.maxLength = 30;
+  question.style.height = "5vh";
+  question.style.width = "7vw";
+  question.style.textAlign = "left";
+  question.style.fontSize = "24px";
 }
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
@@ -266,29 +275,28 @@ function animate() {
 function initIntro(theme) {
 
   const options = {
-      container: container,
-      renderer: 'svg',
-      loop: false,
-      autoplay: true,
-      transparent: true,
-      animationData: animationData
+    container: container,
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    transparent: true,
+    animationData: animationData
   };
 
-  lottie.loadAnimation(options);
+  lottieIntroInstance = lottie.loadAnimation(options);
 
   firstTime.style.opacity = 1;
   firstTime.style.display = 'flex';
-  
-  const audioData = `data:audio/mpeg;base64,${theme}`;
-    
-    // Load and play theme
-    audioLoader.load(audioData, function (buffer) {
-      soundKacl.setBuffer(buffer);
-      soundKacl.setLoop(false);
-      soundKacl.setVolume(1);
-      soundKacl.play();
-    });
 
+  const audioData = `data:audio/mpeg;base64,${theme}`;
+
+  // Load and play theme
+  audioLoader.load(audioData, function (buffer) {
+    soundKacl.setBuffer(buffer);
+    soundKacl.setLoop(false);
+    soundKacl.setVolume(1);
+    soundKacl.play();
+  });
 }
 
 //  ------------- [ RESIZE ] -----------------
