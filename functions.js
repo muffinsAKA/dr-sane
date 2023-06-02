@@ -66,36 +66,26 @@ export async function monologueLength(audio) {
 
 //  ------------- [ PLAY CREDITS THEME + GET LENGTH ] -----------------
 export async function credLength(audioLoader, soundCreds) {
-  
-  let credAudio = new Audio('https://muffinsaka.s3.amazonaws.com/credits.mp3');
-
+  const audioUrl = 'https://muffinsaka.s3.amazonaws.com/credits.mp3';
 
   // Get audio duration
-  let credAudioPromise = new Promise((resolve, reject) => {
+  const credAudioPromise = new Promise((resolve, reject) => {
+    audioLoader.load(audioUrl, (buffer) => {
+      // Resolve with the audio duration
+      resolve(buffer.duration);
+    }, undefined, reject);
+  });
 
-  credAudio.addEventListener('loadedmetadata', () => {
-      
-    // load duration into 'creditsLength'
-    resolve(credAudio.duration); 
-    });
-    
-    credAudio.addEventListener('error', reject);
+  // Load and play theme
+  audioLoader.load(audioUrl, (buffer) => {
+    soundCreds.setBuffer(buffer);
+    soundCreds.setLoop(false);
+    soundCreds.setVolume(0.4);
+    soundCreds.play();
+  });
 
-    
-    });
-
-    // Load and play theme
-    audioLoader.load('https://muffinsaka.s3.amazonaws.com/credits.mp3', function(buffer) {
-        soundCreds.setBuffer(buffer);
-        soundCreds.setLoop(false);
-        soundCreds.setVolume(0.4);
-        soundCreds.play();
-    
-    });
-  
-    // return credits length
-    return credAudioPromise;
-
+  // Return credits length
+  return credAudioPromise;
 }
 
 
