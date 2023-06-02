@@ -458,7 +458,8 @@ async function episode(questionText, name) {
   // Intro creation
 
   
-  console.log(`world: ${world.scene}`)
+  console.log(`world scene: ${world.scene}`)
+  console.log(`mixer: ${world.mixer}`)
   // Set first run as complete
 
   // Show player canvas
