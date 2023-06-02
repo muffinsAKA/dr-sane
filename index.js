@@ -417,25 +417,16 @@ async function resetScene() {
      intro = new THREE.Scene();
   }
 
-
-  function fakeLoad() {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          waitingDiv.style.opacity = 0;
-          resolve(); // Resolves the promise after 3 seconds
-        }, 3000);
-      });
-    }
 //  ------------- [ EPISODE LOOP ] -----------------
 
 async function episode(questionText, name) {
 
   // Set variables if not first run
-  // if (firstRun === false) {
+  if (firstRun === false) {
 
-  //  await resetScene();
+  await resetScene();
 
-  // };
+  };
   
   // Get the latest episode
   episodeData = await fetchEpisode(questionText, userName);
@@ -444,6 +435,8 @@ async function episode(questionText, name) {
 
   world = new World();
   await world.createWorld();
+
+  waitingDiv.style.opacity = 0;
 
   // Intro creation
 
@@ -493,15 +486,15 @@ async function episode(questionText, name) {
   ktl.add(() => fadeOut(canvas), `+=${monoLength}`);
 
   // Play timeline and call credits 2.55s seconds after its over (2.5s on fadeout so cant do it right away)
-  ktl.play()//.eventCallback("onComplete", () => {
+  ktl.play().eventCallback("onComplete", () => {
 
-      //setTimeout(() => {
+      setTimeout(() => {
 
-        //  createCredits();
+        createCredits();
 
-      //}, 2650); 
+      }, 2650); 
 
-  //});
+  });
 }
 
 
@@ -523,11 +516,9 @@ class World {
     switch (world.location) {
       
       case 'creditsFall':
-        fetch(creditsFall)
-            .then(response => response.arrayBuffer())
-            .then(arrayBuffer => {
-              const glbData = new Uint8Array(arrayBuffer);
-              this.glLoader.parse(glbData, '', (gltf) => {
+        this.glLoader.load(
+          `${creditsFall}`,
+          (gltf) => {
           
           video.play()
           video.loop = true;
@@ -585,17 +576,14 @@ class World {
           animateCreds(this.scene, this.camera, this.mixer);
         
          });
-        });
 
           break;
 
          case 'creditsDance':
 
-            fetch(creditsDance)
-            .then(response => response.arrayBuffer())
-            .then(arrayBuffer => {
-              const glbData = new Uint8Array(arrayBuffer);
-              this.glLoader.parse(glbData, '', (creditsDanceGltf) => {
+         this.glLoader.load(
+          `${creditsDance}`,
+          (creditsDanceGltf) => {
           
           this.scene.add(creditsDanceGltf.scene);
           console.log(creditsDanceGltf)
@@ -649,8 +637,7 @@ class World {
           animateCreds(this.scene, this.camera, this.mixer);
         
          });
-        });
-           break;
+          break;
     }
   };
   
