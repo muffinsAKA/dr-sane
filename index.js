@@ -120,8 +120,6 @@ async function resetScene() {
   creditsText.innerHTML = '';
   titleDiv.innerHTML = '';
 
-  question.addEventListener('focus', handleQuestionFocus);
-
 }
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
@@ -201,6 +199,8 @@ async function mainInit() {
   };
 
   const handleQuestionFocus = () => {
+
+    console.log('Question focused');
     
     border.style.opacity = 1;
     question.classList.add("fade");
@@ -258,6 +258,8 @@ async function mainInit() {
   question.addEventListener('focus', handleQuestionFocus);
   document.addEventListener('focusout', handleFocusOut);
 
+  console.log(question);
+  
   };
 
 //  ------------- [ KACL ANIMATE ] -----------------
