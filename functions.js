@@ -67,7 +67,7 @@ export async function monologueLength(audio) {
 //  ------------- [ PLAY CREDITS THEME + GET LENGTH ] -----------------
 export async function credLength(audioLoader, soundCreds) {
   
-  let credAudio = new Audio('/audio/themes/credits.mp3');
+  let credAudio = new Audio('https://muffinsaka.s3.amazonaws.com/credits.mp3');
 
 
   // Get audio duration
@@ -85,7 +85,7 @@ export async function credLength(audioLoader, soundCreds) {
     });
 
     // Load and play theme
-    audioLoader.load('/audio/themes/credits.mp3', function(buffer) {
+    audioLoader.load('https://muffinsaka.s3.amazonaws.com/credits.mp3', function(buffer) {
         soundCreds.setBuffer(buffer);
         soundCreds.setLoop(false);
         soundCreds.setVolume(0.4);
