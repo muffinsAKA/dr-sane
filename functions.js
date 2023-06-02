@@ -26,7 +26,7 @@ export async function monologueLength(audio) {
   
   //  ------------- [ LOAD THEME + SET DURATION ] -----------------
 
-  export async function themeSong(theme, soundKacl, audioLoader) {
+  export async function themeSong(theme) {
     const audioData = `data:audio/mpeg;base64,${theme}`;
   
     // Create a new Audio object
@@ -39,14 +39,6 @@ export async function monologueLength(audio) {
         resolve(themeAudio.duration);
       });
       themeAudio.addEventListener('error', reject);
-    });
-  
-    // Load and play theme
-    audioLoader.load(audioData, function (buffer) {
-      soundKacl.setBuffer(buffer);
-      soundKacl.setLoop(false);
-      soundKacl.setVolume(1);
-      soundKacl.play();
     });
   
     // Return theme song length

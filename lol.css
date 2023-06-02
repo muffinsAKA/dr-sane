@@ -21,18 +21,7 @@ html, body {
   transition: opacity 2.5s;
   border-radius: 12px;
 }
-#start-screen {
-  position: absolute;
-  width: 50vw;
-  height: 60vh;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  transform: translate(-50%, -50%);
-  opacity: 1;
-  transition: opacity 2.5s;
-  border-radius: 15px;
-}
+
 #first-time {
   position: absolute;
   width: 50vw;
@@ -47,6 +36,7 @@ html, body {
   font-size: 2rem;
   opacity: 1;
   border-radius: 15px;
+  transition: opacity 2s ease;
 
 }
 #title {
