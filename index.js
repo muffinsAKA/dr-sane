@@ -86,8 +86,6 @@ let rendererCredits = new THREE.WebGLRenderer({canvas, antialias: true});
 //  ------------- [ CLEAR SCENE ] -----------------
 
 async function resetScene() {
-  
-  question.removeEventListener('focus', handleQuestionFocus);
 
   // clear Timelines
   ctl.clear();
@@ -136,102 +134,6 @@ window.addEventListener('DOMContentLoaded', () => {
 let inputCount = 0;
 let userName;
 
-const handleEnterKey = (event) => {
-  if (event.key === 'Enter') {
-
-    if (inputCount === 0) {
-
-      question.style.opacity = 0;
-      inputCount++;
-      userName = question.value;
-      question.placeholder = '';
-
-      setTimeout(() => {
-        question.maxLength = 100;
-        question.style.opacity = 1;
-        question.placeholder = `What's your question, ${userName}?`;
-      }, 1500);
-      
-      question.value = '';
-
-    } else if (inputCount === 1) {
-
-      const questionText = question.value;
-
-      inputCount++;
-      
-      question.value = '';
-      question.placeholder = '';
-      question.style.opacity = 0;
-      
-      setTimeout(() => {
-        waitingDiv.style.opacity = 1;
-      }, 500)
-
-      removeEventListeners();
-      episode(questionText, userName);
-
-    }
-  }
-};
-
-const handleQuestionFocus = () => {
-  
-  border.style.opacity = 1;
-  question.classList.add("fade");
-
-  
-    if ( inputCount === 0 ) {
-      setTimeout(() => {
-      question.placeholder = "What's your name, caller?";
-      question.classList.remove("fade");
-    }, 1000);
-
-    } else if ( inputCount === 1) {
-      setTimeout(() => {
-      question.placeholder = `What's your question, ${userName}`;
-      question.classList.remove("fade");
-    }, 1000);
-  }
-
-    if (inputCount > 1) {
-      question.placeholder = '';
-      question.classList.add("fade");
-      question.style.opacity = 0;
-    }
-  
-
-};
-
-const handleFocusOut = () => {
- 
-    question.classList.add("fade");
-    border.style.opacity = 0;
-
-    if (inputCount <= 1) {
-    setTimeout(() => {
-      question.placeholder = "I'm listening.";
-      question.classList.remove("fade");
-    }, 1000);
-
-  } else if (inputCount > 1) {
-    question.placeholder = '';
-    question.style.opacity = 0;
-    question.classList.add("fade")
-  }
-  }
-
-  const removeEventListeners = () => {
-    //question.removeEventListener('input', handleTyping);
-    question.removeEventListener('focus', handleQuestionFocus);
-    document.removeEventListener('keydown', handleEnterKey);
-    document.removeEventListener('focusout', handleFocusOut);
-  };
-  
-//question.addEventListener('input', handleTyping);
-question.addEventListener('keydown', handleEnterKey);
-question.addEventListener('focus', handleQuestionFocus);
-document.addEventListener('focusout', handleFocusOut);
 
 async function mainInit() {
 
@@ -257,6 +159,103 @@ async function mainInit() {
   
   // Hide player canvas initially
   canvas.style.display = 'none';
+  
+  const handleEnterKey = (event) => {
+    if (event.key === 'Enter') {
+  
+      if (inputCount === 0) {
+  
+        question.style.opacity = 0;
+        inputCount++;
+        userName = question.value;
+        question.placeholder = '';
+
+        setTimeout(() => {
+          question.maxLength = 100;
+          question.style.opacity = 1;
+          question.placeholder = `What's your question, ${userName}?`;
+        }, 1500);
+        
+        question.value = '';
+  
+      } else if (inputCount === 1) {
+
+        const questionText = question.value;
+
+        inputCount++;
+        
+        question.value = '';
+        question.placeholder = '';
+        question.style.opacity = 0;
+        
+        setTimeout(() => {
+          waitingDiv.style.opacity = 1;
+        }, 500)
+
+        removeEventListeners();
+        episode(questionText, userName);
+
+      }
+    }
+  };
+
+  const handleQuestionFocus = () => {
+    
+    border.style.opacity = 1;
+    question.classList.add("fade");
+
+    
+      if ( inputCount === 0 ) {
+        setTimeout(() => {
+        question.placeholder = "What's your name, caller?";
+        question.classList.remove("fade");
+      }, 1000);
+
+      } else if ( inputCount === 1) {
+        setTimeout(() => {
+        question.placeholder = `What's your question, ${userName}`;
+        question.classList.remove("fade");
+      }, 1000);
+    }
+
+      if (inputCount > 1) {
+        question.placeholder = '';
+        question.classList.add("fade");
+        question.style.opacity = 0;
+      }
+    
+  
+  };
+
+  const handleFocusOut = () => {
+   
+      question.classList.add("fade");
+      border.style.opacity = 0;
+
+      if (inputCount <= 1) {
+      setTimeout(() => {
+        question.placeholder = "I'm listening.";
+        question.classList.remove("fade");
+      }, 1000);
+
+    } else if (inputCount > 1) {
+      question.placeholder = '';
+      question.style.opacity = 0;
+      question.classList.add("fade")
+    }
+    }
+
+    const removeEventListeners = () => {
+      //question.removeEventListener('input', handleTyping);
+      question.removeEventListener('focus', handleQuestionFocus);
+      document.removeEventListener('keydown', handleEnterKey);
+      document.removeEventListener('focusout', handleFocusOut);
+    };
+    
+  //question.addEventListener('input', handleTyping);
+  question.addEventListener('keydown', handleEnterKey);
+  question.addEventListener('focus', handleQuestionFocus);
+  document.addEventListener('focusout', handleFocusOut);
 
   };
 
@@ -453,6 +452,7 @@ async function fetchEpisode(questionText, userName) {
 
 async function episode(questionText, name) {
 
+  question.blur();
   
   // Get the latest episode
   episodeData = await fetchEpisode(questionText, userName);
