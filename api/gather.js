@@ -17,7 +17,7 @@ const elevenHeader = {
 };
 
 
-async function defaultPrompt(questionText) {
+async function defaultPrompt(questionText, userName) {
 
   const voice = process.env.frazID;
   const world = 'frasier';
@@ -28,7 +28,7 @@ async function defaultPrompt(questionText) {
   const tokens = 900;
   const subject = questionText;
 
-  const prompt = `Pretend to be Dr. Frasier Crane on his radio show giving response to a calller asking the question: ${subject}.
+  const prompt = `Pretend to be Dr. Frasier Crane on his radio show giving response to a caller named ${userName} asking this question: "${subject}".
 End the monologue with 'This is Dr. Frasier Crane signing off and wishing you good mental health' \
 Separate the title, which should be creative, and script in your response. \
 Keep your response under ${charLimit} characters. Reply in only json with no other text. The json just contain two parts: title and script.`
@@ -37,9 +37,9 @@ Keep your response under ${charLimit} characters. Reply in only json with no oth
   return {voice, world, prompt, subject, name, location, tokens, model}
 }
 
-export async function gather(questionText) {
+export async function gather(questionText, userName) {
 
-  const promptInfo = await defaultPrompt(questionText);
+  const promptInfo = await defaultPrompt(questionText, userName);
 
   console.log(`promptInfo: ${promptInfo.prompt}`)
 
@@ -141,9 +141,9 @@ async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, 
 
 export default async (req, res) => {
   try {
-    const { questionText } = req.query;
+    const { questionText, userName } = req.query;
 
-      const result = await gather(questionText);
+      const result = await gather(questionText, userName);
       res.setHeader('Access-Control-Allow-Credentials', true);
       res.setHeader('Access-Control-Allow-Origin', '*');
       console.log(result);
