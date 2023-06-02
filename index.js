@@ -680,11 +680,13 @@ class World {
   
     try {
       // Load Set
-      const setResponse = await fetch(frazSetGlbUrl);
-      const setArrayBuffer = await setResponse.arrayBuffer();
-      const setGlbData = new Uint8Array(setArrayBuffer);
-      const setGltf = await this.glLoader.parseAsync(setGlbData);
+      const setResponse = await fetch(frazGlbUrl);
+const setBlob = await setResponse.blob();
+const setGltf = await this.glLoader.parseAsync(setBlob);
+
       this.scene.add(setGltf.scene);
+
+
 
       console.log('Set GLTF:', setGltf);
 
@@ -704,13 +706,12 @@ class World {
   
       // Add hero model
       const modelResponse = await fetch(frazGlbUrl);
-      const modelArrayBuffer = await modelResponse.arrayBuffer();
-      const modelGlbData = new Uint8Array(modelArrayBuffer);
-      const modelGltf = await this.glLoader.parseAsync(modelGlbData);
-      this.scene.add(modelGltf.scene);
+const modelBlob = await modelResponse.blob();
+const modelGltf = await this.glLoader.parseAsync(modelBlob);
+this.scene.add(modelGltf.scene);
 
     console.log('Model GLTF:', modelGltf);
-    
+
       modelGltf.scene.position.set(0.061, 0, -0.127);
       modelGltf.scene.scale.set(1, 1, 1);
       modelGltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
