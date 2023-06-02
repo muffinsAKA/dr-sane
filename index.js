@@ -381,7 +381,7 @@ async function createCredits() {
   ctl.add(() => creditsDiv.style.display = "none", creditsLength - 2 );
 
   // start next episode
-  ctl.add(mainInit(), creditsLength + 2);
+  ctl.add(mainInit, creditsLength + 2);
   
   // Play timline
   ctl.play();
