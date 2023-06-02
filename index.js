@@ -119,6 +119,7 @@ async function resetScene() {
 
   creditsText.innerHTML = '';
   titleDiv.innerHTML = '';
+  void question.offsetWidth;
 
 }
 
@@ -250,16 +251,16 @@ async function mainInit() {
       //question.removeEventListener('input', handleTyping);
       question.removeEventListener('focus', handleQuestionFocus);
       document.removeEventListener('keydown', handleEnterKey);
-      document.removeEventListener('focusout', handleFocusOut);
+      question.addEventListener('blur', handleFocusOut);
     };
     
   //question.addEventListener('input', handleTyping);
   question.addEventListener('keydown', handleEnterKey);
   question.addEventListener('focus', handleQuestionFocus);
-  document.addEventListener('focusout', handleFocusOut);
+  question.addEventListener('blur', handleFocusOut);
 
   console.log(question);
-  
+
   };
 
 //  ------------- [ KACL ANIMATE ] -----------------
@@ -270,7 +271,10 @@ function animate() {
      requestAnimationFrame(animate);
 
     const delta = clock.getDelta();
+
+    if (world.mixer) {
     world.mixer.update( delta );
+    }
         
     renderer.render(world.scene, world.camera);
     world.camera.updateMatrixWorld();
