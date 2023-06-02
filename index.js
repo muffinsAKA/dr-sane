@@ -161,8 +161,6 @@ function mainInit() {
 
         inputCount++;
         
-        console.log(`input count === 2: ${inputCount}`);
-        
         question.value = '';
         question.placeholder = '';
         question.style.opacity = 0;
@@ -439,19 +437,13 @@ async function episode(questionText, name) {
   // Get the latest episode
   episodeData = await fetchEpisode(questionText, userName);
 
-  console.log(`episode data: ${episodeData.script}`);
-
   world = new World();
   await world.createWorld();
 
   waitingDiv.style.opacity = 0;
 
-  // Intro creation
-
-  
-  console.log(`world scene: ${world.scene}`)
-  console.log(`mixer: ${world.mixer}`)
   // Set first run as complete
+  firstRun = false;
 
   // Show player canvas
   firstTime.style.opacity = 1;
@@ -528,13 +520,18 @@ class World {
     switch (world.location) {
       
       case 'creditsFall':
+        fetch('https://muffinsaka.s3.amazonaws.com/blues.mp4')
+  .then(response => response.blob())
+  .then(blob => {
+    const videoUrl = URL.createObjectURL(blob);
         this.glLoader.load(
           `${creditsFall}`,
           (gltf) => {
           
-          video.play()
-          video.loop = true;
-          video.muted = true;
+            video.src = videoUrl;
+            video.play();
+            video.loop = true;
+            video.muted = true;
 
           this.scene.add(gltf.scene);
     
@@ -576,6 +573,7 @@ class World {
               texture.needsUpdate = true;
               renderer.render(scene, camera)
             
+            
             } else {
 
               return;
@@ -583,11 +581,15 @@ class World {
             }
           
             
-          }
+        }
           
           animateCreds(this.scene, this.camera, this.mixer);
         
          });
+        })
+        .catch(error => {
+          console.error('Error loading video:', error);
+        });
 
           break;
 
