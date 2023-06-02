@@ -551,7 +551,6 @@ class World {
           video.loop = true;
           video.muted = true;
 
-          console.log(gltf.scene)
           this.scene.add(gltf.scene);
     
           let clip, cone, texture;
@@ -679,62 +678,59 @@ class World {
     // Adds audio listener to camera
     this.camera.add(listenerKacl);
   
-    // Load Set
-    fetch(frazSetGlbUrl)
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => {
-        const glbData = new Uint8Array(arrayBuffer);
-        this.glLoader.parse(glbData, '', (gltf) => {
-          this.scene.add(gltf.scene);
+    try {
+      // Load Set
+      const setResponse = await fetch(frazSetGlbUrl);
+      const setArrayBuffer = await setResponse.arrayBuffer();
+      const setGlbData = new Uint8Array(setArrayBuffer);
+      const setGltf = await this.glLoader.parseAsync(setGlbData);
+      this.scene.add(setGltf.scene);
   
-          const worldSet = gltf.scene;
-          worldSet.position.set(0, 0, 0);
-          kaclCamRandomzier(this.camera, animateActive);
+      const worldSet = setGltf.scene;
+      worldSet.position.set(0, 0, 0);
+      kaclCamRandomzier(this.camera, animateActive);
   
-          worldSet.traverse(function (child) {
-            if (child.isMesh) {
-              child.material.roughness = 1;
-            }
-          });
-  
-          worldSet.traverse(function (obj) {
-            obj.frustumCulled = false;
-          });
-        });
+      worldSet.traverse(function (child) {
+        if (child.isMesh) {
+          child.material.roughness = 1;
+        }
       });
   
-    // Add hero model
-    fetch(frazGlbUrl)
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => {
-        const glbData = new Uint8Array(arrayBuffer);
-        this.glLoader.parse(glbData, '', (gltf) => {
-          this.scene.add(gltf.scene);
-  
-          gltf.scene.position.set(0.061, 0, -0.127);
-          gltf.scene.scale.set(1, 1, 1);
-          gltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
-  
-          const model = gltf.scene;
-  
-          model.traverse(function (child) {
-            if (child.isMesh) {
-              child.material.roughness = 1;
-            }
-          });
-  
-          model.traverse(function (obj) {
-            obj.frustumCulled = false;
-          });
-  
-          this.mixer = new THREE.AnimationMixer(gltf.scene);
-          let clip = gltf.animations[1]; // talk animation
-  
-          const action = this.mixer.clipAction(clip);
-          action.setLoop(THREE.LoopRepeat);
-          action.play();
-        });
+      worldSet.traverse(function (obj) {
+        obj.frustumCulled = false;
       });
+  
+      // Add hero model
+      const modelResponse = await fetch(frazGlbUrl);
+      const modelArrayBuffer = await modelResponse.arrayBuffer();
+      const modelGlbData = new Uint8Array(modelArrayBuffer);
+      const modelGltf = await this.glLoader.parseAsync(modelGlbData);
+      this.scene.add(modelGltf.scene);
+  
+      modelGltf.scene.position.set(0.061, 0, -0.127);
+      modelGltf.scene.scale.set(1, 1, 1);
+      modelGltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
+  
+      const model = modelGltf.scene;
+  
+      model.traverse(function (child) {
+        if (child.isMesh) {
+          child.material.roughness = 1;
+        }
+      });
+  
+      model.traverse(function (obj) {
+        obj.frustumCulled = false;
+      });
+  
+      this.mixer = new THREE.AnimationMixer(modelGltf.scene);
+      let clip = modelGltf.animations[1]; // talk animation
+  
+      const action = this.mixer.clipAction(clip);
+      action.setLoop(THREE.LoopRepeat);
+      action.play();
+    } catch (error) {
+      console.error('Error loading GLTF files:', error);
+    }
   }
-  
-};
+};  
