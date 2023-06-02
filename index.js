@@ -123,12 +123,18 @@ let userName;
 
 async function mainInit() {
 
-    // Set variables if not first run
-    if (firstRun === false) {
 
-      await resetScene();
+    // Set variables if not first run
+    if (firstRun === true) {
+
+      world = new World();
+      await world.createWorld();
     
-      };
+      } else {
+
+        await resetScene();
+        
+      }
 
   setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
 
@@ -207,10 +213,6 @@ async function mainInit() {
       }
     
   
-  };
-
-  const handleTyping = () => {
-    question.style.textAlign = 'center'
   };
 
   const handleFocusOut = () => {
@@ -443,9 +445,6 @@ async function episode(questionText, name) {
   
   // Get the latest episode
   episodeData = await fetchEpisode(questionText, userName);
-
-  world = new World();
-  await world.createWorld();
 
   waitingDiv.style.opacity = 0;
 

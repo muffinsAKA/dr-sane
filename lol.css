@@ -1,5 +1,5 @@
 :root {
-  --base-font-size: 2rem;
+  --base-font-size: 2vw;
 }
 
 html, body {
@@ -9,6 +9,11 @@ html, body {
     width: 100%;
     height: 100%;
     }
+
+#container {
+  width: 100%;
+  height: 100%;
+}
 #player {
   position: absolute;
   width: 50vw;
@@ -133,20 +138,22 @@ html, body {
 }
 
 #question {
-  caret-color: rgba(255,255,255, 0.2);
+  caret-color: rgba(255,255,255, 0.1);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 5vh;
   width: 7vw;
+  min-width: fit-content;
+  min-height: fit-content;
   border-radius: 0.4vw;
   border: 0;
   outline-color: rgb(37, 37, 37);
   background-color: rgb(12, 11, 11);
-  color: rgb(99, 99, 99);
+  color: rgb(116, 116, 116);
   text-align: left;
-  font-size: 0.85vw;
+  font-size: 24px;
   pointer-events: all;
   font-family: "Korin", sans-serif;
   transition: width 1s ease, height 1.2s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
@@ -162,7 +169,7 @@ html, body {
 }
 
 #question:focus::placeholder {
-  color: rgb(55, 55, 55);
+  color: rgb(76, 76, 76);
   transition: opacity 1s ease, color 0.5s ease;
   text-align: center;
   
@@ -189,7 +196,7 @@ html, body {
 
 #waiting {
   color: rgb(99, 99, 99);
-  font-size: 1.2vw;
+  font-size: 36px;
   font-family: "Korin", sans-serif;
   transition: width 1s ease, height 1.5s ease, opacity 1.1s ease;
   opacity: 0;
