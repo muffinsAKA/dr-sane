@@ -101,7 +101,11 @@ async function resetScene() {
 
   // dispose of scene and recreate
    world = null;
+   inputCount = 0;
+   userName = null;
+   episodeData = null;
    location.reload();
+
 
 }
 
