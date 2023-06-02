@@ -71,8 +71,8 @@ const ktl = gsap.timeline();
 
 
 //  ------------- [ DIRECTORIES ] -----------------
-const frazGlbUrl = 'https://muffinsaka.s3.amazonaws.com/3d/fraz.glb';
-const frazSetGlbUrl = 'https://muffinsaka.s3.amazonaws.com/3d/kacl.glb';
+const modelUrl = 'https://muffinsaka.s3.amazonaws.com/3d/fraz.glb';
+const setUrl = 'https://muffinsaka.s3.amazonaws.com/3d/kacl.glb';
 const creditsFall = 'https://muffinsaka.s3.amazonaws.com/3d/creditsFall.glb';
 const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
@@ -676,66 +676,65 @@ class World {
 
   async createWorld() {
     // Adds audio listener to camera
-    this.camera.add(listenerKacl);
+    this.camera.add( listenerKacl );
+      
+    // Fetch and load set
+    const setResponse = await fetch(setUrl);
+    const setBlob = await setResponse.blob();
+    const setGltf = await new Promise((resolve, reject) => {
+      this.glLoader.parse(setBlob, '', resolve, reject);
+    });
   
-    try {
-      // Load Set
-      const setResponse = await fetch(frazGlbUrl);
-const setBlob = await setResponse.blob();
-const setGltf = await this.glLoader.parseAsync(setBlob);
-
-      this.scene.add(setGltf.scene);
-
-
-
-      console.log('Set GLTF:', setGltf);
-
-      const worldSet = setGltf.scene;
-      worldSet.position.set(0, 0, 0);
-      kaclCamRandomzier(this.camera, animateActive);
+    this.scene.add(setGltf.scene);
+    const worldSet = setGltf.scene;
+    worldSet.position.set(0, 0, 0)
+    kaclCamRandomzier(this.camera, animateActive);
   
-      worldSet.traverse(function (child) {
-        if (child.isMesh) {
-          child.material.roughness = 1;
-        }
-      });
+    worldSet.traverse(function (child) {
+      if (child.isMesh) {
+        child.material.roughness = 1;
+      }
+    });
   
-      worldSet.traverse(function (obj) {
-        obj.frustumCulled = false;
-      });
+    worldSet.traverse(function (obj) {
+      obj.frustumCulled = false;
+    });
   
-      // Add hero model
-      const modelResponse = await fetch(frazGlbUrl);
-const modelBlob = await modelResponse.blob();
-const modelGltf = await this.glLoader.parseAsync(modelBlob);
-this.scene.add(modelGltf.scene);
-
-    console.log('Model GLTF:', modelGltf);
-
-      modelGltf.scene.position.set(0.061, 0, -0.127);
-      modelGltf.scene.scale.set(1, 1, 1);
-      modelGltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
+    // Fetch and load hero model
+    const modelResponse = await fetch(modelUrl);
+    const modelBlob = await modelResponse.blob();
+    const modelGltf = await new Promise((resolve, reject) => {
+      this.glLoader.parse(modelBlob, '', resolve, reject);
+    });
   
-      const model = modelGltf.scene;
+    this.scene.add(modelGltf.scene);
   
-      model.traverse(function (child) {
-        if (child.isMesh) {
-          child.material.roughness = 1;
-        }
-      });
+    modelGltf.scene.position.set( 0.061, 0, -0.127 );
+    modelGltf.scene.scale.set( 1, 1, 1 );
+    modelGltf.scene.rotation.set( 0 , -180 * Math.PI / 180, 0 );
   
-      model.traverse(function (obj) {
-        obj.frustumCulled = false;
-      });
+    const model = modelGltf.scene;
   
-      this.mixer = new THREE.AnimationMixer(modelGltf.scene);
-      let clip = modelGltf.animations[1]; // talk animation
+    model.traverse(function (child) {
+      if (child.isMesh) {
+        child.material.roughness = 1;
+      }
+    });
   
-      const action = this.mixer.clipAction(clip);
-      action.setLoop(THREE.LoopRepeat);
-      action.play();
-    } catch (error) {
-      console.error('Error loading GLTF files:', error);
-    }
+    model.traverse(function (obj) {
+      obj.frustumCulled = false;
+    });
+  
+    this.mixer = new THREE.AnimationMixer(modelGltf.scene);
+  
+    let clip;
+  
+    clip = modelGltf.animations[1]; // talk animation
+  
+    const action = this.mixer.clipAction(clip);
+  
+    action.setLoop(THREE.LoopRepeat);
+  
+    action.play();
   }
-};  
+};
