@@ -214,8 +214,6 @@ function animate() {
     const delta = clock.getDelta();
     world.mixer.update( delta );
         
-    // depending on the scene, adjust camera behavior for things that need updates (e.g. zooms)
-    
     renderer.render(world.scene, world.camera);
     world.camera.updateMatrixWorld();
 
@@ -366,11 +364,6 @@ async function createCredits() {
 }
 
 
-
-
-
-
-
 //  ------------- [ GET LATEST EP ] -----------------
 
 async function fetchEpisode(questionText) {
@@ -465,7 +458,7 @@ async function episode(questionText, name) {
   // Intro creation
 
   
-  //console.log(`world: ${world}`)
+  console.log(`world: ${world}`)
   // Set first run as complete
 
   // Show player canvas
