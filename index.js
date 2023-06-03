@@ -18,6 +18,7 @@ const question = document.getElementById('question');
 const container = document.getElementById('first-time');
 const waitingDiv = document.getElementById("waiting");
 const border = document.getElementById('border')
+const questionDiv = document.getElementById('questionDiv');
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -109,18 +110,43 @@ async function resetScene() {
   lottieIntroInstance.destroy();
   lottieIntroInstance = null;
 
-  question.maxLength = 30;
-  question.style.height = "5vh";
-  question.style.width = "7vw";
-  question.style.textAlign = "left";
-  question.style.fontSize = "24px";
-  question.placeholder = "I'm listening."
-  question.style.opacity = 1;
+  question.parentNode.removeChild(question);
+
+  question = document.createElement("input");
+  
+question = document.createElement("input");
+question.setAttribute("type", "text");
+question.setAttribute("id", "question");
+question.setAttribute("placeholder", "I'm listening.");
+question.setAttribute("maxlength", "30");
+
+// Setting CSS properties
+question.style.caretColor = "rgba(255,255,255, 0.1)";
+question.style.position = "absolute";
+question.style.top = "50%";
+question.style.left = "50%";
+question.style.transform = "translate(-50%, -50%)";
+question.style.height = "5vh";
+question.style.width = "7vw";
+question.style.minWidth = "fit-content";
+question.style.minHeight = "fit-content";
+question.style.borderRadius = "0.4vw";
+question.style.border = "0";
+question.style.outlineColor = "rgb(37, 37, 37)";
+question.style.backgroundColor = "rgb(12, 11, 11)";
+question.style.color = "rgb(116, 116, 116)";
+question.style.textAlign = "left";
+question.style.fontSize = "24px";
+question.style.pointerEvents = "all";
+question.style.fontFamily = "'Korin', sans-serif";
+question.style.transition = "width 1s ease, height 1.2s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease";
+question.style.paddingLeft = "1vw";
+question.style.paddingRight = "1vw";
+
+questionDiv.appendChild(question);
 
   creditsText.innerHTML = '';
   titleDiv.innerHTML = '';
-  void question.offsetWidth;
-
 }
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
