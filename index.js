@@ -231,6 +231,7 @@ async function mainInit() {
             current.scene = kacl.scene;
             current.camera = kacl.camera;
             current.mixer = kacl.mixer;
+            current.sceneName = 'kacl';
             
             console.log(`firstRun createKacl -> current: ${logCurrentScene()}`);
 
