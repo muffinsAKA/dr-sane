@@ -82,11 +82,18 @@ async function mainInit() {
 
 // Set variables if not first run
 if (firstRun) {
-  const kaclPromise = createKacl();
-  kaclPromise.then((kacl) => {
-    animate(kacl.scene, kacl.camera, kacl.mixer, kaclPromise);
+  createKacl(location)
+  .then((kacl) => {
+    animateActive = true; // Disable the previous animation
+    creditsAnimateActive = false; // Enable the credits animation
+    animate(kacl.scene, kacl.camera, kacl.mixer);
     window.addEventListener('resize', () => adjustSize(kacl.camera));
+  })
+  .catch((error) => {
+    console.error(error);
   });
+
+
 } else if (firstRun === false) {
   await resetScene();
 }
@@ -332,12 +339,14 @@ async function createCredits() {
 
   // create credits world
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
-  const creditsPromise = createCreditsWorld(creditsChoice);
-  creditsPromise.then((credits) => {
-    animateActive = false;
-    creditsAnimateActive = true;
-    window.addEventListener('resize', () => adjustSize(credits.camera));
-    animateCreds(credits.scene, credits.camera, credits.mixer, credits.texture, credits.cone, creditsPromise);
+  createCreditsWorld(creditsChoice)
+  .then((credits) => {
+    animateActive = false; // Disable the previous animation
+    creditsAnimateActive = true; // Enable the credits animation
+    animateCreds(credits.scene, credits.camera, credits.mixer, credits.texture, credits.cone);
+  })
+  .catch((error) => {
+    console.error(error);
   });
 
 }
@@ -373,19 +382,17 @@ async function fetchEpisode(questionText, userName) {
 
 
 //  ------------- [ KACL ANIMATE ] -----------------
-function animate(scene, camera, mixer, promise) {
-  promise.then(() => {
+function animate(scene, camera, mixer) {
     if (animateActive) {
       setTimeout( function() {
-        requestAnimationFrame(() => animate(scene, camera, mixer, promise));
+        requestAnimationFrame(() => animate(scene, camera, mixer));
         const delta = clock.getDelta();
         mixer.update( delta );
         renderer.render(scene, camera);
         camera.updateMatrixWorld();
       }, 1000 / 24 ); 
     }
-  })
-}
+  }
 
 //  ------------- [ EPISODE LOOP ] -----------------
 
@@ -429,7 +436,7 @@ async function episode(questionText) {
   ktl.add(() => titleFade(titleDiv), "+=2");
 
    // fade in to kacl studio
-   ktl.add(() => fadeIn(canvas), "+=0");
+   ktl.add(() => fadeIn(canvas), "+=5");
 
   // start monologue
   ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
@@ -450,11 +457,11 @@ async function episode(questionText) {
   });
 }
 
-function animateCreds(scene, camera, mixer, texture, cone, creditsPromise) {
+function animateCreds(scene, camera, mixer, texture, cone) {
   if (creditsAnimateActive === true) {
     creditsPromise.then(() => {
       setTimeout( function() {
-        requestAnimationFrame(() => animateCreds(scene, camera, mixer, texture, cone, creditsPromise));
+        requestAnimationFrame(() => animateCreds(scene, camera, mixer, texture, cone));
 
     const delta = clock.getDelta();
     
