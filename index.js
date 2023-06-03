@@ -608,7 +608,7 @@ switch (location) {
       creditsCamera.position.set(0, 6.25, 0.5);
       creditsCamera.rotation.x = -1.5;
 
-
+      console.log(creditsScene, creditsCamera, mixer, texture,cone)
       resolve({
         scene: creditsScene,
         camera: creditsCamera,
@@ -659,6 +659,7 @@ switch (location) {
             obj.frustumCulled = false;
           });
 
+          console.log(creditsScene, creditsCamera, mixer)
 
           resolve({
             scene: creditsScene,
