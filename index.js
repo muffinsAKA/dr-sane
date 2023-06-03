@@ -459,7 +459,6 @@ async function episode(questionText) {
 
 function animateCreds(scene, camera, mixer, texture, cone) {
   if (creditsAnimateActive === true) {
-    creditsPromise.then(() => {
       setTimeout( function() {
         requestAnimationFrame(() => animateCreds(scene, camera, mixer, texture, cone));
 
@@ -476,9 +475,9 @@ function animateCreds(scene, camera, mixer, texture, cone) {
     }
 
     renderer.render(scene, camera);
-    })}, 1000 / 24 );
+  }, 1000 / 24 ); 
   }
-}
+  }
 
 async function createKacl() {
   return new Promise((resolve, reject) => {
