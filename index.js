@@ -29,7 +29,7 @@ let canvasHeight = window.innerHeight * 0.6
 let episodeData;
 
 //  ------------- [ ANIM TRIGGERS ] -----------------
-let animateActive;
+let animateActive = true;
 
 
 //  ------------- [ GLOBAL VARS ] -----------------
@@ -147,34 +147,8 @@ async function mainInit() {
 // Set variables if not first run
 
 
-if (firstRun === true) {
 
-  createKacl()
-  .then((kacl) => {
-    current.scene = kacl.scene;
-    current.camera = kacl.camera;
-    current.mixer = kacl.mixer;
-    animate();
-  });
-  
-
-  createCreditsWorld('creditsFall')
-  .then((creditsFall) => {
-    creditsFallHold.scene = creditsFall.scene;
-    creditsFallHold.camera = creditsFall.camera;
-    creditsFallHold.mixer = creditsFall.mixer;
-    creditsFallHold.texture = creditsFall.texture;
-    creditsFallHold.cone = creditsFall.cone;
-  });
-    
-  createCreditsWorld('creditsDance')
-  .then((creditsDance) => {
-    creditsDanceHold.scene = creditsDance.scene;
-    creditsDanceHold.camera = creditsDance.camera;
-    creditsDanceHold.mixer = creditsDance.mixer;
-  });
-  
-} else if (firstRun === false) {
+ if (firstRun === false) {
     
     await resetScene();
     switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
@@ -213,6 +187,33 @@ if (firstRun === true) {
 
         }, 500);
         
+        if (firstRun === true) {
+
+          createKacl()
+          .then((kacl) => {
+            current.scene = kacl.scene;
+            current.camera = kacl.camera;
+            current.mixer = kacl.mixer;
+            animate();
+          });
+          
+        
+          createCreditsWorld('creditsFall')
+          .then((creditsFall) => {
+            creditsFallHold.scene = creditsFall.scene;
+            creditsFallHold.camera = creditsFall.camera;
+            creditsFallHold.mixer = creditsFall.mixer;
+            creditsFallHold.texture = creditsFall.texture;
+            creditsFallHold.cone = creditsFall.cone;
+          });
+            
+          createCreditsWorld('creditsDance')
+          .then((creditsDance) => {
+            creditsDanceHold.scene = creditsDance.scene;
+            creditsDanceHold.camera = creditsDance.camera;
+            creditsDanceHold.mixer = creditsDance.mixer;
+          });
+        };
 
         episode(questionText);
 
@@ -538,10 +539,7 @@ async function episode(questionText) {
 
    // fade in title card
   ktl.add(() => titleFade(titleDiv), "+=2");
-  
-  ktl.add(() => {
-    animateActive= true;
-  }, "+1");
+
 
    // fade in to kacl studio
    ktl.add(() => fadeIn(canvas), "+=5");
