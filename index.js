@@ -24,8 +24,6 @@ const questionDiv = document.getElementById('questionDiv');
 let canvasWidth = window.innerWidth * 0.5
 let canvasHeight = window.innerHeight * 0.6
 
-
-
 //  ------------- [ API GRAB ] -----------------
 let episodeData;
 
@@ -74,31 +72,109 @@ const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 //  ------------- [ RENDERERS ] -----------------
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
-//  ------------- [ CLEAR SCENE ] -----------------
-
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 window.addEventListener('DOMContentLoaded', mainInit);
 
 async function mainInit() {
-  
-  // Set variables if not first run
-  if (firstRun) {
-    
-    const kacl = createKacl();
-    window.addEventListener('resize', () => adjustSize(kacl.camera));
-
-  } else if (firstRun === false) {
-    await resetScene();
-  }
 
   setRenderer(canvas, renderer, canvasWidth, canvasHeight);
+
+// Set variables if not first run
+if (firstRun) {
+  const kaclPromise = createKacl();
+  kaclPromise.then((kacl) => {
+    animate(kacl.scene, kacl.camera, kacl.mixer, kaclPromise);
+    window.addEventListener('resize', () => adjustSize(kacl.camera));
+  });
+} else if (firstRun === false) {
+  await resetScene();
+}
 
   // Hide player canvas initially
   canvas.style.display = 'none';
 
   // Add event listeners
+  
+
+  function handleEnterKey(event) {
+    if (event.key === 'Enter') {
+      if (inputCount === 0) {
+        question.style.opacity = 0;
+        inputCount++;
+        userName = question.value;
+        question.placeholder = '';
+  
+        setTimeout(() => {
+          question.maxLength = 100;
+          question.style.opacity = 1;
+          question.placeholder = `What's your question, ${userName}?`;
+        }, 1500);
+  
+        question.value = '';
+      } else if (inputCount === 1) {
+        const questionText = question.value;
+        inputCount++;
+        question.value = '';
+        question.placeholder = '';
+        question.style.opacity = 0;
+  
+        setTimeout(() => {
+          waitingDiv.style.opacity = 1;
+        }, 500);
+  
+        episode(questionText);
+      }
+    }
+  }
+  
+  const handleQuestionFocus = () => {
+    console.log('Question focused');
+  
+    border.style.opacity = 1;
+    question.classList.add("fade");
+  
+    if (inputCount === 0) {
+      setTimeout(() => {
+        question.placeholder = "What's your name, caller?";
+        question.classList.remove("fade");
+      }, 1000);
+    } else if (inputCount === 1) {
+      setTimeout(() => {
+        question.placeholder = `What's your question, ${userName}?`;
+        question.classList.remove("fade");
+      }, 1000);
+    } else {
+      question.placeholder = '';
+      question.classList.add("fade");
+      question.style.opacity = 0;
+    }
+  };
+  
+  function handleFocusOut() {
+    question.classList.add('fade');
+    border.style.opacity = 0;
+  
+    if (inputCount <= 1) {
+      setTimeout(() => {
+        question.placeholder = "I'm listening.";
+        question.classList.remove('fade');
+      }, 1000);
+    } else if (inputCount > 1) {
+      question.placeholder = '';
+      question.style.opacity = 0;
+      question.classList.add('fade');
+    }
+  }
+  
+  function addQuestionEventListeners() {
+    question.addEventListener('keydown', handleEnterKey);
+    question.addEventListener('focus', handleQuestionFocus);
+    question.addEventListener('blur', handleFocusOut);
+  }
+
   addQuestionEventListeners();
+  
 }
 
 async function resetScene() {
@@ -134,98 +210,6 @@ async function resetScene() {
   question.blur();
 }
 
-
-function handleEnterKey(event) {
-  if (event.key === 'Enter') {
-    if (inputCount === 0) {
-      question.style.opacity = 0;
-      inputCount++;
-      userName = question.value;
-      question.placeholder = '';
-
-      setTimeout(() => {
-        question.maxLength = 100;
-        question.style.opacity = 1;
-        question.placeholder = `What's your question, ${userName}?`;
-      }, 1500);
-
-      question.value = '';
-    } else if (inputCount === 1) {
-      const questionText = question.value;
-      inputCount++;
-      question.value = '';
-      question.placeholder = '';
-      question.style.opacity = 0;
-
-      setTimeout(() => {
-        waitingDiv.style.opacity = 1;
-      }, 500);
-
-      episode(questionText, userName);
-    }
-  }
-}
-
-const handleQuestionFocus = () => {
-  console.log('Question focused');
-
-  border.style.opacity = 1;
-  question.classList.add("fade");
-
-  if (inputCount === 0) {
-    setTimeout(() => {
-      question.placeholder = "What's your name, caller?";
-      question.classList.remove("fade");
-    }, 1000);
-  } else if (inputCount === 1) {
-    setTimeout(() => {
-      question.placeholder = `What's your question, ${userName}?`;
-      question.classList.remove("fade");
-    }, 1000);
-  } else {
-    question.placeholder = '';
-    question.classList.add("fade");
-    question.style.opacity = 0;
-  }
-};
-
-function handleFocusOut() {
-  question.classList.add('fade');
-  border.style.opacity = 0;
-
-  if (inputCount <= 1) {
-    setTimeout(() => {
-      question.placeholder = "I'm listening.";
-      question.classList.remove('fade');
-    }, 1000);
-  } else if (inputCount > 1) {
-    question.placeholder = '';
-    question.style.opacity = 0;
-    question.classList.add('fade');
-  }
-}
-
-function addQuestionEventListeners() {
-  question.addEventListener('keydown', handleEnterKey);
-  question.addEventListener('focus', handleQuestionFocus);
-  question.addEventListener('blur', handleFocusOut);
-}
-
-//  ------------- [ KACL ANIMATE ] -----------------
-function animate(scene, camera, renderer, mixer) {
-  if (animateActive && !creditsAnimateActive) {
-    requestAnimationFrame(animate);
-
-    const delta = clock.getDelta();
-
-    if (mixer) {
-      mixer.update(delta);
-    }
-
-    renderer.render(scene, camera);
-    camera.updateMatrixWorld();
-  }
-}
 
 
 function initIntro(theme) {
@@ -384,9 +368,24 @@ async function fetchEpisode(questionText, userName) {
 }
 
 
+//  ------------- [ KACL ANIMATE ] -----------------
+function animate(scene, camera, mixer, promise) {
+  promise.then(() => {
+    if (animateActive) {
+      setTimeout( function() {
+        requestAnimationFrame(() => animate(scene, camera, mixer, promise));
+        const delta = clock.getDelta();
+        mixer.update( delta );
+        renderer.render(scene, camera);
+        camera.updateMatrixWorld();
+      }, 1000 / 24 ); 
+    }
+  })
+}
+
 //  ------------- [ EPISODE LOOP ] -----------------
 
-async function episode(questionText, name) {
+async function episode(questionText) {
 
 
   // Get the latest episode
@@ -426,7 +425,7 @@ async function episode(questionText, name) {
   ktl.add(() => titleFade(titleDiv), "+=2");
 
   // begin animation
-  ktl.add(() => animate(), "+=5");
+  ktl.add(() => animate(kacl.scene, kacl.camera, kacl.mixer), "+=5");
 
    // fade in to kacl studio
    ktl.add(() => fadeIn(canvas), "+=0");
@@ -450,7 +449,7 @@ async function episode(questionText, name) {
   });
 }
 
-function animateCreds(scene, camera, renderer, mixer, texture, cone) {
+function animateCreds(scene, camera, mixer, texture, cone) {
   if (creditsAnimateActive === true) {
     requestAnimationFrame(animateCreds);
 
@@ -472,29 +471,24 @@ function animateCreds(scene, camera, renderer, mixer, texture, cone) {
   }
 }
 
-function createKacl() {
-
+async function createKacl() {
+  return new Promise((resolve, reject) => {
     // Adds audio listener to camera
     const kaclCamera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
-    kaclCamera.add( listenerKacl );
-    
+
     const kaclGLloader = new GLTFLoader();
 
     const kaclScene = new THREE.Scene();
-
 
     // Load Set
     kaclGLloader.load(
       `${frazSetGlbUrl}`,
       (gltf) => {
-      
         kaclScene.add(gltf.scene);
 
         const worldSet = gltf.scene;
-
-        worldSet.position.set(0, 0, 0)
+        worldSet.position.set(0, 0, 0);
         kaclCamRandomzier(kaclCamera, animateActive);
-
 
         worldSet.traverse(function (child) {
           if (child.isMesh) {
@@ -505,58 +499,58 @@ function createKacl() {
         worldSet.traverse(function (obj) {
           obj.frustumCulled = false;
         });
-      }, undefined, function ( error ) {
-        console.error( error );
-      }
-    );
 
-    // Add hero model
-    kaclGLloader.load(
-      `${frazGlbUrl}`,
-      (gltf) => {
-        kaclScene.add(gltf.scene);
+        // Add hero model
+        kaclGLloader.load(
+          `${frazGlbUrl}`,
+          (gltf) => {
+            kaclScene.add(gltf.scene);
 
-        gltf.scene.position.set( 0.061, 0, -0.127 );
-        gltf.scene.scale.set( 1, 1, 1 );
-        gltf.scene.rotation.set( 0 , -180 * Math.PI / 180, 0 );
+            gltf.scene.position.set(0.061, 0, -0.127);
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.rotation.set(0, -180 * Math.PI / 180, 0);
 
-        const model = gltf.scene;
+            const model = gltf.scene;
 
-        model.traverse(function (child) {
-          if (child.isMesh) {
-            child.material.roughness = 1;
+            model.traverse(function (child) {
+              if (child.isMesh) {
+                child.material.roughness = 1;
+              }
+            });
+
+            model.traverse(function (obj) {
+              obj.frustumCulled = false;
+            });
+
+            const mixer = new THREE.AnimationMixer(gltf.scene);
+            let clip = gltf.animations[1]; // talk animation
+            const action = mixer.clipAction(clip);
+            action.setLoop(THREE.LoopRepeat);
+            action.play();
+
+            window.addEventListener('resize', () => adjustSize(kaclCamera));
+
+            resolve({
+              scene: kaclScene,
+              camera: kaclCamera,
+              mixer: mixer,
+            });
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+            reject(error);
           }
-        });
-
-        model.traverse(function (obj) {
-          obj.frustumCulled = false;
-        });
-
-        const mixer = new THREE.AnimationMixer(gltf.scene);
-
-        let clip = gltf.animations[1]; // talk animation
-
-        const action = mixer.clipAction(clip);
-
-        action.setLoop(THREE.LoopRepeat);
-
-        action.play();
-
-        animate(kaclScene, kaclCamera, renderer, mixer);
-
-        window.addEventListener('resize', () => adjustSize(kaclCamera));
-
-        return {
-          scene: kaclScene,
-          camera: kaclCamera,
-          mixer: mixer
-        };
-
-      }, undefined, function ( error ) {
-        console.error( error );
+        );
+      },
+      undefined,
+      function (error) {
+        console.error(error);
+        reject(error);
       }
     );
-  };
+  });
+}
 
 
   async function createCreditsWorld(location) {
