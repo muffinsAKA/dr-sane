@@ -29,14 +29,12 @@ let episodeData;
 
 //  ------------- [ ANIM TRIGGERS ] -----------------
 let animateActive = true;
-let creditsAnimateActive = false;
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
 let lottieIntroInstance = null;
 let inputCount = 0;
 let userName;
-
 
 
 //  ------------- [ GLOBAL OBJS ] -----------------
@@ -72,6 +70,69 @@ const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 //  ------------- [ RENDERERS ] -----------------
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
+let current = {
+  scene: null,
+  camera: null,
+  mixer: null,
+  texture: null,
+  cone: null,
+  sceneName: null
+}
+
+let kaclHold = {
+  scene: null,
+  camera: null,
+  mixer: null,
+  sceneName: 'kacl'
+}
+
+let creditsFallHold = {
+  scene: null,
+  camera: null,
+  mixer: null,
+  texture: null,
+  cone: null,
+  sceneName: 'creditsFall'
+}
+
+let creditsDanceHold = {
+  scene: null,
+  camera: null,
+  mixer: null,
+  sceneName: 'creditsDance'
+}
+
+function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
+  
+  if (current.sceneName === 'kacl') {
+    kaclHold.scene = newScene;
+    kaclHold.camera = newCamera;
+    kaclHold.mixer = newMixer;
+
+  } else if (current.sceneName === 'creditsFall') {
+    creditsFallHold.scene = newScene;
+    creditsFallHold.camera = newCamera;
+    creditsFallHold.mixer = newMixer;
+    creditsFallHold.texture = texture;
+    creditsFallHold.cone = cone;
+
+  } else if (current.sceneName === 'creditsDance') {
+    creditsDanceHold.scene = newScene;
+    creditsDanceHold.camera = newCamera;
+    creditsDanceHold.mixer = newMixer;
+  }
+  
+  current.scene = newScene;
+  current.camera = newCamera;
+  current.mixer = newMixer;
+
+  if (sceneName === 'creditsFall') {
+    current.texture = texture;
+    current.cone = cone;
+  }
+
+}
+
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 window.addEventListener('DOMContentLoaded', mainInit);
@@ -84,10 +145,9 @@ async function mainInit() {
 if (firstRun) {
   createKacl(location)
   .then((kacl) => {
-    animateActive = true; // Disable the previous animation
-    creditsAnimateActive = false; // Enable the credits animation
+    switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null)
     animate(kacl.scene, kacl.camera, kacl.mixer);
-    window.addEventListener('resize', () => adjustSize(kacl.camera));
+    window.addEventListener('resize', () => adjustSize(current.camera));
   })
   .catch((error) => {
     console.error(error);
@@ -208,7 +268,6 @@ async function resetScene() {
 
   creditsText.innerHTML = '';
   titleDiv.innerHTML = ''
-  credits = null;
   lottieIntroInstance.destroy();
   lottieIntroInstance = null;
   
@@ -341,14 +400,28 @@ async function createCredits() {
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
   createCreditsWorld(creditsChoice)
   .then((credits) => {
-    animateActive = false; // Disable the previous animation
-    creditsAnimateActive = true; // Enable the credits animation
-    animateCreds(credits.scene, credits.camera, credits.mixer, credits.texture, credits.cone);
+
+    if (creditsChoice === 'creditsDance') {
+      switchScene(credits.scene, credits.camera, credits.mixer, 'creditsDance', null, null);
+    } else if (creditsChoice = 'creditsFall') {
+      switchScene(credits.scene, credits.camera, credits.mixer, 'creditsFall', credits.texture, credits.cone);
+    }
+    
   })
   .catch((error) => {
     console.error(error);
   });
 
+}
+
+
+function switchScene(newScene, newCamera, newMixer, texture, cone, sceneName) {
+  current.scene = newScene;
+  current.camera = newCamera;
+  current.mixer = newMixer;
+  current.texture = texture;
+  current.cone = cone;
+  current.sceneName = sceneName;
 }
 
 
@@ -382,18 +455,26 @@ async function fetchEpisode(questionText, userName) {
 
 
 //  ------------- [ KACL ANIMATE ] -----------------
-function animate(scene, camera, mixer) {
-    if (animateActive) {
-      setTimeout( function() {
-        requestAnimationFrame(() => animate(scene, camera, mixer));
-        const delta = clock.getDelta();
-        mixer.update( delta );
-        renderer.render(scene, camera);
-        camera.updateMatrixWorld();
-      }, 1000 / 24 ); 
-    }
-  }
+function animate() {
+  if (current.animateActive) {
+    setTimeout(function () {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      current.mixer.update(delta);
 
+      if (current.cone) {
+        current.cone.rotation.y += 0.01;
+      }
+  
+      if (current.texture) {
+        current.texture.needsUpdate = true;
+      }
+
+      renderer.render(current.scene, current.camera);
+      current.camera.updateMatrixWorld();
+    }, 1000 / 24);
+  }
+}
 //  ------------- [ EPISODE LOOP ] -----------------
 
 async function episode(questionText) {
@@ -457,27 +538,8 @@ async function episode(questionText) {
   });
 }
 
-function animateCreds(scene, camera, mixer, texture, cone) {
-  if (creditsAnimateActive === true) {
-      setTimeout( function() {
-        requestAnimationFrame(() => animateCreds(scene, camera, mixer, texture, cone));
 
-    const delta = clock.getDelta();
-    
-    mixer.update(delta);
 
-    if (cone) {
-      cone.rotation.y += 0.01;
-    }
-
-    if (texture) {
-      texture.needsUpdate = true;
-    }
-
-    renderer.render(scene, camera);
-  }, 1000 / 24 ); 
-  }
-  }
 
 async function createKacl() {
   return new Promise((resolve, reject) => {
@@ -535,8 +597,6 @@ async function createKacl() {
             const action = mixer.clipAction(clip);
             action.setLoop(THREE.LoopRepeat);
             action.play();
-
-            window.addEventListener('resize', () => adjustSize(kaclCamera));
 
             resolve({
               scene: kaclScene,
