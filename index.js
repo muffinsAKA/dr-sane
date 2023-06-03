@@ -93,8 +93,6 @@ function logHolds(logReq) {
   }
 }
 
-logHolds('creditsDance');
-
 //  ------------- [ RENDERERS ] -----------------
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
