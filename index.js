@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import animationData from './src/intro.json';
 import { kaclCamRandomzier } from './cams.js';
 import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, setRenderer, titleFade } from './functions.js';
-import VimeoPlayer from '@vimeo/player';
+
 
 //  ------------- [ DOM ELEMENTS ] -----------------
 const firstTime = document.getElementById('first-time');
@@ -274,7 +274,7 @@ async function mainInit() {
     const removeEventListeners = () => {
       //question.removeEventListener('input', handleTyping);
       question.removeEventListener('focus', handleQuestionFocus);
-      document.removeEventListener('keydown', handleEnterKey);
+      question.removeEventListener('keydown', handleEnterKey);
       question.addEventListener('blur', handleFocusOut);
     };
     
