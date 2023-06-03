@@ -27,10 +27,9 @@ async function defaultPrompt(questionText, userName) {
   const charLimit = 500;
   const tokens = 900;
   const subject = questionText;
+  const userName = userName;
 
-  const prompt = 
-  
-  `Pretend to be Dr. Frasier Crane on his radio show giving response to a caller named ${userName} asking this question/statement: "${subject}". \
+  const prompt = `Pretend to be Dr. Frasier Crane on his radio show giving response to a caller named ${userName} asking this question/statement: "${subject}". \
 Be humorous with dialogue in the way Dr. Frasier Crane speaks. The goal is to be funny while giving great advice. \
 End the monologue with 'This is Dr. Frasier Crane signing off & wishing you good mental health' \
 Separate the title and script in your response. \
