@@ -54,7 +54,7 @@ const clock = new THREE.Clock();
 
 //  ------------- [ SCENES ] -----------------
 let intro = new THREE.Scene();
-let credits = new THREE.Scene();
+let credits;
 
 
 
@@ -137,9 +137,12 @@ async function resetScene() {
   episodeData = null;
 
   creditsText.innerHTML = '';
-  titleDiv.innerHTML = '';
-  lottieIntroInstance = null;
+  titleDiv.innerHTML = ''
+  credits.destroy();
+  credits = null;
   lottieIntroInstance.destroy();
+  lottieIntroInstance = null;
+  
   
 
   question.style.opacity = 1;
@@ -379,8 +382,8 @@ async function createCredits() {
 
   // create credits world
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
-  world = await chooseCredits(creditsOptions[creditsChoice]);
-  world.createCreditsWorld();
+  credits = await chooseCredits(creditsOptions[creditsChoice]);
+  credits.createCreditsWorld();
   
 }
 
