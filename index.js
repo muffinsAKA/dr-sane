@@ -14,7 +14,7 @@ const creditsDiv = document.querySelector('#credits');
 const creditsText = creditsDiv.querySelector('p')
 const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
-const question = document.getElementById('question');
+let question = document.getElementById('question');
 const container = document.getElementById('first-time');
 const waitingDiv = document.getElementById("waiting");
 const border = document.getElementById('border')
@@ -506,7 +506,7 @@ async function episode(questionText, name) {
   console.log(`monologue length: ${monoLength}`);
 
   border.style.opacity = 1;
-  
+
   ktl.add(() => {
     initIntro(episodeData.theme);
   }, 0.5);
