@@ -143,15 +143,31 @@ async function mainInit() {
 
 // Set variables if not first run
 if (firstRun) {
+
   createKacl(location)
   .then((kacl) => {
-    switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null)
-    animate(kacl.scene, kacl.camera, kacl.mixer);
-    window.addEventListener('resize', () => adjustSize(current.camera));
-  })
-  .catch((error) => {
-    console.error(error);
+    current.scene = kacl.scene;
+    current.camera = kacl.camera;
+    current.mixer = kacl.mixer;
+    animate();
   });
+  
+
+    createCreditsWorld('creditsFall')
+    .then((creditsFall) => {
+      creditsFallHold.scene = creditsFall.scene;
+      creditsFallHold.camera = creditsFall.camera;
+      creditsFallHold.mixer = creditsFall.mixer;
+      creditsFallHold.texture = creditsFall.texture;
+      creditsFallHold.cone = creditsFall.cone;
+    });
+      
+    createCreditsWorld('creditsDance')
+    .then((creditsDance) => {
+      creditsDanceHold.scene = creditsDance.scene;
+      creditsDanceHold.camera = creditsDance.camera;
+      creditsDanceHold.mixer = creditsDance.mixer;
+    });
 
 
 } else if (firstRun === false) {
