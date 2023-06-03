@@ -332,8 +332,11 @@ async function createCredits() {
 
   // create credits world
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
-  const credits = createCreditsWorld(creditsChoice);
-  
+  const creditsPromise = createCreditsWorld(creditsChoice);
+  creditsPromise.then((credits) => {
+    animateCreds(credits.scene, credits.camera, credits.mixer, credits.texture, credits.cone, creditsPromise);
+  });
+
   window.addEventListener('resize', () => adjustSize(credits.camera));
 
 }
@@ -449,8 +452,9 @@ async function episode(questionText) {
   });
 }
 
-function animateCreds(scene, camera, mixer, texture, cone) {
+function animateCreds(scene, camera, mixer, texture, cone, creditsPromise) {
   if (creditsAnimateActive === true) {
+    creditsPromise.then(() => {
     requestAnimationFrame(animateCreds);
 
     const delta = clock.getDelta();
@@ -466,8 +470,7 @@ function animateCreds(scene, camera, mixer, texture, cone) {
     }
 
     renderer.render(scene, camera);
-  } else {
-    return;
+    })
   }
 }
 
@@ -553,117 +556,122 @@ async function createKacl() {
 }
 
 
-  async function createCreditsWorld(location) {
+async function createCreditsWorld(location) {
 
-    const creditsCamera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
-    
-    const creditsGLloader = new GLTFLoader();
+  return new Promise((resolve, reject) => {
 
-    const creditsScene = new THREE.Scene();
+  const creditsCamera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
+  
+  const creditsGLloader = new GLTFLoader();
 
-  // Load Set
-  switch (location) {
-    case 'creditsFall':
+  const creditsScene = new THREE.Scene();
 
-      video.play();
-      video.loop = true;
-      video.muted = true;
+// Load Set
+switch (location) {
+  case 'creditsFall':
 
-      creditsGLloader.load(`${creditsFall}`, (gltf) => {
-      creditsScene.add(gltf.scene);
+    video.play();
+    video.loop = true;
+    video.muted = true;
 
-        let clip = gltf.animations[0];
+    creditsGLloader.load(`${creditsFall}`, (gltf) => {
+    creditsScene.add(gltf.scene);
 
-        const mixer = new THREE.AnimationMixer(gltf.scene);
+      let clip = gltf.animations[0];
 
-        const action = mixer.clipAction(clip);
+      const mixer = new THREE.AnimationMixer(gltf.scene);
 
-        action.setLoop(THREE.LoopRepeat);
+      const action = mixer.clipAction(clip);
 
-        action.play();
+      action.setLoop(THREE.LoopRepeat);
 
-        const cone = gltf.scene.children[0].children[0];
+      action.play();
 
-        const texture = new THREE.VideoTexture(video);
+      const cone = gltf.scene.children[0].children[0];
 
-        texture.repeat.y = -1;
+      const texture = new THREE.VideoTexture(video);
 
-        const material = new THREE.MeshStandardMaterial({
-          map: texture,
-          color: 0x5E1327,
-          emissive: texture,
-          emissiveMap: texture,
-        });
+      texture.repeat.y = -1;
 
-        cone.material = material;
-
-        cone.material.emissiveIntensity = 3;
-
-        creditsCamera.position.set(0, 6.25, 0.5);
-        creditsCamera.rotation.x = -1.5;
-
-
-        animateCreds(creditsScene, creditsCamera, mixer, texture, cone);
-
-        return {
-          scene: creditsScene,
-          camera: creditsCamera,
-          mixer: mixer,
-          texture: texture,
-          cone: cone
-        };
+      const material = new THREE.MeshStandardMaterial({
+        map: texture,
+        color: 0x5E1327,
+        emissive: texture,
+        emissiveMap: texture,
       });
 
-      break;
+      cone.material = material;
+
+      cone.material.emissiveIntensity = 3;
+
+      creditsCamera.position.set(0, 6.25, 0.5);
+      creditsCamera.rotation.x = -1.5;
+
+
+      resolve({
+        scene: creditsScene,
+        camera: creditsCamera,
+        mixer: mixer,
+        texture: texture,
+        cone: cone
+      });
+    },
+    undefined,
+    (error) => {
+      console.error(error);
+      reject(error);
+    });
+
+    break;
+
+    case 'creditsDance':
+
+       creditsGLloader.load(
+        `${creditsDance}`,
+        (creditsDanceGltf) => {
+        
+        creditsScene.add(creditsDanceGltf.scene);
   
-      case 'creditsDance':
+        let clip = creditsDanceGltf.animations[33]
+  
+        const mixer = new THREE.AnimationMixer(creditsDanceGltf.scene);
+  
+        const action = mixer.clipAction(clip);
+        
+        action.setLoop(THREE.LoopRepeat);
+  
+        action.play();
 
-         creditsGLloader.load(
-          `${creditsDance}`,
-          (creditsDanceGltf) => {
-          
-          creditsScene.add(creditsDanceGltf.scene);
-    
-          let clip = creditsDanceGltf.animations[33]
-    
-          const mixer = new THREE.AnimationMixer(creditsDanceGltf.scene);
-    
-          const action = mixer.clipAction(clip);
-          
-          action.setLoop(THREE.LoopRepeat);
-    
-          action.play();
+        creditsCamera.position.set(-3.1, 0.89 , 1.94);
+        creditsCamera.rotation.set(
+          18.74 * Math.PI / 180,
+          -67.87 * Math.PI / 180,
+          17.45 * Math.PI / 180)
 
-          creditsCamera.position.set(-3.1, 0.89 , 1.94);
-          creditsCamera.rotation.set(
-            18.74 * Math.PI / 180,
-            -67.87 * Math.PI / 180,
-            17.45 * Math.PI / 180)
-
-            creditsDanceGltf.scene.traverse(function (child) {
-              if (child.isMesh) {
-                child.material.roughness = 1;
-              }
-            });
-    
-            creditsDanceGltf.scene.traverse(function (obj) {
-              obj.frustumCulled = false;
-            });
+          creditsDanceGltf.scene.traverse(function (child) {
+            if (child.isMesh) {
+              child.material.roughness = 1;
+            }
+          });
+  
+          creditsDanceGltf.scene.traverse(function (obj) {
+            obj.frustumCulled = false;
+          });
 
 
-          animateCreds(creditsScene, creditsCamera, mixer);
-          
-          return {
+          resolve({
             scene: creditsScene,
             camera: creditsCamera,
             mixer: mixer
-          };
-
-         });
-          break;
-    }
+          });
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+          reject(error);
+        }
+      );
+        break;
+      }
+    });
   };
-  
-  
-
-  
