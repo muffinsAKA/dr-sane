@@ -103,17 +103,6 @@ let creditsDanceHold = {
 }
 
 function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
-  
-  console.log({
-    sceneName,
-    newScene,
-    newCamera,
-    newMixer,
-    texture,
-    cone
-  });
-
-  console.log(current);
 
   if (current.sceneName === 'kacl') {
     kaclHold.scene = current.scene;
@@ -224,8 +213,7 @@ if (firstRun) {
   }
   
   const handleQuestionFocus = () => {
-    console.log('Question focused');
-  
+
     border.style.opacity = 1;
     question.classList.add("fade");
   
@@ -361,7 +349,6 @@ async function titleCard(epTitle) {
 async function createCredits() {
 
   let creditsLength = await credLength(audioLoader, soundKacl);
-  console.log(`creds length: ${creditsLength}`)
   
   // tbh not sure if this is needed but why fuck with it
   creditsDiv.style.display = "flex";
@@ -428,9 +415,7 @@ async function createCredits() {
   const creditsChoice = creditsOptions[Math.floor(Math.random() * creditsOptions.length)];
   createCreditsWorld(creditsChoice)
   .then((credits) => {
-    console.log(`credits: ${credits}`);
-    console.log(credits);
-    console.log(credits.scene);
+
     if (creditsChoice === 'creditsDance') {
       switchScene(credits.scene, credits.camera, credits.mixer, 'creditsDance', null, null);
     } else if (creditsChoice === 'creditsFall') {
@@ -514,11 +499,9 @@ async function episode(questionText) {
 
   // Get theme song length
   let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
-  console.log(`theme length: ${themeLength}`);
   
     // Get monologue length
   let monoLength = Math.ceil(await monologueLength(episodeData.audio)) -0.5;
-  console.log(`monologue length: ${monoLength}`);
 
   border.style.opacity = 1;
 
@@ -695,7 +678,6 @@ switch (location) {
       creditsCamera.position.set(0, 6.25, 0.5);
       creditsCamera.rotation.x = -1.5;
 
-      console.log(creditsScene, creditsCamera, mixer, texture,cone)
       resolve({
         scene: creditsScene,
         camera: creditsCamera,
@@ -745,8 +727,6 @@ switch (location) {
           creditsDanceGltf.scene.traverse(function (obj) {
             obj.frustumCulled = false;
           });
-
-          console.log(creditsScene, creditsCamera, mixer)
 
           resolve({
             scene: creditsScene,
