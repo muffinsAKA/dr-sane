@@ -147,8 +147,34 @@ async function mainInit() {
 // Set variables if not first run
 
 
+if (firstRun === true) {
 
-  if (firstRun === false) {
+  createKacl()
+  .then((kacl) => {
+    current.scene = kacl.scene;
+    current.camera = kacl.camera;
+    current.mixer = kacl.mixer;
+    animate();
+  });
+  
+
+  createCreditsWorld('creditsFall')
+  .then((creditsFall) => {
+    creditsFallHold.scene = creditsFall.scene;
+    creditsFallHold.camera = creditsFall.camera;
+    creditsFallHold.mixer = creditsFall.mixer;
+    creditsFallHold.texture = creditsFall.texture;
+    creditsFallHold.cone = creditsFall.cone;
+  });
+    
+  createCreditsWorld('creditsDance')
+  .then((creditsDance) => {
+    creditsDanceHold.scene = creditsDance.scene;
+    creditsDanceHold.camera = creditsDance.camera;
+    creditsDanceHold.mixer = creditsDance.mixer;
+  });
+  
+} else if (firstRun === false) {
     
     await resetScene();
     switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
@@ -187,33 +213,6 @@ async function mainInit() {
 
         }, 500);
         
-        if (firstRun === true) {
-
-          createKacl()
-          .then((kacl) => {
-            current.scene = kacl.scene;
-            current.camera = kacl.camera;
-            current.mixer = kacl.mixer;
-            animate();
-          });
-          
-        
-            createCreditsWorld('creditsFall')
-            .then((creditsFall) => {
-              creditsFallHold.scene = creditsFall.scene;
-              creditsFallHold.camera = creditsFall.camera;
-              creditsFallHold.mixer = creditsFall.mixer;
-              creditsFallHold.texture = creditsFall.texture;
-              creditsFallHold.cone = creditsFall.cone;
-            });
-              
-            createCreditsWorld('creditsDance')
-            .then((creditsDance) => {
-              creditsDanceHold.scene = creditsDance.scene;
-              creditsDanceHold.camera = creditsDance.camera;
-              creditsDanceHold.mixer = creditsDance.mixer;
-            });
-          }
 
         episode(questionText);
 
