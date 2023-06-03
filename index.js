@@ -541,7 +541,7 @@ class World {
   // Load Set
   switch (world.location) {
     case 'creditsFall':
-      video.src = '/loop.gif';
+      
       video.play();
       video.loop = true;
       video.muted = true;

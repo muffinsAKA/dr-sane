@@ -33,7 +33,7 @@ Be creative and humorous with dialogue in the same way Dr. Frasier Crane often s
 End the monologue with 'This is Dr. Frasier Crane signing off & wishing you good mental health' \
 Separate the title and script in your response. \
 Keep your response under ${charLimit} characters. Reply in only json with no other text. The json just contain two parts: title and script.\
-Make sure the title for the episode is creative and relevant.`
+Make sure the title for the episode is a double entendre.`
 
 
   return {voice, world, prompt, subject, name, location, tokens, model}
