@@ -29,13 +29,10 @@ let canvasHeight = window.innerHeight * 0.6
 
 //  ------------- [ API GRAB ] -----------------
 let episodeData;
-let world;
 
 //  ------------- [ ANIM TRIGGERS ] -----------------
 let animateActive = true;
 let creditsAnimateActive = false;
-let animateIntro = true;
-let mixer;
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
@@ -47,16 +44,7 @@ let userName;
 
 //  ------------- [ GLOBAL OBJS ] -----------------
 const audioLoader = new THREE.AudioLoader();
-const lottieLoader = new LottieLoader();
 const clock = new THREE.Clock();
-
-
-
-//  ------------- [ SCENES ] -----------------
-let intro = new THREE.Scene();
-let credits;
-
-
 
 
 //  ------------- [ CAMERAS ] -----------------
@@ -99,17 +87,15 @@ async function mainInit() {
   
   // Set variables if not first run
   if (firstRun) {
-    world = new World();
-    await world.createWorld();
+    
+    const kacl = createKacl();
+    window.addEventListener('resize', () => adjustSize(kacl.camera));
 
   } else if (firstRun === false) {
     await resetScene();
   }
 
   setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
-
-  // Add listener for window resizing to adjust size/camera
-  window.addEventListener('resize', adjustSize);
 
   // Hide player canvas initially
   canvas.style.display = 'none';
@@ -229,18 +215,18 @@ function addQuestionEventListeners() {
 }
 
 //  ------------- [ KACL ANIMATE ] -----------------
-function animate() {
+function animate(scene, camera, renderer, mixer) {
   if (animateActive && !creditsAnimateActive) {
     requestAnimationFrame(animate);
 
     const delta = clock.getDelta();
 
-    if (world.mixer) {
-      world.mixer.update(delta);
+    if (mixer) {
+      mixer.update(delta);
     }
 
-    renderer.render(world.scene, world.camera);
-    world.camera.updateMatrixWorld();
+    renderer.render(scene, camera);
+    camera.updateMatrixWorld();
   }
 }
 
@@ -273,18 +259,16 @@ function initIntro(theme) {
 }
 
 //  ------------- [ RESIZE ] -----------------
-async function adjustSize() {
+async function adjustSize(camera) {
 
 
   canvasWidth = window.innerWidth * 0.5;
   canvasHeight = window.innerHeight * 0.6;
   
-  world.camera.aspect = canvasWidth / canvasHeight;
-  world.camera.updateProjectionMatrix();
   renderer.setSize(canvasWidth, canvasHeight);
   
-  credits.camera.aspect = canvasWidth / canvasHeight;
-  credits.camera.updateProjectionMatrix();
+  camera.aspect = canvasWidth / canvasHeight;
+  camera.updateProjectionMatrix();
 
 }
 
@@ -302,9 +286,7 @@ async function titleCard(epTitle) {
 async function createCredits() {
 
   let creditsLength = await credLength(audioLoader, soundKacl);
-  console.log(creditsLength)
-  
-  creditsAnimateActive = true;
+  console.log(`creds length: ${creditsLength}`)
   
   // tbh not sure if this is needed but why fuck with it
   creditsDiv.style.display = "flex";
@@ -365,24 +347,14 @@ async function createCredits() {
   // Play timline
   ctl.play();
   
-  async function chooseCredits(worldType) {
-    switch (worldType) {
-      case 'creditsDance':
-        return new World('credits', 'creditsDance', 'creditsDance');
-      case 'creditsFall':
-        return new World('credits', 'creditsFall', 'creditsFall');
-      default:
-        throw new Error(`Unknown world type: ${worldType}`);
-    }
-  }
-
   const creditsOptions = ['creditsDance', 'creditsFall'];
 
   // create credits world
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
-  credits = await chooseCredits(creditsOptions[creditsChoice]);
-  await credits.createCreditsWorld();
-  console.log(credits);
+  const credits = createCreditsWorld(creditsChoice);
+  
+  window.addEventListener('resize', () => adjustSize(credits.camera));
+
 }
 
 
@@ -481,167 +453,50 @@ async function episode(questionText, name) {
   });
 }
 
-function animateCreds(scene, camera, mixer) {
+function animateCreds(scene, camera, renderer, mixer, texture, cone) {
   if (creditsAnimateActive === true) {
     requestAnimationFrame(animateCreds);
 
     const delta = clock.getDelta();
     
     mixer.update(delta);
-    cone.rotation.y += 0.01;
-    texture.needsUpdate = true;
+
+    if (cone) {
+      cone.rotation.y += 0.01;
+    }
+
+    if (texture) {
+      texture.needsUpdate = true;
+    }
+
     renderer.render(scene, camera);
   } else {
     return;
   }
 }
 
-class World {
-  constructor(worldName, location, character) {
-
-    this.worldName = worldName;
-    this.location = location;
-    this.character = character;
- 
-    this.camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
-
-    this.glLoader = new GLTFLoader();
-    
-    this.scene = new THREE.Scene();
-    
-    this.mixer = null;
-  }
-
-  async createCreditsWorld() {
-  // Load Set
-  switch (credits.location) {
-    case 'creditsFall':
-
-      video.play();
-      video.loop = true;
-      video.muted = true;
-
-      this.glLoader.load(`${creditsFall}`, (gltf) => {
-        this.scene.add(gltf.scene);
-
-        let clip, cone, texture;
-
-        clip = gltf.animations[0];
-
-        this.mixer = new THREE.AnimationMixer(gltf.scene);
-
-        const action = this.mixer.clipAction(clip);
-
-        action.setLoop(THREE.LoopRepeat);
-
-        action.play();
-
-        cone = gltf.scene.children[0].children[0];
-
-        texture = new THREE.VideoTexture(video);
-
-        texture.repeat.y = -1;
-
-        const material = new THREE.MeshStandardMaterial({
-          map: texture,
-          color: 0x5E1327,
-          emissive: texture,
-          emissiveMap: texture,
-        });
-
-        cone.material = material;
-
-        cone.material.emissiveIntensity = 3;
-
-        this.camera.position.set(0, 6.25, 0.5);
-        this.camera.rotation.x = -1.5;
-
-
-        animateCreds(this.scene, this.camera, this.mixer);
-      });
-
-      break;
-  
-      case 'creditsDance':
-
-         this.glLoader.load(
-          `${creditsDance}`,
-          (creditsDanceGltf) => {
-          
-          this.scene.add(creditsDanceGltf.scene);
-          console.log(creditsDanceGltf)
-    
-          let clip
-    
-          clip = creditsDanceGltf.animations[33]
-    
-          this.mixer = new THREE.AnimationMixer(creditsDanceGltf.scene);
-    
-          const action = this.mixer.clipAction(clip);
-          
-          action.setLoop(THREE.LoopRepeat);
-    
-          action.play();
-
-          this.camera.position.set(-3.1, 0.89 , 1.94);
-          this.camera.rotation.set(
-            18.74 * Math.PI / 180,
-            -67.87 * Math.PI / 180,
-            17.45 * Math.PI / 180)
-
-            creditsDanceGltf.scene.traverse(function (child) {
-              if (child.isMesh) {
-                child.material.roughness = 1;
-              }
-            });
-    
-            creditsDanceGltf.scene.traverse(function (obj) {
-              obj.frustumCulled = false;
-            });
-
-          function animateCreds(scene, camera, mixer) {
-            if (creditsAnimateActive === true) {
-              requestAnimationFrame(animate)
-            
-              const delta = clock.getDelta();
-            
-              mixer.update( delta );
-              renderer.render(scene, camera)
-            
-            } else {
-
-              return;
-
-            }
-          
-            
-          }
-          
-          animateCreds(this.scene, this.camera, this.mixer);
-        
-         });
-          break;
-    }
-  };
-  
-  
-
-  async createWorld() {
+function createKacl() {
 
     // Adds audio listener to camera
-    this.camera.add( listenerKacl );
+    const kaclCamera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
+    kaclCamera.add( listenerKacl );
     
+    const kaclGLloader = new GLTFLoader();
+
+    const kaclScene = new THREE.Scene();
+
+
     // Load Set
-    this.glLoader.load(
+    kaclGLloader.load(
       `${frazSetGlbUrl}`,
       (gltf) => {
       
-        this.scene.add(gltf.scene);
+        kaclScene.add(gltf.scene);
 
         const worldSet = gltf.scene;
 
         worldSet.position.set(0, 0, 0)
-        kaclCamRandomzier(this.camera, animateActive);
+        kaclCamRandomzier(kaclCamera, animateActive);
 
 
         worldSet.traverse(function (child) {
@@ -659,10 +514,10 @@ class World {
     );
 
     // Add hero model
-    this.glLoader.load(
+    kaclGLloader.load(
       `${frazGlbUrl}`,
       (gltf) => {
-        this.scene.add(gltf.scene);
+        kaclScene.add(gltf.scene);
 
         gltf.scene.position.set( 0.061, 0, -0.127 );
         gltf.scene.scale.set( 1, 1, 1 );
@@ -680,21 +535,144 @@ class World {
           obj.frustumCulled = false;
         });
 
-        this.mixer = new THREE.AnimationMixer(gltf.scene);
+        const mixer = new THREE.AnimationMixer(gltf.scene);
 
-        let clip;
+        let clip = gltf.animations[1]; // talk animation
 
-        clip = gltf.animations[1]; // talk animation
-
-
-        const action = this.mixer.clipAction(clip);
+        const action = mixer.clipAction(clip);
 
         action.setLoop(THREE.LoopRepeat);
 
         action.play();
+
+        animate(kaclScene, kaclCamera, renderer, mixer);
+
+        window.addEventListener('resize', () => adjustSize(kaclCamera));
+
+        return {
+          scene: kaclScene,
+          camera: kaclCamera,
+          mixer: mixer
+        };
+
       }, undefined, function ( error ) {
         console.error( error );
       }
     );
-  }
-}
+  };
+
+
+  async function createCreditsWorld(location) {
+
+    const creditsCamera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.01, 5000);
+    
+    const creditsGLloader = new GLTFLoader();
+
+    const creditsScene = new THREE.Scene();
+
+  // Load Set
+  switch (location) {
+    case 'creditsFall':
+
+      video.play();
+      video.loop = true;
+      video.muted = true;
+
+      creditsGLloader.load(`${creditsFall}`, (gltf) => {
+      creditsScene.add(gltf.scene);
+
+        let clip = gltf.animations[0];
+
+        const mixer = new THREE.AnimationMixer(gltf.scene);
+
+        const action = mixer.clipAction(clip);
+
+        action.setLoop(THREE.LoopRepeat);
+
+        action.play();
+
+        const cone = gltf.scene.children[0].children[0];
+
+        const texture = new THREE.VideoTexture(video);
+
+        texture.repeat.y = -1;
+
+        const material = new THREE.MeshStandardMaterial({
+          map: texture,
+          color: 0x5E1327,
+          emissive: texture,
+          emissiveMap: texture,
+        });
+
+        cone.material = material;
+
+        cone.material.emissiveIntensity = 3;
+
+        creditsCamera.position.set(0, 6.25, 0.5);
+        creditsCamera.rotation.x = -1.5;
+
+
+        animateCreds(creditsScene, creditsCamera, mixer, texture, cone);
+
+        return {
+          scene: creditsScene,
+          camera: creditsCamera,
+          mixer: mixer,
+          texture: texture,
+          cone: cone
+        };
+      });
+
+      break;
+  
+      case 'creditsDance':
+
+         creditsGLloader.load(
+          `${creditsDance}`,
+          (creditsDanceGltf) => {
+          
+          creditsScene.add(creditsDanceGltf.scene);
+    
+          let clip = creditsDanceGltf.animations[33]
+    
+          const mixer = new THREE.AnimationMixer(creditsDanceGltf.scene);
+    
+          const action = mixer.clipAction(clip);
+          
+          action.setLoop(THREE.LoopRepeat);
+    
+          action.play();
+
+          creditsCamera.position.set(-3.1, 0.89 , 1.94);
+          creditsCamera.rotation.set(
+            18.74 * Math.PI / 180,
+            -67.87 * Math.PI / 180,
+            17.45 * Math.PI / 180)
+
+            creditsDanceGltf.scene.traverse(function (child) {
+              if (child.isMesh) {
+                child.material.roughness = 1;
+              }
+            });
+    
+            creditsDanceGltf.scene.traverse(function (obj) {
+              obj.frustumCulled = false;
+            });
+
+
+          animateCreds(creditsScene, creditsCamera, mixer);
+          
+          return {
+            scene: creditsScene,
+            camera: creditsCamera,
+            mixer: mixer
+          };
+
+         });
+          break;
+    }
+  };
+  
+  
+
+  
