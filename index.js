@@ -123,7 +123,11 @@ async function resetScene() {
   ctl.clear();
   ktl.clear();
 
-  firstTime.style.opacity = 1;
+  if (firstTime) {
+    firstTime.style.opacity = 0;
+    firstTime.style.display = 'none';
+  }
+
   canvas.style.opacity = 0;
   border.style.opacity = 0;
   creditsDiv.style.opacity = 1;
@@ -138,7 +142,6 @@ async function resetScene() {
 
   creditsText.innerHTML = '';
   titleDiv.innerHTML = ''
-  credits.destroy();
   credits = null;
   lottieIntroInstance.destroy();
   lottieIntroInstance = null;
@@ -502,7 +505,7 @@ class World {
 
   async createCreditsWorld() {
   // Load Set
-  switch (world.location) {
+  switch (credits.location) {
     case 'creditsFall':
 
       video.play();
