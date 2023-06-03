@@ -152,6 +152,7 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   current.scene = newScene;
   current.camera = newCamera;
   current.mixer = newMixer;
+  current.sceneName = sceneName;
 
   if (sceneName === 'creditsFall') {
     current.texture = texture;
