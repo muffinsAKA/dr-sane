@@ -19,6 +19,7 @@ const container = document.getElementById('first-time');
 const waitingDiv = document.getElementById("waiting");
 const border = document.getElementById('border')
 const questionDiv = document.getElementById('questionDiv');
+const body = document.getElementById('body')
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -28,13 +29,15 @@ let canvasHeight = window.innerHeight * 0.6
 let episodeData;
 
 //  ------------- [ ANIM TRIGGERS ] -----------------
-let animateActive = true;
+let animateActive;
+let waitingDivAnimate;
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
 let lottieIntroInstance = null;
 let inputCount = 0;
 let userName;
+
 
 
 //  ------------- [ GLOBAL OBJS ] -----------------
@@ -133,47 +136,23 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 }
 
-
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 window.addEventListener('DOMContentLoaded', mainInit);
+window.addEventListener('resize', adjustSize);
 
 async function mainInit() {
 
   setRenderer(canvas, renderer, canvasWidth, canvasHeight);
 
 // Set variables if not first run
-if (firstRun) {
-
-  createKacl(location)
-  .then((kacl) => {
-    current.scene = kacl.scene;
-    current.camera = kacl.camera;
-    current.mixer = kacl.mixer;
-    animate();
-  });
-  
-
-    createCreditsWorld('creditsFall')
-    .then((creditsFall) => {
-      creditsFallHold.scene = creditsFall.scene;
-      creditsFallHold.camera = creditsFall.camera;
-      creditsFallHold.mixer = creditsFall.mixer;
-      creditsFallHold.texture = creditsFall.texture;
-      creditsFallHold.cone = creditsFall.cone;
-    });
-      
-    createCreditsWorld('creditsDance')
-    .then((creditsDance) => {
-      creditsDanceHold.scene = creditsDance.scene;
-      creditsDanceHold.camera = creditsDance.camera;
-      creditsDanceHold.mixer = creditsDance.mixer;
-    });
 
 
-} else if (firstRun === false) {
-  await resetScene();
-  switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
-}
+
+  if (firstRun === false) {
+    
+    await resetScene();
+    switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
+  }
 
   // Hide player canvas initially
   canvas.style.display = 'none';
@@ -205,8 +184,37 @@ if (firstRun) {
   
         setTimeout(() => {
           waitingDiv.style.opacity = 1;
+          waitingDivAnimate = true;
+          animateOpacity();
         }, 500);
-  
+        
+        if (firstRun === true) {
+
+          createKacl(location)
+          .then((kacl) => {
+            current.scene = kacl.scene;
+            current.camera = kacl.camera;
+            current.mixer = kacl.mixer;
+            animate();
+          });
+          
+        
+            createCreditsWorld('creditsFall')
+            .then((creditsFall) => {
+              creditsFallHold.scene = creditsFall.scene;
+              creditsFallHold.camera = creditsFall.camera;
+              creditsFallHold.mixer = creditsFall.mixer;
+              creditsFallHold.texture = creditsFall.texture;
+              creditsFallHold.cone = creditsFall.cone;
+            });
+              
+            createCreditsWorld('creditsDance')
+            .then((creditsDance) => {
+              creditsDanceHold.scene = creditsDance.scene;
+              creditsDanceHold.camera = creditsDance.camera;
+              creditsDanceHold.mixer = creditsDance.mixer;
+            });
+          }
         episode(questionText);
       }
     }
@@ -257,7 +265,6 @@ if (firstRun) {
   }
 
   addQuestionEventListeners();
-  question.placeholder = "I'm listening."
 }
 
 async function resetScene() {
@@ -275,7 +282,7 @@ async function resetScene() {
   creditsDiv.style.opacity = 1;
   waitingDiv.style.opacity = 0;
 
-  animateActive = true;
+  animateActive = false;
 
   inputCount = 0;
   userName = null;
@@ -289,10 +296,28 @@ async function resetScene() {
   question.style.opacity = 1;
   question.placeholder = "I'm Listening."
   question.blur();
-  animateActive = false;
+  body.focus();
 }
 
 
+
+function animateOpacity() {
+  if (waitingDivAnimate === true) {
+    waitingDiv.style.opacity = 0.4;
+
+  
+    setTimeout(() => {
+
+      waitingDiv.style.opacity = 1;
+
+      setTimeout(() => {
+        requestAnimationFrame(animateOpacity);
+      }, 2000);
+
+    }, 2000);
+  }
+
+}
 
 function initIntro(theme) {
 
@@ -356,8 +381,23 @@ async function createCredits() {
 
 
   const creditsData = [
-    ['Executiver Gamer', 'Executive Producer', 'Assistant Boy', 'Ball Grip', 'Mayo Catering', 'Deviant Scholar', 'Elder Council', 'Dashing Charmer', 'Cramp Guy', 'Little Baby', 'Grinch', 'Glass Blower'],
-    ['MR. MARBLES', 'JOE BIDEN', 'GELSEY KRAMMER', 'MARK', 'MY FATHER-IN-LAW', 'DRACULA', 'TIM APPLE', 'DR. HOMEWORK', 'MYSTERY MAN (GREG)'],
+    ['Executiver Gamer', 'Executive Producer', 'Assistant Boy', 'Ball Grip', 'Mayo Catering', 'Deviant Scholar', 'Elder Council',
+    'Dashing Charmer', 'Cramp Guy', 'Little Baby', 'Grinch', 'Glass Blower', 'Knower', 'Last Guy', 'First Being', 'Fake Friend', 'Defiant One',
+    'Shamed Outcast', 'Defias Pillager', 'Script Eater', 'Code Sucker', "Director's Nephew", 'Ford F150', 'Terrible', 'Major Problem', 'Cutie Patootie',
+    "Friend of Daryl", 'Sound Hearer', 'Voice of Reason', 'Fact Ignorer', 'Hair But Not Makeup', 'Wardrobe Malfuncter', 'Haunting Spectre', 'Communist',
+    "Hideo Kojima", "Food Finder", "Tantrum Haver", "Favorite Daughter", "Bestest Boy", "Relisher of Fools", "Knob Turner", "Mop", "Assistant Associate",
+    "Feral Hog", "Tome Scribe", "Executive Grump", "Disappointed Father", "Therapist's Therapist", "Popup Closer", "Crypto Jester", "Salt of the Earth",
+    "Security Baton", "Second Hand", "Wife's Mistress", "Resident Bisexual", "Premiere Crasher", "Plugin Downloader", "Imaginary Friend", "Passing Thought",
+    "Master Unlocker", "Movie Buff", "Scam Artist", "Belaborer", "Loverboy", "Head Shrimp", "Gone & Forgotten"  ]
+
+    ['MR. MARBLES', 'GELSEY KRAMMER', 'BIG JERRY', 'MARK', 'MY FATHER-IN-LAW', 'DRACULA', "BLINK-182", "NVIDIA", "VYVANSE", "PHOEBE BRIDGERS", "QUESTLOVE",
+    'GEOFF KEIGHLEY', 'DR. HOMEWORK', 'MYSTERY MAN (GREG)', 'JIMMY CHEAPSKATES', 'TREE BEING', 'MRS. GRIMBLE', 'ERICA HORSE', 'COMPUTER #2', "GUMBY",
+    "RACECAR STEVENS", "JOHN?", "KARDASHIAN #772", "TERRY TUESDAY", "JEFF GERSTMANN", "SWIFTIES", "LOUIS COLE", "YVETTE YOUNG", "MAGNUS", "JACK BLACK",
+    "SOMEHOW MARKIPLIER", "JOE PERA", "TIM ROBINSON", "CONNOR O'MALLEY", "THE REAL GRINCH", "ELUNE", "THE BOYS", "THE GIRLS", "THE POPE", "THE PRESIDENT",
+    "JERRY FINN", "/R/FRASIER", "JACK SHEPARD", "JOHN LOCKE", "BRITTANY/BRITNEY", "CALL OF DUTY", "THE DARK TRAVELER", "PARK RANGER ED", "RED GREEN", "NYC SUBWAY",
+    "KIRBY", "ZELDA", "EMILY HAINES", "MY RHEUMATOLOGIST", "ECHOES OF THE PAST", "Q", "MELISSA SHORTJEANS", "LIMP BIZKIT", "THE THIRD DIMENSION",
+    "THE SUN", "LOUD NEIGHBORS", "BLENDER", "LEORGE GUCAS", "THE LAST STRAW", "MCDONALDS BIG MAC", "MY HATERS", "GAMERS", "BATHTUB GERALT", "WARIO64",
+    "FURRIES", "MOUNTAIN DEW", "JEFF OVERWATCH", "GOBLIN BOY"]
   ]
 
   function getRandomCredit(type) {
@@ -488,6 +528,9 @@ async function episode(questionText) {
   episodeData = await fetchEpisode(questionText, userName);
 
   waitingDiv.style.opacity = 0;
+  waitingDivAnimate = false;
+  
+  
 
   // Set first run as complete
   firstRun = false;
