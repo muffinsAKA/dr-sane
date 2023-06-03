@@ -258,7 +258,7 @@ async function mainInit() {
           });
         };
 
-        episode(questionText);
+        episode(questionText, userName);
 
       }
     }
@@ -556,7 +556,7 @@ function animate() {
 }
 //  ------------- [ EPISODE LOOP ] -----------------
 
-async function episode(questionText) {
+async function episode(questionText, userName) {
 
 
   // Get the latest episode
