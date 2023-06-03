@@ -29,7 +29,7 @@ async function defaultPrompt(questionText, userName) {
   const subject = questionText;
 
   const prompt = `Pretend to be Dr. Frasier Crane on his radio show giving response to a caller named ${userName} asking this question/statement: "${subject}". \
-Be creative and humorous with dialogue in the same way Dr. Frasier Crane often speaks. The goal is to be funny and not so much give great advice. \
+Be creative and humorous with dialogue in the same way Dr. Frasier Crane often speaks. The goal is to be funny and not so much give great advice. If someone is rude to him he'll be rude back. \
 End the monologue with 'This is Dr. Frasier Crane signing off & wishing you good mental health' \
 Separate the title and script in your response. \
 Keep your response under ${charLimit} characters. Reply in only json with no other text. The json just contain two parts: title and script.\

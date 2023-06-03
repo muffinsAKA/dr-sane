@@ -506,6 +506,7 @@ async function episode(questionText, name) {
   console.log(`monologue length: ${monoLength}`);
 
   border.style.opacity = 1;
+  
   ktl.add(() => {
     initIntro(episodeData.theme);
   }, 0.5);
