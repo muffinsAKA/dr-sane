@@ -113,8 +113,6 @@ async function resetScene() {
   question.parentNode.removeChild(question);
 
   question = document.createElement("input");
-  
-question = document.createElement("input");
 question.setAttribute("type", "text");
 question.setAttribute("id", "question");
 question.setAttribute("placeholder", "I'm listening.");
@@ -522,7 +520,7 @@ async function episode(questionText, name) {
   ktl.add(() => titleFade(titleDiv), "+=2");
 
   // begin animation
-  ktl.add(() => animate(), "+=6");
+  ktl.add(() => animate(), "+=5");
 
    // fade in to kacl studio
    ktl.add(() => fadeIn(canvas), "+=0");
