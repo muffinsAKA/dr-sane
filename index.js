@@ -146,9 +146,8 @@ async function resetScene() {
   lottieIntroInstance.destroy();
   lottieIntroInstance = null;
   
-  
-
   question.style.opacity = 1;
+  question.placeholder = "I'm Listening."
 }
 
 
