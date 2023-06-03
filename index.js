@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import animationData from './src/intro.json';
 import { kaclCamRandomzier } from './cams.js';
-import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, setRenderer, titleFade } from './functions.js';
+import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, setRenderer, titleFade, logCurrentScene, logHolds } from './functions.js';
 
 
 
@@ -112,17 +112,22 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
     kaclHold.camera = current.camera;
     kaclHold.mixer = current.mixer;
 
+    logHolds('kacl');
+
+
   } else if (current.sceneName === 'creditsFall') {
     creditsFallHold.scene = current.scene;
     creditsFallHold.camera = current.camera;
     creditsFallHold.mixer = current.mixer;
     creditsFallHold.texture = current.texture;
     creditsFallHold.cone = current.cone;
+    logHolds('creditsFall');
 
   } else if (current.sceneName === 'creditsDance') {
     creditsDanceHold.scene = current.scene;
     creditsDanceHold.camera = current.camera;
     creditsDanceHold.mixer = current.mixer;
+    logHolds('creditsDance');
   }
   
   current.scene = newScene;
@@ -134,7 +139,15 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
     current.cone = cone;
   }
 
+  console.log(`Switching to: ${sceneName}`);
+  console.log(`${sceneName}: ${newScene}`);
+
+  console.log(`Current Scene (should match newScene):`);
+  logCurrentScene();
+
+
 }
+
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 window.addEventListener('DOMContentLoaded', mainInit);
@@ -151,7 +164,13 @@ async function mainInit() {
  if (firstRun === false) {
     
     await resetScene();
+
+    console.log(`First Run = False -> Switching to kaclHold`);
+    
     switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
+        
+    console.log(`Is this kaclHold?: ${logCurrentScene()}`);
+
   }
 
   // Hide player canvas initially
@@ -194,6 +213,9 @@ async function mainInit() {
             current.scene = kacl.scene;
             current.camera = kacl.camera;
             current.mixer = kacl.mixer;
+            
+            console.log(`firstRun createKacl -> current: ${logCurrentScene()}`);
+
             animate();
           });
           
@@ -205,6 +227,7 @@ async function mainInit() {
             creditsFallHold.mixer = creditsFall.mixer;
             creditsFallHold.texture = creditsFall.texture;
             creditsFallHold.cone = creditsFall.cone;
+            console.log(`firstRun createCreditsWorld('creditsFall') -> creditsFallHold: ${logHolds('creditsFall')}`);
           });
             
           createCreditsWorld('creditsDance')
@@ -212,6 +235,7 @@ async function mainInit() {
             creditsDanceHold.scene = creditsDance.scene;
             creditsDanceHold.camera = creditsDance.camera;
             creditsDanceHold.mixer = creditsDance.mixer;
+            console.log(`firstRun createCreditsWorld('creditsDance') -> creditsDanceHold: ${logHolds('creditsDance')}`);
           });
         };
 
@@ -298,6 +322,10 @@ async function resetScene() {
   question.placeholder = "I'm Listening."
   question.blur();
   body.focus();
+
+  console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
+
+
 }
 
 
@@ -440,8 +468,14 @@ async function createCredits() {
 
     if (creditsChoice === 'creditsDance') {
       switchScene(credits.scene, credits.camera, credits.mixer, 'creditsDance', null, null);
+      
+      console.log(`creditsChoice = 'creditsDance' -> kaclHold: ${logHolds('kacl')}`);
+
     } else if (creditsChoice === 'creditsFall') {
       switchScene(credits.scene, credits.camera, credits.mixer, 'creditsFall', credits.texture, credits.cone);
+
+      console.log(`creditsChoice = 'creditsFall' -> kaclHold: ${logHolds('kacl')}`);
+
     }
   })
   .catch((error) => {
@@ -526,6 +560,13 @@ async function episode(questionText) {
   let monoLength = Math.ceil(await monologueLength(episodeData.audio)) -0.5;
 
   border.style.opacity = 1;
+
+  console.log(`Current Scene before Kacl Round 2 (should be Credits): ${logCurrentScene()}`);
+
+  if (firstRun === false) {
+    switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
+    console.log(`Kacl Round 2? ${logCurrentScene()}`);
+  }
 
   ktl.add(() => {
     initIntro(episodeData.theme);

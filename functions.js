@@ -104,3 +104,39 @@ export async function titleFade(titleDiv) {
   await new Promise(resolve => setTimeout(resolve, 3000));
   titleDiv.style.opacity = 0;
 }
+
+export function logCurrentScene() {
+  
+  console.log(`Current Scene: ${current.scene}`);
+  console.log(`Current Camera: ${current.camera}`);
+  console.log(`Current Mixer: ${current.mixer}`);
+  console.log(`Current Texture: ${current.texture}`);
+  console.log(`Current Cone: ${current.cone}`);
+
+}
+
+export function logHolds(logReq) {
+
+  if (logReq === 'creditsDance') {
+    console.log(`creditsDanceHold: ${creditsDanceHold}`);
+    console.log(`creditsDanceHold scene: ${creditsDanceHold.scene}`);
+    console.log(`creditsDanceHold camera: ${creditsDanceHold.camera}`);
+    console.log(`creditsDanceHold mixer: ${creditsDanceHold.mixer}`);
+  }
+
+  if (logReq === 'creditsFall') {
+  console.log(`creditsFallHold: ${creditsFallHold}`);
+  console.log(`creditsFallHold scene: ${creditsFallHold.scene}`);
+  console.log(`creditsFallHold camera: ${creditsFallHold.camera}`);
+  console.log(`creditsFallHold mixer: ${creditsFallHold.mixer}`);
+  console.log(`creditsFallHold texture: ${creditsFallHold.texture}`);
+  console.log(`creditsFallHold cone: ${creditsFallHold.cone}`)
+  }
+
+  if (logReq === 'kacl') {
+  console.log(`kaclHold: ${kaclHold}`);
+  console.log(`kaclHold scene: ${kaclHold.scene}`);
+  console.log(`kaclHold camera: ${kaclHold.camera}`);
+  console.log(`kaclHold mixer: ${kaclHold.mixer}`);
+  }
+}
