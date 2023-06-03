@@ -30,7 +30,7 @@ let episodeData;
 
 //  ------------- [ ANIM TRIGGERS ] -----------------
 let animateActive;
-let waitingDivAnimate;
+
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
@@ -184,13 +184,12 @@ async function mainInit() {
   
         setTimeout(() => {
           waitingDiv.style.opacity = 1;
-          waitingDivAnimate = true;
-          animateOpacity();
+
         }, 500);
         
         if (firstRun === true) {
 
-          createKacl(location)
+          createKacl()
           .then((kacl) => {
             current.scene = kacl.scene;
             current.camera = kacl.camera;
@@ -215,7 +214,9 @@ async function mainInit() {
               creditsDanceHold.mixer = creditsDance.mixer;
             });
           }
+
         episode(questionText);
+
       }
     }
   }
@@ -299,25 +300,6 @@ async function resetScene() {
   body.focus();
 }
 
-
-
-function animateOpacity() {
-  if (waitingDivAnimate === true) {
-    waitingDiv.style.opacity = 0.4;
-
-  
-    setTimeout(() => {
-
-      waitingDiv.style.opacity = 1;
-
-      setTimeout(() => {
-        requestAnimationFrame(animateOpacity);
-      }, 2000);
-
-    }, 2000);
-  }
-
-}
 
 function initIntro(theme) {
 
@@ -528,9 +510,6 @@ async function episode(questionText) {
   episodeData = await fetchEpisode(questionText, userName);
 
   waitingDiv.style.opacity = 0;
-  waitingDivAnimate = false;
-  
-  
 
   // Set first run as complete
   firstRun = false;
