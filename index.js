@@ -464,7 +464,7 @@ async function fetchEpisode(questionText, userName) {
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
-  if (current.animateActive) {
+  if (animateActive) {
     setTimeout(function () {
       requestAnimationFrame(animate);
       const delta = clock.getDelta();
