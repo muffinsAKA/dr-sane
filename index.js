@@ -498,7 +498,7 @@ function animate() {
 
       renderer.render(current.scene, current.camera);
       current.camera.updateMatrixWorld();
-    }, 1000 / 24);
+    }, 1000 / 60);
   }
 }
 //  ------------- [ EPISODE LOOP ] -----------------
