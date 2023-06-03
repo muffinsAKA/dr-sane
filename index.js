@@ -95,6 +95,7 @@ let rendererCredits = new THREE.WebGLRenderer({canvas, antialias: true});
 window.addEventListener('DOMContentLoaded', mainInit);
 
 async function mainInit() {
+  
   await resetScene();
 
   // Set variables if not first run
@@ -135,6 +136,8 @@ async function resetScene() {
 
   creditsText.innerHTML = '';
   titleDiv.innerHTML = '';
+  lottieIntroInstance.destroy();
+  lottieIntroInstance = null;
 
   question.style.opacity = 1;
 }
