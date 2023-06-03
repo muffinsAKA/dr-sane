@@ -183,6 +183,7 @@ if (firstRun) {
 
 } else if (firstRun === false) {
   await resetScene();
+  switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
 }
 
   // Hide player canvas initially
