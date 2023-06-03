@@ -566,7 +566,6 @@ class World {
   switch (world.location) {
     case 'creditsFall':
 
-      video.crossOrigin = 'anonymous';
       video.play();
       video.loop = true;
       video.muted = true;
