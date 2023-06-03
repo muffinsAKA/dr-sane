@@ -91,16 +91,11 @@ export async function credLength(audioLoader, soundCreds) {
 
 
   //  ------------- [ RENDERER ] ----------------
-export async function setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight) {
+export async function setRenderer(canvas, renderer, canvasWidth, canvasHeight) {
 
   renderer.setSize(canvasWidth, canvasHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 4));
-  renderer.outputEncoding = THREE.sRGBEncoding;
-
-  rendererCredits.setSize(canvasWidth, canvasHeight);
-  rendererCredits.setPixelRatio(Math.min(window.devicePixelRatio, 4));
-  rendererCredits.outputEncoding = THREE.sRGBEncoding;
-  
+  renderer.outputEncoding = THREE.sRGBEncoding;  
 
 }
 

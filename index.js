@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { gsap } from 'gsap';
-import { LottieLoader } from 'three/addons/loaders/LottieLoader';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import animationData from './src/intro.json';
 import { kaclCamRandomzier } from './cams.js';
@@ -48,7 +47,6 @@ const clock = new THREE.Clock();
 
 
 //  ------------- [ CAMERAS ] -----------------
-const camCredits = new THREE.PerspectiveCamera(50, canvasWidth/canvasHeight, 0.01, 1000);
 //const controls = new OrbitControls(camera, canvas);
 
 
@@ -74,8 +72,7 @@ const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
 
 //  ------------- [ RENDERERS ] -----------------
-let renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-let rendererCredits = new THREE.WebGLRenderer({canvas, antialias: true});
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
 //  ------------- [ CLEAR SCENE ] -----------------
 
