@@ -104,22 +104,33 @@ let creditsDanceHold = {
 
 function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   
+  console.log({
+    sceneName,
+    newScene,
+    newCamera,
+    newMixer,
+    texture,
+    cone
+  });
+
+  console.log(current);
+
   if (current.sceneName === 'kacl') {
-    kaclHold.scene = newScene;
-    kaclHold.camera = newCamera;
-    kaclHold.mixer = newMixer;
+    kaclHold.scene = current.scene;
+    kaclHold.camera = current.camera;
+    kaclHold.mixer = current.mixer;
 
   } else if (current.sceneName === 'creditsFall') {
-    creditsFallHold.scene = newScene;
-    creditsFallHold.camera = newCamera;
-    creditsFallHold.mixer = newMixer;
-    creditsFallHold.texture = texture;
-    creditsFallHold.cone = cone;
+    creditsFallHold.scene = current.scene;
+    creditsFallHold.camera = current.camera;
+    creditsFallHold.mixer = current.mixer;
+    creditsFallHold.texture = current.texture;
+    creditsFallHold.cone = current.cone;
 
   } else if (current.sceneName === 'creditsDance') {
-    creditsDanceHold.scene = newScene;
-    creditsDanceHold.camera = newCamera;
-    creditsDanceHold.mixer = newMixer;
+    creditsDanceHold.scene = current.scene;
+    creditsDanceHold.camera = current.camera;
+    creditsDanceHold.mixer = current.mixer;
   }
   
   current.scene = newScene;
@@ -322,7 +333,7 @@ function initIntro(theme) {
 }
 
 //  ------------- [ RESIZE ] -----------------
-async function adjustSize(camera) {
+async function adjustSize() {
 
 
   canvasWidth = window.innerWidth * 0.5;
@@ -330,8 +341,8 @@ async function adjustSize(camera) {
   
   renderer.setSize(canvasWidth, canvasHeight);
   
-  camera.aspect = canvasWidth / canvasHeight;
-  camera.updateProjectionMatrix();
+  current.camera.aspect = canvasWidth / canvasHeight;
+  current.camera.updateProjectionMatrix();
 
 }
 
