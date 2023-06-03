@@ -14,7 +14,7 @@ const creditsDiv = document.querySelector('#credits');
 const creditsText = creditsDiv.querySelector('p')
 const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
-let question = document.getElementById('question');
+const  question = document.getElementById('question');
 const container = document.getElementById('first-time');
 const waitingDiv = document.getElementById("waiting");
 const border = document.getElementById('border')
@@ -39,6 +39,9 @@ let mixer;
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
 let lottieIntroInstance = null;
+let inputCount = 0;
+let userName;
+
 
 
 //  ------------- [ GLOBAL OBJS ] -----------------
@@ -87,15 +90,38 @@ let rendererCredits = new THREE.WebGLRenderer({canvas, antialias: true});
 
 //  ------------- [ CLEAR SCENE ] -----------------
 
-async function resetScene() {
 
-  // clear Timelines
+//  ------------- [ MAIN INITIALIZATION ] -----------------
+window.addEventListener('DOMContentLoaded', mainInit);
+
+async function mainInit() {
+  await resetScene();
+
+  // Set variables if not first run
+  if (firstRun) {
+    world = new World();
+    await world.createWorld();
+  }
+
+  setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
+
+  // Add listener for window resizing to adjust size/camera
+  window.addEventListener('resize', adjustSize);
+
+  // Hide player canvas initially
+  canvas.style.display = 'none';
+
+  // Add event listeners
+  addQuestionEventListeners();
+}
+
+async function resetScene() {
+  // Clear timelines
   ctl.clear();
   ktl.clear();
 
   firstTime.style.opacity = 1;
   canvas.style.opacity = 0;
-
   border.style.opacity = 0;
   creditsDiv.style.opacity = 1;
   waitingDiv.style.opacity = 0;
@@ -103,189 +129,92 @@ async function resetScene() {
   animateActive = true;
   creditsAnimateActive = false;
 
-  // dispose of scene and recreate
   inputCount = 0;
   userName = null;
   episodeData = null;
-  lottieIntroInstance.destroy();
-  lottieIntroInstance = null;
-
-  question.parentNode.removeChild(question);
-
-  question = document.createElement("input");
-question.setAttribute("type", "text");
-question.setAttribute("id", "question");
-question.setAttribute("placeholder", "I'm listening.");
-question.setAttribute("maxlength", "30");
-
-// Setting CSS properties
-question.style.caretColor = "rgba(255,255,255, 0.1)";
-question.style.position = "absolute";
-question.style.top = "50%";
-question.style.left = "50%";
-question.style.transform = "translate(-50%, -50%)";
-question.style.height = "5vh";
-question.style.width = "7vw";
-question.style.minWidth = "fit-content";
-question.style.minHeight = "fit-content";
-question.style.borderRadius = "0.4vw";
-question.style.border = "0";
-question.style.outlineColor = "rgb(37, 37, 37)";
-question.style.backgroundColor = "rgb(12, 11, 11)";
-question.style.color = "rgb(116, 116, 116)";
-question.style.textAlign = "left";
-question.style.fontSize = "24px";
-question.style.pointerEvents = "all";
-question.style.fontFamily = "'Korin', sans-serif";
-question.style.transition = "width 1s ease, height 1.2s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease";
-question.style.paddingLeft = "1vw";
-question.style.paddingRight = "1vw";
-
-questionDiv.appendChild(question);
 
   creditsText.innerHTML = '';
   titleDiv.innerHTML = '';
+
+  question.style.opacity = 1;
 }
 
-//  ------------- [ MAIN INITIALIZATION ] -----------------
 
-window.addEventListener('DOMContentLoaded', () => {
-  mainInit();
-});
+function handleEnterKey(event) {
+  if (event.key === 'Enter') {
+    if (inputCount === 0) {
+      question.style.opacity = 0;
+      inputCount++;
+      userName = question.value;
+      question.placeholder = '';
 
-
-// Intro flow vars
-let inputCount = 0;
-let userName;
-
-
-async function mainInit() {
-
-
-    // Set variables if not first run
-    if (firstRun === true) {
-
-      world = new World();
-      await world.createWorld();
-    
-      } else if (firstRun === false) {
-
-        await resetScene();
-        
-      };
-
-  setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
-
-  // ------------- [ FIRST RUN CHECK ] -----------------
-  // Add listener for window resizing to adjust size/camera
-  window.addEventListener('resize', adjustSize);
-
-  
-  // Hide player canvas initially
-  canvas.style.display = 'none';
-  
-  const handleEnterKey = (event) => {
-    if (event.key === 'Enter') {
-  
-      if (inputCount === 0) {
-  
-        question.style.opacity = 0;
-        inputCount++;
-        userName = question.value;
-        question.placeholder = '';
-
-        setTimeout(() => {
-          question.maxLength = 100;
-          question.style.opacity = 1;
-          question.placeholder = `What's your question, ${userName}?`;
-        }, 1500);
-        
-        question.value = '';
-  
-      } else if (inputCount === 1) {
-
-        const questionText = question.value;
-
-        inputCount++;
-        
-        question.value = '';
-        question.placeholder = '';
-        question.style.opacity = 0;
-        
-        setTimeout(() => {
-          waitingDiv.style.opacity = 1;
-        }, 500)
-
-        removeEventListeners();
-        episode(questionText, userName);
-
-      }
-    }
-  };
-
-  const handleQuestionFocus = () => {
-
-    console.log('Question focused');
-    
-    border.style.opacity = 1;
-    question.classList.add("fade");
-
-    
-      if ( inputCount === 0 ) {
-        setTimeout(() => {
-        question.placeholder = "What's your name, caller?";
-        question.classList.remove("fade");
-      }, 1000);
-
-      } else if ( inputCount === 1) {
-        setTimeout(() => {
-        question.placeholder = `What's your question, ${userName}`;
-        question.classList.remove("fade");
-      }, 1000);
-    }
-
-      if (inputCount > 1) {
-        question.placeholder = '';
-        question.classList.add("fade");
-        question.style.opacity = 0;
-      }
-    
-  
-  };
-
-  const handleFocusOut = () => {
-   
-      question.classList.add("fade");
-      border.style.opacity = 0;
-
-      if (inputCount <= 1) {
       setTimeout(() => {
-        question.placeholder = "I'm listening.";
-        question.classList.remove("fade");
-      }, 1000);
+        question.maxLength = 100;
+        question.style.opacity = 1;
+        question.placeholder = `What's your question, ${userName}?`;
+      }, 1500);
 
-    } else if (inputCount > 1) {
+      question.value = '';
+    } else if (inputCount === 1) {
+      const questionText = question.value;
+      inputCount++;
+      question.value = '';
       question.placeholder = '';
       question.style.opacity = 0;
-      question.classList.add("fade")
-    }
-    }
 
-    const removeEventListeners = () => {
-      //question.removeEventListener('input', handleTyping);
-      question.removeEventListener('focus', handleQuestionFocus);
-      question.removeEventListener('keydown', handleEnterKey);
-      question.addEventListener('blur', handleFocusOut);
-    };
-    
-  //question.addEventListener('input', handleTyping);
+      setTimeout(() => {
+        waitingDiv.style.opacity = 1;
+      }, 500);
+
+      episode(questionText, userName);
+    }
+  }
+}
+
+const handleQuestionFocus = () => {
+  console.log('Question focused');
+
+  border.style.opacity = 1;
+  question.classList.add("fade");
+
+  if (inputCount === 0) {
+    setTimeout(() => {
+      question.placeholder = "What's your name, caller?";
+      question.classList.remove("fade");
+    }, 1000);
+  } else if (inputCount === 1) {
+    setTimeout(() => {
+      question.placeholder = `What's your question, ${userName}?`;
+      question.classList.remove("fade");
+    }, 1000);
+  } else {
+    question.placeholder = '';
+    question.classList.add("fade");
+    question.style.opacity = 0;
+  }
+};
+
+function handleFocusOut() {
+  question.classList.add('fade');
+  border.style.opacity = 0;
+
+  if (inputCount <= 1) {
+    setTimeout(() => {
+      question.placeholder = "I'm listening.";
+      question.classList.remove('fade');
+    }, 1000);
+  } else if (inputCount > 1) {
+    question.placeholder = '';
+    question.style.opacity = 0;
+    question.classList.add('fade');
+  }
+}
+
+function addQuestionEventListeners() {
   question.addEventListener('keydown', handleEnterKey);
   question.addEventListener('focus', handleQuestionFocus);
   question.addEventListener('blur', handleFocusOut);
-
-  console.log(question);
-
-  };
+}
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
