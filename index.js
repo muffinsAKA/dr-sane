@@ -269,7 +269,7 @@ if (firstRun) {
   }
 
   addQuestionEventListeners();
-  
+  question.placeholder = "I'm listening."
 }
 
 async function resetScene() {
@@ -301,6 +301,7 @@ async function resetScene() {
   question.style.opacity = 1;
   question.placeholder = "I'm Listening."
   question.blur();
+  animateActive = false;
 }
 
 
@@ -533,6 +534,10 @@ async function episode(questionText) {
 
    // fade in title card
   ktl.add(() => titleFade(titleDiv), "+=2");
+  
+  ktl.add(() => {
+    animateActive= true;
+  }, "+1");
 
    // fade in to kacl studio
    ktl.add(() => fadeIn(canvas), "+=5");
