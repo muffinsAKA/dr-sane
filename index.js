@@ -287,9 +287,8 @@ async function adjustSize() {
   world.camera.updateProjectionMatrix();
   renderer.setSize(canvasWidth, canvasHeight);
   
-  camCredits.aspect = canvasWidth / canvasHeight;
-  camCredits.updateProjectionMatrix();
-  rendererCredits.setSize(canvasWidth, canvasHeight);
+  credits.camera.aspect = canvasWidth / canvasHeight;
+  credits.camera.updateProjectionMatrix();
 
 }
 
@@ -387,7 +386,7 @@ async function createCredits() {
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
   credits = await chooseCredits(creditsOptions[creditsChoice]);
   credits.createCreditsWorld();
-  
+  console.log(credits);
 }
 
 
