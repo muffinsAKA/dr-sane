@@ -148,6 +148,7 @@ async function resetScene() {
   
   question.style.opacity = 1;
   question.placeholder = "I'm Listening."
+  question.blur();
 }
 
 
@@ -380,7 +381,7 @@ async function createCredits() {
   // create credits world
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
   credits = await chooseCredits(creditsOptions[creditsChoice]);
-  credits.createCreditsWorld();
+  await credits.createCreditsWorld();
   console.log(credits);
 }
 
@@ -480,6 +481,20 @@ async function episode(questionText, name) {
   });
 }
 
+function animateCreds(scene, camera, mixer) {
+  if (creditsAnimateActive === true) {
+    requestAnimationFrame(animateCreds);
+
+    const delta = clock.getDelta();
+    
+    mixer.update(delta);
+    cone.rotation.y += 0.01;
+    texture.needsUpdate = true;
+    renderer.render(scene, camera);
+  } else {
+    return;
+  }
+}
 
 class World {
   constructor(worldName, location, character) {
@@ -541,20 +556,6 @@ class World {
         this.camera.position.set(0, 6.25, 0.5);
         this.camera.rotation.x = -1.5;
 
-        function animateCreds(scene, camera, mixer) {
-          if (creditsAnimateActive === true) {
-            requestAnimationFrame(animateCreds);
-
-            const delta = clock.getDelta();
-
-            mixer.update(delta);
-            cone.rotation.y += 0.01;
-            texture.needsUpdate = true;
-            renderer.render(scene, camera);
-          } else {
-            return;
-          }
-        }
 
         animateCreds(this.scene, this.camera, this.mixer);
       });
