@@ -92,7 +92,7 @@ async function mainInit() {
     await resetScene();
   }
 
-  setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
+  setRenderer(canvas, renderer, canvasWidth, canvasHeight);
 
   // Hide player canvas initially
   canvas.style.display = 'none';
