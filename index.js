@@ -287,7 +287,6 @@ async function resetScene() {
   waitingDiv.style.opacity = 0;
 
   animateActive = true;
-  creditsAnimateActive = false;
 
   inputCount = 0;
   userName = null;
@@ -427,15 +426,14 @@ async function createCredits() {
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
   createCreditsWorld(creditsChoice)
   .then((credits) => {
-    console.log(`credits: ${credits}`)
+    console.log(`credits: ${credits}`);
     console.log(credits);
     console.log(credits.scene);
     if (creditsChoice === 'creditsDance') {
       switchScene(credits.scene, credits.camera, credits.mixer, 'creditsDance', null, null);
-    } else if (creditsChoice = 'creditsFall') {
+    } else if (creditsChoice === 'creditsFall') {
       switchScene(credits.scene, credits.camera, credits.mixer, 'creditsFall', credits.texture, credits.cone);
     }
-  
   })
   .catch((error) => {
     console.error(error);
