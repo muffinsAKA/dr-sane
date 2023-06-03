@@ -7,6 +7,7 @@ import { kaclCamRandomzier } from './cams.js';
 import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, setRenderer, titleFade } from './functions.js';
 
 
+
 //  ------------- [ DOM ELEMENTS ] -----------------
 const firstTime = document.getElementById('first-time');
 const canvas = document.querySelector('#player');
@@ -96,12 +97,13 @@ window.addEventListener('DOMContentLoaded', mainInit);
 
 async function mainInit() {
   
-  await resetScene();
-
   // Set variables if not first run
   if (firstRun) {
     world = new World();
     await world.createWorld();
+
+  } else if (firstRun === false) {
+    await resetScene();
   }
 
   setRenderer(canvas, renderer, rendererCredits, canvasWidth, canvasHeight);
@@ -136,8 +138,9 @@ async function resetScene() {
 
   creditsText.innerHTML = '';
   titleDiv.innerHTML = '';
-  lottieIntroInstance.destroy();
   lottieIntroInstance = null;
+  lottieIntroInstance.destroy();
+  
 
   question.style.opacity = 1;
 }
