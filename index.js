@@ -71,39 +71,29 @@ const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
 function logCurrentScene() {
   
-  console.log(`Current Scene: ${current.scene}`);
-  console.log(`Current Camera: ${current.camera}`);
-  console.log(`Current Mixer: ${current.mixer}`);
-  console.log(`Current Texture: ${current.texture}`);
-  console.log(`Current Cone: ${current.cone}`);
+console.log(`current scene:`);
+console.dir(current);
 
 }
 
 function logHolds(logReq) {
-
   if (logReq === 'creditsDance') {
-    console.log(`creditsDanceHold: ${creditsDanceHold}`);
-    console.log(`creditsDanceHold scene: ${creditsDanceHold.scene}`);
-    console.log(`creditsDanceHold camera: ${creditsDanceHold.camera}`);
-    console.log(`creditsDanceHold mixer: ${creditsDanceHold.mixer}`);
+    console.log('creditsDanceHold:');
+    console.dir(creditsDanceHold);
   }
 
   if (logReq === 'creditsFall') {
-  console.log(`creditsFallHold: ${creditsFallHold}`);
-  console.log(`creditsFallHold scene: ${creditsFallHold.scene}`);
-  console.log(`creditsFallHold camera: ${creditsFallHold.camera}`);
-  console.log(`creditsFallHold mixer: ${creditsFallHold.mixer}`);
-  console.log(`creditsFallHold texture: ${creditsFallHold.texture}`);
-  console.log(`creditsFallHold cone: ${creditsFallHold.cone}`)
+    console.log('creditsFallHold:');
+    console.dir(creditsFallHold);
   }
 
   if (logReq === 'kacl') {
-  console.log(`kaclHold: ${kaclHold}`);
-  console.log(`kaclHold scene: ${kaclHold.scene}`);
-  console.log(`kaclHold camera: ${kaclHold.camera}`);
-  console.log(`kaclHold mixer: ${kaclHold.mixer}`);
+    console.log('kaclHold:');
+    console.dir(kaclHold);
   }
 }
+
+logHolds('creditsDance');
 
 //  ------------- [ RENDERERS ] -----------------
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
