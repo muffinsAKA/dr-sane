@@ -423,7 +423,7 @@ async function createCredits() {
   const creditsOptions = ['creditsDance', 'creditsFall'];
 
   // create credits world
-  const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
+  const creditsChoice = creditsOptions[Math.floor(Math.random() * creditsOptions.length)];
   createCreditsWorld(creditsChoice)
   .then((credits) => {
     console.log(`credits: ${credits}`);
