@@ -230,23 +230,19 @@ function addQuestionEventListeners() {
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
-  if (animateActive) {
-    setTimeout( function() {
-
-     requestAnimationFrame(animate);
+  if (animateActive && !creditsAnimateActive) {
+    requestAnimationFrame(animate);
 
     const delta = clock.getDelta();
 
     if (world.mixer) {
-    world.mixer.update( delta );
+      world.mixer.update(delta);
     }
-        
+
     renderer.render(world.scene, world.camera);
     world.camera.updateMatrixWorld();
-
-    }, 1000 / 60 ); 
   }
-  };
+}
 
 
 function initIntro(theme) {
@@ -316,7 +312,7 @@ async function createCredits() {
 
 
   const creditsData = [
-    ['Executiver Gamer', 'Executive Producer', 'Assistant Boy', 'Ball Grip', 'Mayo Catering', 'Deviant Scholar', 'Elder Council', 'Dashing Charmer'],
+    ['Executiver Gamer', 'Executive Producer', 'Assistant Boy', 'Ball Grip', 'Mayo Catering', 'Deviant Scholar', 'Elder Council', 'Dashing Charmer', 'Cramp Guy', 'Little Baby', 'Grinch', 'Glass Blower'],
     ['MR. MARBLES', 'JOE BIDEN', 'GELSEY KRAMMER', 'MARK', 'MY FATHER-IN-LAW', 'DRACULA', 'TIM APPLE', 'DR. HOMEWORK', 'MYSTERY MAN (GREG)'],
   ]
 
