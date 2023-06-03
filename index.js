@@ -308,7 +308,7 @@ async function createCredits() {
   let creditsLength = await credLength(audioLoader, soundKacl);
   console.log(creditsLength)
   
-  creditsAnimateActive = false;  //this was previously used to flag the credits had started in order to stop the main animate function, since the credits scene used to use a different canvas/renderer
+  creditsAnimateActive = true;
   
   // tbh not sure if this is needed but why fuck with it
   creditsDiv.style.display = "flex";
