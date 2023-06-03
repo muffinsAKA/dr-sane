@@ -120,6 +120,8 @@ html, body {
 
 #video {
   display: block;
+  opacity: 0;
+  pointer-events: none;
 }
 
 #questionDiv {
