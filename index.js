@@ -428,9 +428,6 @@ async function episode(questionText) {
    // fade in title card
   ktl.add(() => titleFade(titleDiv), "+=2");
 
-  // begin animation
-  ktl.add(() => animate(kacl.scene, kacl.camera, kacl.mixer), "+=5");
-
    // fade in to kacl studio
    ktl.add(() => fadeIn(canvas), "+=0");
 
@@ -456,7 +453,8 @@ async function episode(questionText) {
 function animateCreds(scene, camera, mixer, texture, cone, creditsPromise) {
   if (creditsAnimateActive === true) {
     creditsPromise.then(() => {
-    requestAnimationFrame(animateCreds);
+      setTimeout( function() {
+        requestAnimationFrame(() => animateCreds(scene, camera, mixer, texture, cone, creditsPromise));
 
     const delta = clock.getDelta();
     
@@ -471,7 +469,7 @@ function animateCreds(scene, camera, mixer, texture, cone, creditsPromise) {
     }
 
     renderer.render(scene, camera);
-    })
+    })}, 1000 / 24 );
   }
 }
 
