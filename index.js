@@ -147,8 +147,6 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
     kaclHold.camera = current.camera;
     kaclHold.mixer = current.mixer;
 
-    logHolds('kacl');
-
 
   } else if (current.sceneName === 'creditsFall') {
     creditsFallHold.scene = current.scene;
@@ -156,13 +154,11 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
     creditsFallHold.mixer = current.mixer;
     creditsFallHold.texture = current.texture;
     creditsFallHold.cone = current.cone;
-    logHolds('creditsFall');
 
   } else if (current.sceneName === 'creditsDance') {
     creditsDanceHold.scene = current.scene;
     creditsDanceHold.camera = current.camera;
     creditsDanceHold.mixer = current.mixer;
-    logHolds('creditsDance');
   }
   
   current.scene = newScene;
@@ -175,8 +171,6 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   }
 
   console.log(`Switching to: ${sceneName}`);
-  console.log(`${sceneName}: ${newScene}`);
-
   console.log(`Current Scene (should match newScene):`);
   logCurrentScene();
 
