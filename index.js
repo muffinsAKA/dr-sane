@@ -334,10 +334,11 @@ async function createCredits() {
   const creditsChoice = Math.floor(Math.random() * (creditsOptions.length));
   const creditsPromise = createCreditsWorld(creditsChoice);
   creditsPromise.then((credits) => {
+    animateActive = false;
+    creditsAnimateActive = true;
+    window.addEventListener('resize', () => adjustSize(credits.camera));
     animateCreds(credits.scene, credits.camera, credits.mixer, credits.texture, credits.cone, creditsPromise);
   });
-
-  window.addEventListener('resize', () => adjustSize(credits.camera));
 
 }
 
