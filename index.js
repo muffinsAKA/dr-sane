@@ -348,6 +348,8 @@ function resetScene(handleEnterKey, handleQuestionFocus, handleFocusOut) {
   question.placeholder = "I'm Listening."
   question.style.display = 'inline-block';
 
+  question.classList.remove('fade');
+
   question.removeEventListener('keydown', handleEnterKey);
   question.removeEventListener('focus', handleQuestionFocus);
   question.removeEventListener('blur', handleFocusOut);
@@ -514,7 +516,7 @@ async function createCredits() {
   .catch((error) => {
     console.error(error);
   });
-
+  
   firstRun = false;
 
 }
