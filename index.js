@@ -306,9 +306,7 @@ const intro = {
 
   initIntroLottie() {
 
-    lottie.loadAnimation(this.lottieOptions)
-
-    this.introLottie = lottie;
+    this.introLottie = lottie.loadAnimation(this.lottieOptions)
 
     firstTime.style.opacity = 1;
     firstTime.style.display = 'flex';
