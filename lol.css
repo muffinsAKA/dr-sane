@@ -285,7 +285,7 @@ html, body {
   padding-left: 10px;
   padding-right: 10px;
   text-decoration: none;
-  transition: color 0.3s ease, background-color 0.3s ease, font-size 0.3s ease;
+  transition: color 0.8s ease, background-color 0.8s ease, font-size 0.8s ease;
 }
 
 .twitter-container a:hover{
@@ -304,7 +304,7 @@ html, body {
   padding-left: 10px;
   padding-right: 10px;
   text-decoration: none;
-  transition: color 0.3s ease, background-color 0.3s ease, font-size 0.3s ease;
+  transition: color 0.8s ease, background-color 0.8s ease, font-size 0.8s ease;
 }
 
 
