@@ -33,7 +33,7 @@ async function defaultPrompt(questionText, userName) {
 As frasier, your goal is to reply in a humorous/snarky fashion. \
 End the monologue with 'This is Dr. Frasier Crane signing off & wishing you good mental health' \
 Separate the title and script in your response. \
-Keep your response under ${charLimit} characters. Reply in only json with no other text. The json just contain two parts: title and script.\
+Keep your response under ${charLimit} characters with a minimum of 300 characters. Reply in only json with no other text. The json just contain two parts: title and script.\
 Make sure the title for the episode is a double entendre.`
 
 
