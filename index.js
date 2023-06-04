@@ -42,7 +42,7 @@ let userName;
 
 //  ------------- [ GLOBAL OBJS ] -----------------
 const audioLoader = new THREE.AudioLoader();
-const clock = new THREE.Clock();
+let clock = new THREE.Clock();
 
 
 //  ------------- [ CAMERAS ] -----------------
@@ -66,8 +66,8 @@ const ktl = gsap.timeline();
 //  ------------- [ DIRECTORIES ] -----------------
 const frazGlbUrl = 'https://muffinsaka.s3.amazonaws.com/3d/fraz.glb';
 const frazSetGlbUrl = 'https://muffinsaka.s3.amazonaws.com/3d/kacl.glb';
-const creditsFall = 'https://muffinsaka.s3.amazonaws.com/3d/creditsFall.glb';
-const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
+const creditsFallUrl = 'https://muffinsaka.s3.amazonaws.com/3d/creditsFall.glb';
+const creditsDanceUrl = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
 function logCurrentScene() {
   console.log('Current Scene:');
@@ -81,18 +81,18 @@ function logCurrentScene() {
 
 function logHolds(logReq) {
   if (logReq === 'creditsDance') {
-    console.log('Credits Dance Hold:');
-    console.dir(creditsDanceHold);
+    console.log('Credits Dance:');
+    console.dir(creditsDance);
   }
   
   if (logReq === 'creditsFall') {
-    console.log('Credits Fall Hold:');
-    console.dir(creditsFallHold);
+    console.log('Credits Fall:');
+    console.dir(creditsFall);
   }
 
   if (logReq === 'kacl') {
-    console.log('KACL Hold:');
-    console.dir(kaclHold);
+    console.log('KACL:');
+    console.dir(kacl);
   }
 }
 
@@ -108,14 +108,14 @@ let current = {
   sceneName: null
 }
 
-let kaclHold = {
+let kacl = {
   scene: null,
   camera: null,
   mixer: null,
   sceneName: 'kacl'
 }
 
-let creditsFallHold = {
+let creditsFall = {
   scene: null,
   camera: null,
   mixer: null,
@@ -124,7 +124,7 @@ let creditsFallHold = {
   sceneName: 'creditsFall'
 }
 
-let creditsDanceHold = {
+let creditsDance = {
   scene: null,
   camera: null,
   mixer: null,
@@ -132,26 +132,9 @@ let creditsDanceHold = {
 }
 
 function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
-
-  if (current.sceneName === 'kacl') {
-    kaclHold.scene = current.scene;
-    kaclHold.camera = current.camera;
-    kaclHold.mixer = current.mixer;
-
-
-  } else if (current.sceneName === 'creditsFall') {
-    creditsFallHold.scene = current.scene;
-    creditsFallHold.camera = current.camera;
-    creditsFallHold.mixer = current.mixer;
-    creditsFallHold.texture = current.texture;
-    creditsFallHold.cone = current.cone;
-
-  } else if (current.sceneName === 'creditsDance') {
-    creditsDanceHold.scene = current.scene;
-    creditsDanceHold.camera = current.camera;
-    creditsDanceHold.mixer = current.mixer;
-  }
   
+  console.log(`Switching to: ${sceneName}`);
+
   current.scene = newScene;
   current.camera = newCamera;
   current.mixer = newMixer;
@@ -162,8 +145,8 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
     current.cone = cone;
   }
 
-  console.log(`Switching to: ${sceneName}`);
-  console.log(`Current Scene (should match ${newScene}):`);
+  console.log(`Current Scene ${newScene.scene} ||| ${newScene.camera} ||| ${newScene.mixer} |||`);
+
   logCurrentScene();
 
 
@@ -215,30 +198,29 @@ function handleEnterKey(event) {
         
       
         createCreditsWorld('creditsFall')
-        .then((creditsFall) => {
-          creditsFallHold.scene = creditsFall.scene;
-          creditsFallHold.camera = creditsFall.camera;
-          creditsFallHold.mixer = creditsFall.mixer;
-          creditsFallHold.texture = creditsFall.texture;
-          creditsFallHold.cone = creditsFall.cone;
-          console.log(`firstRun createCreditsWorld('creditsFall') -> creditsFallHold: ${logHolds('creditsFall')}`);
+        .then((creditsFallTemp) => {
+          creditsFall.scene = creditsFallTemp.scene;
+          creditsFall.camera = creditsFallTemp.camera;
+          creditsFall.mixer = creditsFallTemp.mixer;
+          creditsFall.texture = creditsFallTemp.texture;
+          creditsFall.cone = creditsFallTemp.cone;
         });
           
         createCreditsWorld('creditsDance')
-        .then((creditsDance) => {
-          creditsDanceHold.scene = creditsDance.scene;
-          creditsDanceHold.camera = creditsDance.camera;
-          creditsDanceHold.mixer = creditsDance.mixer;
-          console.log(`firstRun createCreditsWorld('creditsDance') -> creditsDanceHold: ${logHolds('creditsDance')}`);
+        .then((creditsDanceTemp) => {
+          creditsDance.scene = creditsDanceTemp.scene;
+          creditsDance.camera = creditsDanceTemp.camera;
+          creditsDance.mixer = creditsDanceTemp.mixer;
         });
 
       } else if (firstRun === false) {
        
-        console.log(`First Run = False -> Switching to kaclHold`);
+        console.log(`First Run = False -> Switching to kacl`);
   
-        switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
+        switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null);
             
-        console.log(`Is this kaclHold?: ${logCurrentScene()}`);
+        console.log(`Is this kacl?:`);
+        console.log(logCurrentScene())
 
       }
 
@@ -317,6 +299,7 @@ async function mainInit() {
   // Hide player canvas initially
   canvas.style.display = 'none';
 
+  
   // Add event listeners
   addQuestionEventListeners();
   
@@ -325,7 +308,8 @@ async function mainInit() {
 function resetScene() {
   return new Promise((resolve) => {
   
-    removeQuestionEventListeners()
+    removeQuestionEventListeners();
+
     // Clear timelines
     ctl.clear();
     ktl.clear();
@@ -352,10 +336,12 @@ function resetScene() {
     lottieIntroInstance = null;
     
     question.style.opacity = 1;
-    question.placeholder = "I'm Listening."
+    question.placeholder = "I'm Listening.";
     question.style.display = 'inline-block';
 
     question.classList.remove('fade');
+    clock = null;
+    clock = new THREE.Clock();
 
     console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
 
@@ -411,119 +397,6 @@ async function credTextGen(line1, line2, line3, line4) {
 
 async function titleCard(epTitle) {
     titleDiv.innerHTML = `${epTitle}`;
-}
-
-
-//  ------------- [ CREDITS SEQUENCE ] -----------------
-
-async function createCredits() {
-
-  let creditsLength = await credLength(audioLoader, soundKacl);
-
-  console.log(creditsLength);
-  
-  // tbh not sure if this is needed but why fuck with it
-  creditsDiv.style.display = "flex";
-  creditsDiv.style.opacity = 1;
-
-
-  const creditsData = [
-    ['Executiver Gamer', 'Executive Producer', 'Assistant Boy', 'Ball Grip', 'Mayo Catering', 'Deviant Scholar', 'Elder Council',
-    'Dashing Charmer', 'Cramp Guy', 'Little Baby', 'Grinch', 'Glass Blower', 'Knower', 'Last Guy', 'First Being', 'Fake Friend', 'Defiant One',
-    'Shamed Outcast', 'Defias Pillager', 'Script Eater', 'Code Sucker', "Director's Nephew", 'Ford F150', 'Terrible', 'Major Problem', 'Cutie Patootie',
-    "Friend of Daryl", 'Sound Hearer', 'Voice of Reason', 'Fact Ignorer', 'Hair But Not Makeup', 'Wardrobe Malfuncter', 'Haunting Spectre', 'Communist',
-    "Hideo Kojima", "Food Finder", "Tantrum Haver", "Favorite Daughter", "Bestest Boy", "Relisher of Fools", "Knob Turner", "Mop", "Assistant Associate",
-    "Feral Hog", "Tome Scribe", "Executive Grump", "Disappointed Father", "Therapist's Therapist", "Popup Closer", "Crypto Jester", "Salt of the Earth",
-    "Security Baton", "Second Hand", "Wife's Mistress", "Resident Bisexual", "Premiere Crasher", "Plugin Downloader", "Imaginary Friend", "Passing Thought",
-    "Master Unlocker", "Movie Buff", "Scam Artist", "Belaborer", "Loverboy", "Head Shrimp", "Gone & Forgotten"  ],
-
-    ['MR. MARBLES', 'GELSEY KRAMMER', 'BIG JERRY', 'MARK', 'MY FATHER-IN-LAW', 'DRACULA', "BLINK-182", "NVIDIA", "VYVANSE", "PHOEBE BRIDGERS", "QUESTLOVE",
-    'GEOFF KEIGHLEY', 'DR. HOMEWORK', 'MYSTERY MAN (GREG)', 'JIMMY CHEAPSKATES', 'TREE BEING', 'MRS. GRIMBLE', 'ERICA HORSE', 'COMPUTER #2', "GUMBY",
-    "RACECAR STEVENS", "JOHN?", "KARDASHIAN #772", "TERRY TUESDAY", "JEFF GERSTMANN", "SWIFTIES", "LOUIS COLE", "YVETTE YOUNG", "MAGNUS", "JACK BLACK",
-    "SOMEHOW MARKIPLIER", "JOE PERA", "TIM ROBINSON", "CONNOR O'MALLEY", "THE REAL GRINCH", "ELUNE", "THE BOYS", "THE GIRLS", "THE POPE", "THE PRESIDENT",
-    "JERRY FINN", "/R/FRASIER", "JACK SHEPARD", "JOHN LOCKE", "BRITTANY/BRITNEY", "CALL OF DUTY", "THE DARK TRAVELER", "PARK RANGER ED", "RED GREEN", "NYC SUBWAY",
-    "KIRBY", "ZELDA", "EMILY HAINES", "MY RHEUMATOLOGIST", "ECHOES OF THE PAST", "Q", "MELISSA SHORTJEANS", "LIMP BIZKIT", "THE THIRD DIMENSION",
-    "THE SUN", "LOUD NEIGHBORS", "BLENDER", "LEORGE GUCAS", "THE LAST STRAW", "MCDONALDS BIG MAC", "MY HATERS", "GAMERS", "BATHTUB GERALT", "WARIO64",
-    "FURRIES", "MOUNTAIN DEW", "JEFF OVERWATCH", "GOBLIN BOY"]
-  ];
-
-  function getRandomCredit(type) {
-           
-    if (type === 'title') {
-      
-      const randomTitle = Math.floor(Math.random() * (creditsData[0].length - 1));
-      return creditsData[0][randomTitle];
-
-    } else if (type === 'person') {
-
-      const randomName = Math.floor(Math.random() * (creditsData[1].length - 1));      
-      return creditsData[1][randomName];
-    }
-  }
-  // add credits to timeline
-
-  const numberOfCredits = Math.floor(creditsLength/2.5 - 1)
-
-  for (let i = 0.5; i <= numberOfCredits; i++) {
-
-   const ctlTime = i * 2.5;
-
-   ctl.add(() => {
-
-    const title1 = getRandomCredit('title');
-    const name1 = getRandomCredit('person');
-    const title2 = getRandomCredit('title');
-    const name2 = getRandomCredit('person');
-    
-    credTextGen(title1, name1, title2, name2); 
-  
-  }, ctlTime)
-
-  }
-  
-  const creditsOptions = ['creditsDance', 'creditsFall'];
-
-  const creditsChoice = creditsOptions[Math.floor(Math.random() * creditsOptions.length)];
-
-  ctl.add(() => fadeIn(canvas), 0.5);
-
-  // fade out after credits
-  ctl.add(() => fadeOut(canvas), creditsLength - 3);
-  
-  // hide credits after final credits have shown
-  ctl.add(() => creditsDiv.style.display = "none", creditsLength - 2 );
-
-  // start next episode
-  ctl.add(mainInit, creditsLength + 2);
-
-  
-  // Play timline
-  ctl.play();
-  
-  firstRun = false;
-  console.log(`First Run set to False`)
-
-  // create credits world
-
-  createCreditsWorld(creditsChoice)
-  .then((credits) => {
-
-    if (creditsChoice === 'creditsDance') {
-      switchScene(credits.scene, credits.camera, credits.mixer, 'creditsDance', null, null);
-      
-      console.log(`creditsChoice = 'creditsDance' -> kaclHold: ${logHolds('kacl')}`);
-
-    } else if (creditsChoice === 'creditsFall') {
-      switchScene(credits.scene, credits.camera, credits.mixer, 'creditsFall', credits.texture, credits.cone);
-
-      console.dir(`creditsChoice = 'creditsFall' -> kaclHold: ${logHolds('kacl')}`);
-
-    }
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
 }
 
 
@@ -649,6 +522,115 @@ async function episode(questionText, userName) {
 
 
 
+//  ------------- [ CREDITS SEQUENCE ] -----------------
+
+async function createCredits() {
+
+  let creditsLength = await credLength(audioLoader, soundKacl);
+
+  console.log(creditsLength);
+  
+  // tbh not sure if this is needed but why fuck with it
+  creditsDiv.style.display = "flex";
+  creditsDiv.style.opacity = 1;
+
+
+  const creditsData = [
+    ['Executiver Gamer', 'Executive Producer', 'Assistant Boy', 'Ball Grip', 'Mayo Catering', 'Deviant Scholar', 'Elder Council',
+    'Dashing Charmer', 'Cramp Guy', 'Little Baby', 'Grinch', 'Glass Blower', 'Knower', 'Last Guy', 'First Being', 'Fake Friend', 'Defiant One',
+    'Shamed Outcast', 'Defias Pillager', 'Script Eater', 'Code Sucker', "Director's Nephew", 'Ford F150', 'Terrible', 'Major Problem', 'Cutie Patootie',
+    "Friend of Daryl", 'Sound Hearer', 'Voice of Reason', 'Fact Ignorer', 'Hair But Not Makeup', 'Wardrobe Malfuncter', 'Haunting Spectre', 'Communist',
+    "Hideo Kojima", "Food Finder", "Tantrum Haver", "Favorite Daughter", "Bestest Boy", "Relisher of Fools", "Knob Turner", "Mop", "Assistant Associate",
+    "Feral Hog", "Tome Scribe", "Executive Grump", "Disappointed Father", "Therapist's Therapist", "Popup Closer", "Crypto Jester", "Salt of the Earth",
+    "Security Baton", "Second Hand", "Wife's Mistress", "Resident Bisexual", "Premiere Crasher", "Plugin Downloader", "Imaginary Friend", "Passing Thought",
+    "Master Unlocker", "Movie Buff", "Scam Artist", "Belaborer", "Loverboy", "Head Shrimp", "Gone & Forgotten"  ],
+
+    ['MR. MARBLES', 'GELSEY KRAMMER', 'BIG JERRY', 'MARK', 'MY FATHER-IN-LAW', 'DRACULA', "BLINK-182", "NVIDIA", "VYVANSE", "PHOEBE BRIDGERS", "QUESTLOVE",
+    'GEOFF KEIGHLEY', 'DR. HOMEWORK', 'MYSTERY MAN (GREG)', 'JIMMY CHEAPSKATES', 'TREE BEING', 'MRS. GRIMBLE', 'ERICA HORSE', 'COMPUTER #2', "GUMBY",
+    "RACECAR STEVENS", "JOHN?", "KARDASHIAN #772", "TERRY TUESDAY", "JEFF GERSTMANN", "SWIFTIES", "LOUIS COLE", "YVETTE YOUNG", "MAGNUS", "JACK BLACK",
+    "SOMEHOW MARKIPLIER", "JOE PERA", "TIM ROBINSON", "CONNOR O'MALLEY", "THE REAL GRINCH", "ELUNE", "THE BOYS", "THE GIRLS", "THE POPE", "THE PRESIDENT",
+    "JERRY FINN", "/R/FRASIER", "JACK SHEPARD", "JOHN LOCKE", "BRITTANY/BRITNEY", "CALL OF DUTY", "THE DARK TRAVELER", "PARK RANGER ED", "RED GREEN", "NYC SUBWAY",
+    "KIRBY", "ZELDA", "EMILY HAINES", "MY RHEUMATOLOGIST", "ECHOES OF THE PAST", "Q", "MELISSA SHORTJEANS", "LIMP BIZKIT", "THE THIRD DIMENSION",
+    "THE SUN", "LOUD NEIGHBORS", "BLENDER", "LEORGE GUCAS", "THE LAST STRAW", "MCDONALDS BIG MAC", "MY HATERS", "GAMERS", "BATHTUB GERALT", "WARIO64",
+    "FURRIES", "MOUNTAIN DEW", "JEFF OVERWATCH", "GOBLIN BOY"]
+  ];
+
+  function getRandomCredit(type) {
+           
+    if (type === 'title') {
+      
+      const randomTitle = Math.floor(Math.random() * (creditsData[0].length - 1));
+      return creditsData[0][randomTitle];
+
+    } else if (type === 'person') {
+
+      const randomName = Math.floor(Math.random() * (creditsData[1].length - 1));      
+      return creditsData[1][randomName];
+    }
+  }
+  // add credits to timeline
+
+  const numberOfCredits = Math.floor(creditsLength/2.5 - 1)
+
+  for (let i = 0.5; i <= numberOfCredits; i++) {
+
+   const ctlTime = i * 2.5;
+
+   ctl.add(() => {
+
+    const title1 = getRandomCredit('title');
+    const name1 = getRandomCredit('person');
+    const title2 = getRandomCredit('title');
+    const name2 = getRandomCredit('person');
+    
+    credTextGen(title1, name1, title2, name2); 
+  
+  }, ctlTime)
+
+  }
+  
+  const creditsOptions = ['creditsDance', 'creditsFall'];
+
+  const creditsChoice = creditsOptions[Math.floor(Math.random() * creditsOptions.length)];
+
+  ctl.add(() => fadeIn(canvas), 0.5);
+
+  // fade out after credits
+  ctl.add(() => fadeOut(canvas), creditsLength - 3);
+  
+  // hide credits after final credits have shown
+  ctl.add(() => creditsDiv.style.display = "none", creditsLength - 2 );
+
+  // start next episode
+  ctl.add(mainInit, creditsLength + 2);
+
+  
+  // Play timline
+  ctl.play();
+  
+  firstRun = false;
+  console.log(`First Run set to False`)
+
+  // create credits world
+
+  createCreditsWorld(creditsChoice)
+  .then((credits) => {
+
+    if (creditsChoice === 'creditsDance') {
+      switchScene(credits.scene, credits.camera, credits.mixer, 'creditsDance', null, null);
+
+    } else if (creditsChoice === 'creditsFall') {
+      switchScene(credits.scene, credits.camera, credits.mixer, 'creditsFall', credits.texture, credits.cone);
+
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+}
+
+
 async function createKacl() {
   return new Promise((resolve, reject) => {
     // Adds audio listener to camera
@@ -665,7 +647,9 @@ async function createKacl() {
         kaclScene.add(gltf.scene);
 
         const worldSet = gltf.scene;
+
         worldSet.position.set(0, 0, 0);
+
         kaclCamRandomzier(kaclCamera, animateActive);
 
         worldSet.traverse(function (child) {
@@ -747,7 +731,7 @@ switch (location) {
     video.loop = true;
     video.muted = true;
 
-    creditsGLloader.load(`${creditsFall}`, (gltf) => {
+    creditsGLloader.load(`${creditsFallUrl}`, (gltf) => {
     creditsScene.add(gltf.scene);
 
       let clip = gltf.animations[0];
@@ -799,7 +783,7 @@ switch (location) {
     case 'creditsDance':
 
        creditsGLloader.load(
-        `${creditsDance}`,
+        `${creditsDanceUrl}`,
         (creditsDanceGltf) => {
         
         creditsScene.add(creditsDanceGltf.scene);
