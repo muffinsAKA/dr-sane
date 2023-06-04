@@ -70,25 +70,19 @@ const creditsFall = 'https://muffinsaka.s3.amazonaws.com/3d/creditsFall.glb';
 const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
 function logCurrentScene() {
-  
-console.log(`current scene:`);
 console.dir(current);
-
 }
 
 function logHolds(logReq) {
   if (logReq === 'creditsDance') {
-    console.log('creditsDanceHold:');
     console.dir(creditsDanceHold);
   }
 
   if (logReq === 'creditsFall') {
-    console.log('creditsFallHold:');
     console.dir(creditsFallHold);
   }
 
   if (logReq === 'kacl') {
-    console.log('kaclHold:');
     console.dir(kaclHold);
   }
 }
@@ -580,9 +574,12 @@ async function episode(questionText, userName) {
 
   border.style.opacity = 1;
 
-  console.log(`Current Scene before Kacl Round 2 (should be Credits): ${logCurrentScene()}`);
+  if (firstRun === true) {
+    console.log(`First Run KACL: ${logCurrentScene}`);
+  }
 
   if (firstRun === false) {
+    console.log(`Current Scene before Kacl Round 2 (should be Credits): ${logCurrentScene()}`);
     switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
     console.log(`Kacl Round 2? ${logCurrentScene()}`);
   }
