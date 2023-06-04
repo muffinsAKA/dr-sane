@@ -35,6 +35,10 @@ let lottieIntroInstance = null;
 let inputCount = 0;
 let delta;
 
+let userInfo = {
+  user: null,
+  question
+}
 
 
 //  ------------- [ GLOBAL OBJS ] -----------------
@@ -130,13 +134,11 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 function handleEnterKey(event) {
 
-  let userName;
-
   if (event.key === 'Enter') {
     if (inputCount === 0) {
       question.style.opacity = 0;
       inputCount++;
-      userName = question.value;
+      userInfo.user = question.value;
       question.placeholder = '';
 
       setTimeout(() => {
@@ -148,7 +150,7 @@ function handleEnterKey(event) {
       question.value = '';
 
     } else if (inputCount === 1) {
-      const questionText = question.value;
+      userInfo.question  = question.value;
       inputCount++;
       question.value = '';
       question.placeholder = '';
@@ -204,7 +206,7 @@ function handleEnterKey(event) {
 
       }
 
-      episode(questionText, userName);
+      episode(userInfo.question, userInfo.user);
 
     }
   }
@@ -455,11 +457,18 @@ async function episode(questionText, userName) {
   border.style.opacity = 1;
 
   if (firstRun === true) {
-    console.log(`First Run KACL: ${current.scene, current.camera, current.mixer}`);
+    
+    console.log(`---[ FIRST RUN KACL ]---`)
+
+    console.log(`Current Scene: ${current.scene}`);
+    console.log(`Current Camera: ${current.camera}`);
+    console.log(`Current Mixer: ${current.mixer}`);
   }
 
   if (firstRun === false) {
+
     animateActive = true;
+    
   }
 
   ktl.add(() => {
