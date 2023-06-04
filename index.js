@@ -28,13 +28,11 @@ let canvasHeight = window.innerHeight * 0.6
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
-let lottieIntroInstance;
-let inputCount = 0;
 let delta;
 
 let userInfo = {
   user: null,
-  question
+  question: null
 }
 
 
@@ -128,149 +126,103 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 }
 
+const inputState = {
+  count: 0,
 
-function handleEnterKey(event) {
-
-  if (event.key === 'Enter') {
-    if (inputCount === 0) {
-      if (firstRun === false) {
-        console.log(`inputCount 0 aka name - round 2 - Line 141 ${inputCount}`);
-      }
-      
-      question.style.opacity = 0;
-      inputCount++;
-      userInfo.user = question.value;
-      question.placeholder = '';
-
-      setTimeout(() => {
-        question.maxLength = 100;
-        question.style.opacity = 1;
-        question.placeholder = `What's your question, ${userInfo.user}?`;
-      }, 1500);
-
-      question.value = '';
-
-    } else if (inputCount === 1) {
-      if (firstRun === false) {
-        console.log(`inputCount 1 aka question - round 2 - Line 141 ${inputCount}`);
-      }
-      userInfo.question  = question.value;
-      inputCount++;
-      question.value = '';
-      question.placeholder = '';
-      question.style.opacity = 0;
-      question.style.display = 'none';
-
-      setTimeout(() => {
-        waitingDiv.style.opacity = 1;
-
-      }, 500);
-      
-      if (firstRun === true) {
-
-        createKacl()
-        .then((kaclTemp) => {
-          current.scene = kaclTemp.scene;
-          current.camera = kaclTemp.camera;
-          current.mixer = kaclTemp.mixer;
-          current.sceneName = 'kacl';
-          
-          kacl.scene = kaclTemp.scene;
-          kacl.camera = kaclTemp.camera;
-          kacl.mixer = kaclTemp.mixer;
-
-          kaclCamRandomzier(current.camera);
-          kaclCamRandomzier(kacl.camera);
-          animate();
-        });
-        
-      
-        createCreditsWorld('creditsFall')
-        .then((creditsFallTemp) => {
-          creditsFall.scene = creditsFallTemp.scene;
-          creditsFall.camera = creditsFallTemp.camera;
-          creditsFall.mixer = creditsFallTemp.mixer;
-          creditsFall.texture = creditsFallTemp.texture;
-          creditsFall.cone = creditsFallTemp.cone;
-        });
-          
-        createCreditsWorld('creditsDance')
-        .then((creditsDanceTemp) => {
-          creditsDance.scene = creditsDanceTemp.scene;
-          creditsDance.camera = creditsDanceTemp.camera;
-          creditsDance.mixer = creditsDanceTemp.mixer;
-        });
-
-      } else if (firstRun === false) {
-       
-        console.log(`First Run = False -> Switching to kacl`);
+  handleEnterKey(event) {
   
-        switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null);
-        kaclCamRandomzier(kacl.camera);
-            
-        console.log(`Is this kacl?`);
-
+    if (event.key === 'Enter') {
+      if (inputState.count === 0) {
+  
+        question.style.opacity = 0;
+        inputState.count++;
+        userInfo.user = question.value;
+        question.placeholder = '';
+  
+        setTimeout(() => {
+          question.maxLength = 100;
+          question.style.opacity = 1;
+          question.placeholder = `What's your question, ${userInfo.user}?`;
+        }, 1500);
+  
+        question.value = '';
+  
+      } else if (inputState.count === 1) {
+  
+        userInfo.question  = question.value;
+        inputState.count++;
+        question.value = '';
+        question.placeholder = '';
+        question.style.opacity = 0;
+        question.style.display = 'none';
+  
+        setTimeout(() => {
+          waitingDiv.style.opacity = 1;
+  
+        }, 500);
+        
+        
+        episode(userInfo.question, userInfo.user);
+  
       }
-
-      if (firstRun === false) {
-        console.log(`Starting episode() Round 2 - Line 210`);
-      }
-      
-      episode(userInfo.question, userInfo.user);
-
     }
-  }
-}
+  },
 
-function handleQuestionFocus() {
+  handleQuestionFocus() {
 
-  border.style.opacity = 1;
-  question.classList.add("fade");
-
-  if (inputCount === 0) {
-    setTimeout(() => {
-      question.placeholder = "What's your name, caller?";
-      question.classList.remove("fade");
-    }, 1000);
-  } else if (inputCount === 1) {
-    setTimeout(() => {
-      question.placeholder = `What's your question, ${userInfo.user}?`;
-      question.classList.remove("fade");
-    }, 1000);
-  } else {
-    question.placeholder = '';
+    border.style.opacity = 1;
     question.classList.add("fade");
-    question.style.opacity = 0;
-  }
-}
+  
+    if (inputState.count === 0) {
+      setTimeout(() => {
+        question.placeholder = "What's your name, caller?";
+        question.classList.remove("fade");
+      }, 1000);
+    } else if (inputState.count === 1) {
+      setTimeout(() => {
+        question.placeholder = `What's your question, ${userInfo.user}?`;
+        question.classList.remove("fade");
+      }, 1000);
+    } else {
+      question.placeholder = '';
+      question.classList.add("fade");
+      question.style.opacity = 0;
+    }
+  },
 
-function handleFocusOut() {
-  question.classList.add('fade');
-  border.style.opacity = 0;
-
-  if (inputCount <= 1) {
-    setTimeout(() => {
-      question.placeholder = "I'm listening.";
-      question.classList.remove('fade');
-    }, 1000);
-  } else if (inputCount > 1) {
-    question.placeholder = '';
-    question.style.opacity = 0;
+  handleFocusOut() {
     question.classList.add('fade');
+    border.style.opacity = 0;
+  
+    if (inputState.count <= 1) {
+      setTimeout(() => {
+        question.placeholder = "I'm listening.";
+        question.classList.remove('fade');
+      }, 1000);
+    } else if (inputState.count > 1) {
+      question.placeholder = '';
+      question.style.opacity = 0;
+      question.classList.add('fade');
+    }
+  },
+  
+  addQuestionEventListeners() {
+    question.addEventListener('keydown', this.handleEnterKey);
+    question.addEventListener('focus', this.handleQuestionFocus);
+    question.addEventListener('blur', this.handleFocusOut);
+  },
+  
+  removeQuestionEventListeners() {
+    question.removeEventListener('keydown', this.handleEnterKey);
+    question.removeEventListener('focus', this.handleQuestionFocus);
+    question.removeEventListener('blur', this.handleFocusOut);
   }
+
 }
 
-function addQuestionEventListeners() {
-  question.addEventListener('keydown', handleEnterKey);
-  question.addEventListener('focus', handleQuestionFocus);
-  question.addEventListener('blur', handleFocusOut);
-}
 
-function removeQuestionEventListeners() {
-  question.removeEventListener('keydown', handleEnterKey);
-  question.removeEventListener('focus', handleQuestionFocus);
-  question.removeEventListener('blur', handleFocusOut);
-}
+
+
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 window.addEventListener('DOMContentLoaded', mainInit);
@@ -295,14 +247,14 @@ async function mainInit() {
 
   
   // Add event listeners
-  addQuestionEventListeners();
+  inputState.addQuestionEventListeners();
   
 }
 
 function resetScene() {
   return new Promise((resolve) => {
   
-    removeQuestionEventListeners();
+    inputState.removeEventListeners();
 
     // Clear timelines
     ctl.clear();
@@ -316,11 +268,11 @@ function resetScene() {
     creditsDiv.style.opacity = 1;
     waitingDiv.style.opacity = 0;
 
-    inputCount = 0;
+    inputState.count = 0;
 
     creditsText.innerHTML = '';
     titleDiv.innerHTML = ''
-    lottieIntroInstance = null;
+
     
     question.style.opacity = 1;
     question.placeholder = "I'm Listening.";
@@ -338,37 +290,45 @@ function resetScene() {
 }
 
 
-function initIntro(theme) {
+const intro = {
 
-  if (firstRun === false) {
-    console.log(`initIntro() round 2 - Line 342`);
-  }
+  lottieOptions: {
+      container: container,
+      renderer: 'svg',
+      loop: false,
+      autoplay: true,
+      transparent: true,
+      animationData: animationData
+    },
+
+    introLottie: null,
+    
+
+  initIntroLottie() {
+
+    lottie.loadAnimation(this.lottieOptions),
+
+    this.introLottie = lottie;
+
+    firstTime.style.opacity = 1;
+    firstTime.style.display = 'flex';
   
+  },
 
-  const options = {
-    container: container,
-    renderer: 'svg',
-    loop: false,
-    autoplay: true,
-    transparent: true,
-    animationData: animationData
-  };
-
-  lottieIntroInstance = lottie.loadAnimation(options);
-
-  firstTime.style.opacity = 1;
-  firstTime.style.display = 'flex';
-
-  const audioData = `data:audio/mpeg;base64,${theme}`;
-
-  // Load and play theme
-  audioLoader.load(audioData, function (buffer) {
-    soundKacl.setBuffer(buffer);
-    soundKacl.setLoop(false);
-    soundKacl.setVolume(1);
-    soundKacl.play();
-  });
+  initIntroTheme(theme) {
+    const audioData = `data:audio/mpeg;base64,${theme}`;
+  
+    // Load and play theme
+    audioLoader.load(audioData, function (buffer) {
+      soundKacl.setBuffer(buffer);
+      soundKacl.setLoop(false);
+      soundKacl.setVolume(1);
+      soundKacl.play();
+    });
+  }
 }
+
+
 
 //  ------------- [ RESIZE ] -----------------
 async function adjustSize() {
@@ -458,12 +418,63 @@ function animate() {
 
 async function episode(questionText, userName) {
 
-  // Get the latest episode
 
   if (firstRun === false) {
     console.log(`episode() Successfully Started - Line 458`);
+
   }
 
+  if (firstRun === true) {
+
+    createKacl()
+    .then((kaclTemp) => {
+      current.scene = kaclTemp.scene;
+      current.camera = kaclTemp.camera;
+      current.mixer = kaclTemp.mixer;
+      current.sceneName = 'kacl';
+      
+      kacl.scene = kaclTemp.scene;
+      kacl.camera = kaclTemp.camera;
+      kacl.mixer = kaclTemp.mixer;
+
+      kaclCamRandomzier(current.camera);
+      kaclCamRandomzier(kacl.camera);
+      animate();
+    });
+    
+  
+    createCreditsWorld('creditsFall')
+    .then((creditsFallTemp) => {
+      creditsFall.scene = creditsFallTemp.scene;
+      creditsFall.camera = creditsFallTemp.camera;
+      creditsFall.mixer = creditsFallTemp.mixer;
+      creditsFall.texture = creditsFallTemp.texture;
+      creditsFall.cone = creditsFallTemp.cone;
+    });
+      
+    createCreditsWorld('creditsDance')
+    .then((creditsDanceTemp) => {
+      creditsDance.scene = creditsDanceTemp.scene;
+      creditsDance.camera = creditsDanceTemp.camera;
+      creditsDance.mixer = creditsDanceTemp.mixer;
+    });
+
+  } else if (firstRun === false) {
+   
+    console.log(`First Run = False -> Switching to kacl`);
+
+    switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null);
+    kaclCamRandomzier(kacl.camera);
+        
+    console.log(`Is this kacl?`);
+
+  }
+
+  if (firstRun === false) {
+    console.log(`Starting episode() Round 2 - Line 210`);
+  }
+
+   // Get the latest episode
   const episodeData = await fetchEpisode(questionText, userName);
 
   waitingDiv.style.opacity = 0;
@@ -500,8 +511,12 @@ async function episode(questionText, userName) {
   }
 
   ktl.add(() => {
-    initIntro(episodeData.theme);
-  }, 0.5);
+    intro.initIntroTheme(episodeData.theme);
+  }, 0);
+
+  ktl.add(() => {
+    intro.initIntroLottie;
+  },'+=0.1');
 
   // fade out intro
   ktl.add(() => fadeOut(firstTime), `+=${themeLength - 1}` );
