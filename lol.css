@@ -146,7 +146,7 @@ html, body {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 5vh;
-  width: 7vw;
+  width: 6vw;
   min-width: fit-content;
   min-height: fit-content;
   border-radius: 0.4vw;

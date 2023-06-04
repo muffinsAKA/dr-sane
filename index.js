@@ -206,6 +206,7 @@ async function mainInit() {
         }, 1500);
   
         question.value = '';
+
       } else if (inputCount === 1) {
         const questionText = question.value;
         inputCount++;
@@ -595,7 +596,7 @@ async function episode(questionText, userName) {
   border.style.opacity = 1;
 
   if (firstRun === true) {
-    console.log(`First Run KACL: ${logCurrentScene}`);
+    console.log(`First Run KACL: ${current.scene, current.camera, current.mixer}`);
   }
 
   if (firstRun === false) {
