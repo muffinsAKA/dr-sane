@@ -210,6 +210,7 @@ async function mainInit() {
         question.value = '';
         question.placeholder = '';
         question.style.opacity = 0;
+        question.style.display = 'none';
   
         setTimeout(() => {
           waitingDiv.style.opacity = 1;
@@ -344,6 +345,7 @@ function resetScene() {
   
   question.style.opacity = 1;
   question.placeholder = "I'm Listening."
+  question.style.display = 'inline-block';
 
 
   console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
