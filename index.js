@@ -253,7 +253,7 @@ async function mainInit() {
 function resetScene() {
   return new Promise((resolve) => {
   
-    inputState.removeEventListeners();
+    inputState.removeQuestionEventListeners();
 
     // Clear timelines
     ctl.clear();

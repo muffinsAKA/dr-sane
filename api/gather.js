@@ -70,7 +70,7 @@ export async function gather(questionText, userName) {
     const gptHandoff = {
       "text": `${gptScript}`,
       "voice_settings": {
-        "stability": 0.2,
+        "stability": 0.5,
         "similarity_boost": 1
       }
     }
