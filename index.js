@@ -25,9 +25,6 @@ const body = document.getElementById('body')
 let canvasWidth = window.innerWidth * 0.5
 let canvasHeight = window.innerHeight * 0.6
 
-//  ------------- [ API GRAB ] -----------------
-let episodeData;
-
 //  ------------- [ ANIM TRIGGERS ] -----------------
 let animateActive = true;
 
@@ -201,7 +198,7 @@ function handleEnterKey(event) {
   
         switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null);
             
-        console.log(`Is this kacl?:`);
+        console.log(`Is this kacl?`);
 
       }
 
@@ -439,10 +436,8 @@ function animate() {
 
 async function episode(questionText) {
 
-  episodeData = null;
-
   // Get the latest episode
-  episodeData = await fetchEpisode(questionText);
+  const episodeData = await fetchEpisode(questionText);
 
   waitingDiv.style.opacity = 0;
 
