@@ -139,14 +139,10 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   current.camera = newCamera;
   current.mixer = newMixer;
   current.sceneName = sceneName;
+  current.texture = texture;
+  current.cone = cone;
 
-  if (sceneName === 'creditsFall') {
-    current.texture = texture;
-    current.cone = cone;
-  }
-
-  console.log(`Current Scene ${newScene.scene} ||| ${newScene.camera} ||| ${newScene.mixer} |||`);
-
+  console.log(`Switched Scene ${newScene.scene} ||| ${newScene.camera} ||| ${newScene.mixer} |||`);
   logCurrentScene();
 
 
