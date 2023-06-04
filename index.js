@@ -478,6 +478,9 @@ async function createCredits() {
 
   }
   
+  const creditsOptions = ['creditsDance', 'creditsFall'];
+
+  const creditsChoice = creditsOptions[Math.floor(Math.random() * creditsOptions.length)];
 
   ctl.add(() => fadeIn(canvas), 0.5);
 
@@ -494,10 +497,11 @@ async function createCredits() {
   // Play timline
   ctl.play();
   
-  const creditsOptions = ['creditsDance', 'creditsFall'];
+  firstRun = false;
+  console.log(`First Run set to False`)
 
   // create credits world
-  const creditsChoice = creditsOptions[Math.floor(Math.random() * creditsOptions.length)];
+
   createCreditsWorld(creditsChoice)
   .then((credits) => {
 
@@ -509,15 +513,13 @@ async function createCredits() {
     } else if (creditsChoice === 'creditsFall') {
       switchScene(credits.scene, credits.camera, credits.mixer, 'creditsFall', credits.texture, credits.cone);
 
-      console.log(`creditsChoice = 'creditsFall' -> kaclHold: ${logHolds('kacl')}`);
+      console.dir(`creditsChoice = 'creditsFall' -> kaclHold: ${logHolds('kacl')}`);
 
     }
   })
   .catch((error) => {
     console.error(error);
   });
-  
-  firstRun = false;
 
 }
 
