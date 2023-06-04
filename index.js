@@ -400,6 +400,8 @@ async function titleCard(epTitle) {
 async function createCredits() {
 
   let creditsLength = await credLength(audioLoader, soundKacl);
+
+  console.log(creditsLength);
   
   // tbh not sure if this is needed but why fuck with it
   creditsDiv.style.display = "flex";
