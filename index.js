@@ -326,7 +326,6 @@ function resetScene() {
 
     creditsText.innerHTML = '';
     titleDiv.innerHTML = ''
-    lottieIntroInstance.destroy();
     lottieIntroInstance = null;
     
     question.style.opacity = 1;
@@ -484,7 +483,7 @@ async function episode(questionText, userName) {
   // Show player canvas
   firstTime.style.opacity = 1;
   canvas.style.display = 'flex';
-  canvas.style.opacity = 1;
+ 
   
 
   // Get theme song length
