@@ -243,7 +243,7 @@ async function mainInit(flagged) {
 
   }
 
-  if (flagged) {
+  if (flagged === 'flagged') {
     
     modWarning.style.opacity = 1;
 
