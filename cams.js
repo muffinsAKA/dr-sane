@@ -9,7 +9,7 @@ export async function camKaclTopDown(camera) {
       -155.73 * Math.PI / 180
   
     );
-  };
+  }
   
 export async function camKaclFront(camera) {
   
@@ -20,7 +20,7 @@ export async function camKaclFront(camera) {
       118.33 * Math.PI / 180
   
     );
-  };
+  }
 
   export async function camKaclWindow(camera) {
   
@@ -31,7 +31,7 @@ export async function camKaclFront(camera) {
       -0.19 * Math.PI / 180
   
     );
-  };
+  }
   
  export async function camBlackTemple(camera) {
   
@@ -42,11 +42,11 @@ export async function camKaclFront(camera) {
       -93.37 * Math.PI / 180
   
     );
-  };
+  }
   
 
 
-  export async function kaclCamRandomzier(camera, animateActive) {
+  export async function kaclCamRandomzier(camera) {
     
      const kaclCams = [
       async function camKaclTopDown() {
@@ -108,12 +108,12 @@ export async function camKaclFront(camera) {
   
     const camChoice = kaclCams[camIndex];
 
-    if (animateActive === true) {
+
 
       const randomWait = Math.floor(Math.random() * (9000 - 4500) + 4500);
       
       setTimeout(() => {
-        kaclCamRandomzier(camera, animateActive)  
+        kaclCamRandomzier(camera)  
         return camChoice(camera);
 
       }, randomWait)
@@ -121,6 +121,6 @@ export async function camKaclFront(camera) {
       
      }
 
-  }
+
 
  

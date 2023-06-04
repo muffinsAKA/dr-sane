@@ -26,13 +26,9 @@ const border = document.getElementById('border')
 let canvasWidth = window.innerWidth * 0.5
 let canvasHeight = window.innerHeight * 0.6
 
-//  ------------- [ ANIM TRIGGERS ] -----------------
-let animateActive = true;
-
-
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
-let lottieIntroInstance = null;
+let lottieIntroInstance;
 let inputCount = 0;
 let delta;
 
@@ -209,6 +205,7 @@ function handleEnterKey(event) {
         console.log(`First Run = False -> Switching to kacl`);
   
         switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null);
+        kaclCamRandomzier(kacl.camera);
             
         console.log(`Is this kacl?`);
 
@@ -319,8 +316,6 @@ function resetScene() {
     border.style.opacity = 0;
     creditsDiv.style.opacity = 1;
     waitingDiv.style.opacity = 0;
-
-    animateActive = false;
 
     inputCount = 0;
 
@@ -441,8 +436,6 @@ async function fetchEpisode(questionText, userName) {
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
 
-  if (animateActive) {
-
     if (firstRun === false) {
       console.log(`animate() Round 2 - Line 426`);
     }
@@ -465,7 +458,6 @@ function animate() {
       current.camera.updateMatrixWorld();
     }, 1000 / 60);
   }
-}
 //  ------------- [ EPISODE LOOP ] -----------------
 
 async function episode(questionText, userName) {
@@ -509,12 +501,6 @@ async function episode(questionText, userName) {
     console.log(`Current Scene: ${current.scene}`);
     console.log(`Current Camera: ${current.camera}`);
     console.log(`Current Mixer: ${current.mixer}`);
-  }
-
-  if (firstRun === false) {
-
-    animateActive = true;
-    
   }
 
   ktl.add(() => {
@@ -688,8 +674,6 @@ async function createKacl() {
         const worldSet = gltf.scene;
 
         worldSet.position.set(0, 0, 0);
-
-        kaclCamRandomzier(kaclCamera, animateActive);
 
         worldSet.traverse(function (child) {
           if (child.isMesh) {
