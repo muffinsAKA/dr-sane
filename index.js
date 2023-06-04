@@ -412,7 +412,7 @@ async function createCredits() {
     "Hideo Kojima", "Food Finder", "Tantrum Haver", "Favorite Daughter", "Bestest Boy", "Relisher of Fools", "Knob Turner", "Mop", "Assistant Associate",
     "Feral Hog", "Tome Scribe", "Executive Grump", "Disappointed Father", "Therapist's Therapist", "Popup Closer", "Crypto Jester", "Salt of the Earth",
     "Security Baton", "Second Hand", "Wife's Mistress", "Resident Bisexual", "Premiere Crasher", "Plugin Downloader", "Imaginary Friend", "Passing Thought",
-    "Master Unlocker", "Movie Buff", "Scam Artist", "Belaborer", "Loverboy", "Head Shrimp", "Gone & Forgotten"  ]
+    "Master Unlocker", "Movie Buff", "Scam Artist", "Belaborer", "Loverboy", "Head Shrimp", "Gone & Forgotten"  ],
 
     ['MR. MARBLES', 'GELSEY KRAMMER', 'BIG JERRY', 'MARK', 'MY FATHER-IN-LAW', 'DRACULA', "BLINK-182", "NVIDIA", "VYVANSE", "PHOEBE BRIDGERS", "QUESTLOVE",
     'GEOFF KEIGHLEY', 'DR. HOMEWORK', 'MYSTERY MAN (GREG)', 'JIMMY CHEAPSKATES', 'TREE BEING', 'MRS. GRIMBLE', 'ERICA HORSE', 'COMPUTER #2', "GUMBY",
