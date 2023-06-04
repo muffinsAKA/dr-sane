@@ -170,6 +170,134 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 }
 
 
+function handleEnterKey(event) {
+  if (event.key === 'Enter') {
+    if (inputCount === 0) {
+      question.style.opacity = 0;
+      inputCount++;
+      userName = question.value;
+      question.placeholder = '';
+
+      setTimeout(() => {
+        question.maxLength = 100;
+        question.style.opacity = 1;
+        question.placeholder = `What's your question, ${userName}?`;
+      }, 1500);
+
+      question.value = '';
+
+    } else if (inputCount === 1) {
+      const questionText = question.value;
+      inputCount++;
+      question.value = '';
+      question.placeholder = '';
+      question.style.opacity = 0;
+      question.style.display = 'none';
+
+      setTimeout(() => {
+        waitingDiv.style.opacity = 1;
+
+      }, 500);
+      
+      if (firstRun === true) {
+
+        createKacl()
+        .then((kacl) => {
+          current.scene = kacl.scene;
+          current.camera = kacl.camera;
+          current.mixer = kacl.mixer;
+          current.sceneName = 'kacl';
+          
+          console.log(`firstRun createKacl -> current: ${logCurrentScene()}`);
+
+          animate();
+        });
+        
+      
+        createCreditsWorld('creditsFall')
+        .then((creditsFall) => {
+          creditsFallHold.scene = creditsFall.scene;
+          creditsFallHold.camera = creditsFall.camera;
+          creditsFallHold.mixer = creditsFall.mixer;
+          creditsFallHold.texture = creditsFall.texture;
+          creditsFallHold.cone = creditsFall.cone;
+          console.log(`firstRun createCreditsWorld('creditsFall') -> creditsFallHold: ${logHolds('creditsFall')}`);
+        });
+          
+        createCreditsWorld('creditsDance')
+        .then((creditsDance) => {
+          creditsDanceHold.scene = creditsDance.scene;
+          creditsDanceHold.camera = creditsDance.camera;
+          creditsDanceHold.mixer = creditsDance.mixer;
+          console.log(`firstRun createCreditsWorld('creditsDance') -> creditsDanceHold: ${logHolds('creditsDance')}`);
+        });
+
+      } else if (firstRun === false) {
+       
+        console.log(`First Run = False -> Switching to kaclHold`);
+  
+        switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
+            
+        console.log(`Is this kaclHold?: ${logCurrentScene()}`);
+
+      }
+
+      episode(questionText);
+
+    }
+  }
+}
+
+function handleQuestionFocus() {
+
+  border.style.opacity = 1;
+  question.classList.add("fade");
+
+  if (inputCount === 0) {
+    setTimeout(() => {
+      question.placeholder = "What's your name, caller?";
+      question.classList.remove("fade");
+    }, 1000);
+  } else if (inputCount === 1) {
+    setTimeout(() => {
+      question.placeholder = `What's your question, ${userName}?`;
+      question.classList.remove("fade");
+    }, 1000);
+  } else {
+    question.placeholder = '';
+    question.classList.add("fade");
+    question.style.opacity = 0;
+  }
+};
+
+function handleFocusOut() {
+  question.classList.add('fade');
+  border.style.opacity = 0;
+
+  if (inputCount <= 1) {
+    setTimeout(() => {
+      question.placeholder = "I'm listening.";
+      question.classList.remove('fade');
+    }, 1000);
+  } else if (inputCount > 1) {
+    question.placeholder = '';
+    question.style.opacity = 0;
+    question.classList.add('fade');
+  }
+}
+
+function addQuestionEventListeners() {
+  question.addEventListener('keydown', handleEnterKey);
+  question.addEventListener('focus', handleQuestionFocus);
+  question.addEventListener('blur', handleFocusOut);
+}
+
+function removeQuestionEventListeners() {
+  question.removeEventListener('keydown', handleEnterKey);
+  question.removeEventListener('focus', handleQuestionFocus);
+  question.removeEventListener('blur', handleFocusOut);
+}
+
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 window.addEventListener('DOMContentLoaded', mainInit);
 window.addEventListener('resize', adjustSize);
@@ -182,7 +310,7 @@ async function mainInit() {
 
  if (firstRun === false) {
     
-    await resetScene(handleEnterKey, handleQuestionFocus, handleFocusOut);
+    await resetScene();
 
   }
 
@@ -190,172 +318,46 @@ async function mainInit() {
   canvas.style.display = 'none';
 
   // Add event listeners
-  
-
-  function handleEnterKey(event) {
-    if (event.key === 'Enter') {
-      if (inputCount === 0) {
-        question.style.opacity = 0;
-        inputCount++;
-        userName = question.value;
-        question.placeholder = '';
-  
-        setTimeout(() => {
-          question.maxLength = 100;
-          question.style.opacity = 1;
-          question.placeholder = `What's your question, ${userName}?`;
-        }, 1500);
-  
-        question.value = '';
-
-      } else if (inputCount === 1) {
-        const questionText = question.value;
-        inputCount++;
-        question.value = '';
-        question.placeholder = '';
-        question.style.opacity = 0;
-        question.style.display = 'none';
-  
-        setTimeout(() => {
-          waitingDiv.style.opacity = 1;
-
-        }, 500);
-        
-        if (firstRun === true) {
-
-          createKacl()
-          .then((kacl) => {
-            current.scene = kacl.scene;
-            current.camera = kacl.camera;
-            current.mixer = kacl.mixer;
-            current.sceneName = 'kacl';
-            
-            console.log(`firstRun createKacl -> current: ${logCurrentScene()}`);
-
-            animate();
-          });
-          
-        
-          createCreditsWorld('creditsFall')
-          .then((creditsFall) => {
-            creditsFallHold.scene = creditsFall.scene;
-            creditsFallHold.camera = creditsFall.camera;
-            creditsFallHold.mixer = creditsFall.mixer;
-            creditsFallHold.texture = creditsFall.texture;
-            creditsFallHold.cone = creditsFall.cone;
-            console.log(`firstRun createCreditsWorld('creditsFall') -> creditsFallHold: ${logHolds('creditsFall')}`);
-          });
-            
-          createCreditsWorld('creditsDance')
-          .then((creditsDance) => {
-            creditsDanceHold.scene = creditsDance.scene;
-            creditsDanceHold.camera = creditsDance.camera;
-            creditsDanceHold.mixer = creditsDance.mixer;
-            console.log(`firstRun createCreditsWorld('creditsDance') -> creditsDanceHold: ${logHolds('creditsDance')}`);
-          });
-
-        } else if (firstRun === false) {
-         
-          console.log(`First Run = False -> Switching to kaclHold`);
-    
-          switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
-              
-          console.log(`Is this kaclHold?: ${logCurrentScene()}`);
-
-        }
-
-        episode(questionText);
-
-      }
-    }
-  }
-  
-  const handleQuestionFocus = () => {
-
-    border.style.opacity = 1;
-    question.classList.add("fade");
-  
-    if (inputCount === 0) {
-      setTimeout(() => {
-        question.placeholder = "What's your name, caller?";
-        question.classList.remove("fade");
-      }, 1000);
-    } else if (inputCount === 1) {
-      setTimeout(() => {
-        question.placeholder = `What's your question, ${userName}?`;
-        question.classList.remove("fade");
-      }, 1000);
-    } else {
-      question.placeholder = '';
-      question.classList.add("fade");
-      question.style.opacity = 0;
-    }
-  };
-  
-  function handleFocusOut() {
-    question.classList.add('fade');
-    border.style.opacity = 0;
-  
-    if (inputCount <= 1) {
-      setTimeout(() => {
-        question.placeholder = "I'm listening.";
-        question.classList.remove('fade');
-      }, 1000);
-    } else if (inputCount > 1) {
-      question.placeholder = '';
-      question.style.opacity = 0;
-      question.classList.add('fade');
-    }
-  }
-  
-  function addQuestionEventListeners() {
-    question.addEventListener('keydown', handleEnterKey);
-    question.addEventListener('focus', handleQuestionFocus);
-    question.addEventListener('blur', handleFocusOut);
-  }
-
   addQuestionEventListeners();
+  
 }
 
 function resetScene(handleEnterKey, handleQuestionFocus, handleFocusOut) {
-    return new Promise((resolve) => {
-
-  // Clear timelines
-  ctl.clear();
-  ktl.clear();
-
-  if (firstTime) {
-    firstTime.style.opacity = 0;
-    firstTime.style.display = 'none';
-  }
-
-  canvas.style.opacity = 0;
-  border.style.opacity = 0;
-  creditsDiv.style.opacity = 1;
-  waitingDiv.style.opacity = 0;
-
-  animateActive = false;
-
-  inputCount = 0;
-  userName = null;
-  episodeData = null;
-
-  creditsText.innerHTML = '';
-  titleDiv.innerHTML = ''
-  lottieIntroInstance.destroy();
-  lottieIntroInstance = null;
+  return new Promise((resolve) => {
   
-  question.style.opacity = 1;
-  question.placeholder = "I'm Listening."
-  question.style.display = 'inline-block';
+    removeQuestionEventListeners()
+    // Clear timelines
+    ctl.clear();
+    ktl.clear();
 
-  question.classList.remove('fade');
+    if (firstTime) {
+      firstTime.style.opacity = 0;
+      firstTime.style.display = 'none';
+    }
 
-  question.removeEventListener('keydown', handleEnterKey);
-  question.removeEventListener('focus', handleQuestionFocus);
-  question.removeEventListener('blur', handleFocusOut);
+    canvas.style.opacity = 0;
+    border.style.opacity = 0;
+    creditsDiv.style.opacity = 1;
+    waitingDiv.style.opacity = 0;
 
-  console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
+    animateActive = false;
+
+    inputCount = 0;
+    userName = null;
+    episodeData = null;
+
+    creditsText.innerHTML = '';
+    titleDiv.innerHTML = ''
+    lottieIntroInstance.destroy();
+    lottieIntroInstance = null;
+    
+    question.style.opacity = 1;
+    question.placeholder = "I'm Listening."
+    question.style.display = 'inline-block';
+
+    question.classList.remove('fade');
+
+    console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
 
   resolve();
   });
