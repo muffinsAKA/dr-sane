@@ -26,7 +26,6 @@ let canvasHeight = window.innerHeight * 0.6
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
-let loop = 0;
 let delta;
 
 let userInfo = {
