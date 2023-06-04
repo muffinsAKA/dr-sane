@@ -70,7 +70,9 @@ const creditsFall = 'https://muffinsaka.s3.amazonaws.com/3d/creditsFall.glb';
 const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
 function logCurrentScene() {
-console.dir(current);
+
+return console.dir(current);
+
 }
 
 function logHolds(logReq) {
@@ -165,6 +167,21 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 }
 
+function handleFocusOut() {
+  question.classList.add('fade');
+  border.style.opacity = 0;
+
+  if (inputCount <= 1) {
+    setTimeout(() => {
+      question.placeholder = "I'm listening.";
+      question.classList.remove('fade');
+    }, 1000);
+  } else if (inputCount > 1) {
+    question.placeholder = '';
+    question.style.opacity = 0;
+    question.classList.add('fade');
+  }
+}
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 window.addEventListener('DOMContentLoaded', mainInit);
@@ -178,12 +195,6 @@ async function mainInit() {
  if (firstRun === false) {
     
     await resetScene();
-
-    console.log(`First Run = False -> Switching to kaclHold`);
-    
-    switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
-        
-    console.log(`Is this kaclHold?: ${logCurrentScene()}`);
 
   }
 
@@ -252,7 +263,16 @@ async function mainInit() {
             creditsDanceHold.mixer = creditsDance.mixer;
             console.log(`firstRun createCreditsWorld('creditsDance') -> creditsDanceHold: ${logHolds('creditsDance')}`);
           });
-        };
+
+        } else if (firstRun === false) {
+         
+          console.log(`First Run = False -> Switching to kaclHold`);
+    
+          switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
+              
+          console.log(`Is this kaclHold?: ${logCurrentScene()}`);
+
+        }
 
         episode(questionText, userName);
 
@@ -282,21 +302,6 @@ async function mainInit() {
     }
   };
   
-  function handleFocusOut() {
-    question.classList.add('fade');
-    border.style.opacity = 0;
-  
-    if (inputCount <= 1) {
-      setTimeout(() => {
-        question.placeholder = "I'm listening.";
-        question.classList.remove('fade');
-      }, 1000);
-    } else if (inputCount > 1) {
-      question.placeholder = '';
-      question.style.opacity = 0;
-      question.classList.add('fade');
-    }
-  }
   
   function addQuestionEventListeners() {
     question.addEventListener('keydown', handleEnterKey);
@@ -317,7 +322,6 @@ async function resetScene() {
     firstTime.style.display = 'none';
   }
 
-  firstRun = false;
   canvas.style.opacity = 0;
   border.style.opacity = 0;
   creditsDiv.style.opacity = 1;
@@ -336,8 +340,7 @@ async function resetScene() {
   
   question.style.opacity = 1;
   question.placeholder = "I'm Listening."
-  question.blur();
-  body.focus();
+
 
   console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
 
