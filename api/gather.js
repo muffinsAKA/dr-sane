@@ -27,7 +27,6 @@ async function defaultPrompt(questionText, userName) {
   const charLimit = 500;
   const tokens = 900;
   const subject = questionText;
-  const userName = userName;
 
   const prompt = `Pretend to be Dr. Frasier Crane on his radio show giving response to a caller named ${userName} asking this question/statement: "${subject}". \
 Be humorous with dialogue in the way Dr. Frasier Crane speaks. The goal is to be funny while giving great advice. \
