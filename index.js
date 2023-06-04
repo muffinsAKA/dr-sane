@@ -127,7 +127,6 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   current.cone = cone;
 
   console.log(`Switched Scene ${newScene.scene} ||| ${newScene.camera} ||| ${newScene.mixer} |||`);
-  logCurrentScene();
 
 
 }
@@ -165,11 +164,16 @@ function handleEnterKey(event) {
       if (firstRun === true) {
 
         createKacl()
-        .then((kacl) => {
-          current.scene = kacl.scene;
-          current.camera = kacl.camera;
-          current.mixer = kacl.mixer;
+        .then((kaclTemp) => {
+          current.scene = kaclTemp.scene;
+          current.camera = kaclTemp.camera;
+          current.mixer = kaclTemp.mixer;
           current.sceneName = 'kacl';
+          
+          kacl.scene = kaclTemp.scene;
+          kacl.camera = kaclTemp.camera;
+          kacl.mixer = kaclTemp.mixer;
+
 
           animate();
         });
@@ -198,7 +202,6 @@ function handleEnterKey(event) {
         switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null);
             
         console.log(`Is this kacl?:`);
-        console.log(logCurrentScene())
 
       }
 
