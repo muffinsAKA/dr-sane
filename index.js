@@ -154,7 +154,7 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   }
 
   console.log(`Switching to: ${sceneName}`);
-  console.log(`Current Scene (should match newScene):`);
+  console.log(`Current Scene (should match ${newScene}):`);
   logCurrentScene();
 
 
@@ -315,6 +315,7 @@ async function resetScene() {
     firstTime.style.display = 'none';
   }
 
+  firstRun = false;
   canvas.style.opacity = 0;
   border.style.opacity = 0;
   creditsDiv.style.opacity = 1;
@@ -557,9 +558,6 @@ async function episode(questionText, userName) {
   episodeData = await fetchEpisode(questionText, userName);
 
   waitingDiv.style.opacity = 0;
-
-  // Set first run as complete
-  firstRun = false;
 
   // Show player canvas
   firstTime.style.opacity = 1;
