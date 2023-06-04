@@ -243,4 +243,10 @@ html, body {
   justify-content: center; 
   align-items: center;
   opacity: 0;
+  cursor: pointer;
+}
+
+#mod:hover {
+  transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease; 
+  transform: translate(-50%, -50%) scale(1.05);
 }
