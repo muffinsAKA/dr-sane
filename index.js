@@ -16,7 +16,6 @@ const creditsText = creditsDiv.querySelector('p')
 const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
 const  question = document.getElementById('question');
-const container = document.getElementById('first-time');
 const waitingDiv = document.getElementById("waiting");
 const border = document.getElementById('border')
 //const questionDiv = document.getElementById('questionDiv');
@@ -293,7 +292,7 @@ function resetScene() {
 const intro = {
 
   lottieOptions: {
-      container: container,
+      container: firstTime,
       renderer: 'svg',
       loop: false,
       autoplay: true,
@@ -515,7 +514,7 @@ async function episode(questionText, userName) {
   }, 0);
 
   ktl.add(() => {
-    intro.initIntroLottie;
+    intro.initIntroLottie();
   },'+=0.1');
 
   // fade out intro
