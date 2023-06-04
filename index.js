@@ -244,8 +244,9 @@ async function mainInit(flagged) {
   if (flagged === 'flagged') {
     
     waitingDiv.style.opacity = 0;
-    modWarning.style.opacity = 1;
     modWarning.style.display = 'flex'
+    modWarning.style.opacity = 1;
+    
 
     setTimeout(() => {
 
@@ -296,10 +297,10 @@ function resetScene() {
     creditsText.innerHTML = '';
     titleDiv.innerHTML = ''
 
-    
+    question.style.display = 'inline-block';
     question.style.opacity = 1;
     question.placeholder = "I'm Listening.";
-    question.style.display = 'inline-block';
+    
 
     question.classList.remove('fade');
     clock = null;
