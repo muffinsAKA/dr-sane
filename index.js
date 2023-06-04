@@ -37,6 +37,7 @@ let firstRun = true;
 let lottieIntroInstance = null;
 let inputCount = 0;
 let userName;
+let delta;
 
 
 
@@ -431,7 +432,9 @@ function animate() {
   if (animateActive) {
     setTimeout(function () {
       requestAnimationFrame(animate);
-      const delta = clock.getDelta();
+      
+      delta = clock.getDelta();
+      
       current.mixer.update(delta);
 
       if (current.cone) {
