@@ -33,3 +33,4 @@ res/worlds/blacktemple.json
 temp_CREDITSFALL.js
 index_backup.js
 ae/
+.eslintrc.cjs

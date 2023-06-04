@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import animationData from './src/intro.json';
+import lottie from 'lottie-web';
 import { kaclCamRandomzier } from './cams.js';
 import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, setRenderer, titleFade } from './functions.js';
 
@@ -18,8 +19,8 @@ const  question = document.getElementById('question');
 const container = document.getElementById('first-time');
 const waitingDiv = document.getElementById("waiting");
 const border = document.getElementById('border')
-const questionDiv = document.getElementById('questionDiv');
-const body = document.getElementById('body')
+//const questionDiv = document.getElementById('questionDiv');
+//const body = document.getElementById('body')
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -144,7 +145,7 @@ function handleEnterKey(event) {
       setTimeout(() => {
         question.maxLength = 100;
         question.style.opacity = 1;
-        question.placeholder = `What's your question, ${userName}?`;
+        question.placeholder = `What's your question, ${userInfo.user}?`;
       }, 1500);
 
       question.value = '';
@@ -224,7 +225,7 @@ function handleQuestionFocus() {
     }, 1000);
   } else if (inputCount === 1) {
     setTimeout(() => {
-      question.placeholder = `What's your question, ${userName}?`;
+      question.placeholder = `What's your question, ${userInfo.user}?`;
       question.classList.remove("fade");
     }, 1000);
   } else {
@@ -232,7 +233,7 @@ function handleQuestionFocus() {
     question.classList.add("fade");
     question.style.opacity = 0;
   }
-};
+}
 
 function handleFocusOut() {
   question.classList.add('fade');
@@ -817,4 +818,4 @@ switch (location) {
         break;
       }
     });
-  };
+  }
