@@ -70,16 +70,6 @@ const frazSetGlbUrl = 'https://muffinsaka.s3.amazonaws.com/3d/kacl.glb';
 const creditsFallUrl = 'https://muffinsaka.s3.amazonaws.com/3d/creditsFall.glb';
 const creditsDanceUrl = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
-function logCurrentScene() {
-  console.log('Current Scene:');
-  console.log('Scene:', current.scene);
-  console.log('Camera:', current.camera);
-  console.log('Mixer:', current.mixer);
-  console.log('Texture:', current.texture);
-  console.log('Cone:', current.cone);
-  console.log('Scene Name:', current.sceneName);
-}
-
 //  ------------- [ RENDERERS ] -----------------
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
@@ -438,12 +428,12 @@ function animate() {
 }
 //  ------------- [ EPISODE LOOP ] -----------------
 
-async function episode(questionText, userName) {
+async function episode(questionText) {
 
   episodeData = null;
 
   // Get the latest episode
-  episodeData = await fetchEpisode(questionText, userName);
+  episodeData = await fetchEpisode(questionText);
 
   waitingDiv.style.opacity = 0;
 
