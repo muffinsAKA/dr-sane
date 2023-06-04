@@ -244,10 +244,12 @@ async function mainInit(flagged) {
   if (flagged === 'flagged') {
     
     modWarning.style.opacity = 1;
+    modWarning.style.display = 'flex'
 
     setTimeout(() => {
 
       modWarning.style.opacity = 0;
+      modWarning.style.display = 'none'
 
     }, 6000)
     
@@ -282,7 +284,7 @@ function resetScene() {
 
     setTimeout(() => {
 
-    }, 1000)
+    }, 1300)
     waitingDiv.style.opacity = 0;
 
     inputState.count = 0;
