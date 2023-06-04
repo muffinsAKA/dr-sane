@@ -284,7 +284,7 @@ function resetScene() {
 
     setTimeout(() => {
 
-    }, 2000)
+   
     waitingDiv.style.opacity = 0;
 
     inputState.count = 0;
@@ -305,6 +305,7 @@ function resetScene() {
     console.log(`Current Scene (should be Credits): ${current.sceneName}`);
 
   resolve();
+}, 2000)
   });
 }
 
