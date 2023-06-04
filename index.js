@@ -251,7 +251,7 @@ async function mainInit(flagged) {
       modWarning.style.opacity = 0;
       modWarning.style.display = 'none'
 
-    }, 6000)
+    }, 8000)
     
     
 
