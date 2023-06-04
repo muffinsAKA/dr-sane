@@ -107,7 +107,7 @@ let creditsDance = {
 
 function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   
-  console.log(`Switching to: ${sceneName}`);
+  console.log(`[ SWITCHING ] => : ${sceneName} from ${current.sceneName}`);
 
   current.scene = newScene;
   current.camera = newCamera;
@@ -116,8 +116,17 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   current.texture = texture;
   current.cone = cone;
 
-  console.log(`Switched Scene ${newScene} ||| ${newCamera} ||| ${newMixer} |||`);
-  console.log(`Current Scene: ${current.scene} ||| ${current.camera} ||| ${current.mixer}`);
+  console.log(` ---[ SWITCHING INFO ]---`)
+  console.dir(`< Switched Scene > ${newScene}`);
+  console.dir(`< Switched Camera >: ${newCamera}`);
+  console.dir(`< Switched Mixer >: ${newMixer}`);
+  console.log(`< Switched Name >: ${sceneName}`);
+
+  console.log(` ---[ CURRENT INFO ]---`)
+  console.dir(`[ Current Scene ]: ${current.scene}`);
+  console.dir(`[ Current Camera ]: ${current.camera}`);
+  console.dir(`[ Current Mixer ]: ${current.mixer}`);
+  console.log(`[ Current Name ]: ${current.sceneName}`);
 
 
 }
