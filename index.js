@@ -116,7 +116,7 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   current.texture = texture;
   current.cone = cone;
 
-  console.log(`Switched Scene ${newScene.scene} ||| ${newScene.camera} ||| ${newScene.mixer} |||`);
+  console.log(`Switched Scene ${newScene} ||| ${newCamera} ||| ${newMixer} |||`);
   console.log(`Current Scene: ${current.scene} ||| ${current.camera} ||| ${current.mixer}`);
 
 
