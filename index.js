@@ -181,7 +181,7 @@ async function mainInit() {
 
  if (firstRun === false) {
     
-    await resetScene();
+    await resetScene(handleEnterKey, handleQuestionFocus, handleFocusOut);
 
   }
 
@@ -312,9 +312,7 @@ async function mainInit() {
     question.addEventListener('blur', handleFocusOut);
   }
 
-  if (firstRun === true) {
   addQuestionEventListeners();
-  }
 }
 
 function resetScene() {
@@ -349,6 +347,9 @@ function resetScene() {
   question.placeholder = "I'm Listening."
   question.style.display = 'inline-block';
 
+  question.removeEventListener('keydown', handleEnterKey);
+  question.removeEventListener('focus', handleQuestionFocus);
+  question.removeEventListener('blur', handleFocusOut);
 
   console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
 
