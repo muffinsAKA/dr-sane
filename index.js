@@ -70,27 +70,29 @@ const creditsFall = 'https://muffinsaka.s3.amazonaws.com/3d/creditsFall.glb';
 const creditsDance = 'https://muffinsaka.s3.amazonaws.com/3d/creditsDance.glb';
 
 function logCurrentScene() {
-
-return console.dir(current);
-
+  console.log('Current Scene:');
+  console.log('Scene:', current.scene);
+  console.log('Camera:', current.camera);
+  console.log('Mixer:', current.mixer);
+  console.log('Texture:', current.texture);
+  console.log('Cone:', current.cone);
+  console.log('Scene Name:', current.sceneName);
 }
 
 function logHolds(logReq) {
   if (logReq === 'creditsDance') {
-    
+    console.log('Credits Dance Hold:');
     console.dir(creditsDanceHold);
-    return console.dir(creditsDanceHold);
   }
-    
+  
   if (logReq === 'creditsFall') {
-    
+    console.log('Credits Fall Hold:');
     console.dir(creditsFallHold);
-    return console.dir(creditsFallHold);
   }
 
   if (logReq === 'kacl') {
+    console.log('KACL Hold:');
     console.dir(kaclHold);
-    return  console.dir(kaclHold);
   }
 }
 
@@ -260,7 +262,7 @@ async function mainInit() {
 
         }
 
-        episode(questionText, userName);
+        episode(questionText);
 
       }
     }
@@ -519,8 +521,10 @@ async function createCredits() {
 //  ------------- [ GET LATEST EP ] -----------------
 
 async function fetchEpisode(questionText, userName) {
+  
   const apiUrl = `https://frasier.muffins.zone/api/gather?questionText=${encodeURIComponent(questionText)}&userName=${encodeURIComponent(userName)}`;
   const themeUrl = `https://frasier.muffins.zone/api/retrieve-audio`;
+  
   try {
     const response = await fetch(apiUrl);
     const responseTheme = await fetch(themeUrl);
@@ -540,7 +544,6 @@ async function fetchEpisode(questionText, userName) {
     };
   } catch (error) {
     console.error(`fetch error:${error}`);
-    // Handle error case
   }
 }
 
@@ -570,6 +573,7 @@ function animate() {
 
 async function episode(questionText, userName) {
 
+  episodeData = null;
 
   // Get the latest episode
   episodeData = await fetchEpisode(questionText, userName);
