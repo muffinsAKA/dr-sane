@@ -5,6 +5,7 @@ dotenv.config();
 // GPT env vars
 const gptKey = process.env.gptKey;
 const gptReqUrl = "https://api.openai.com/v1/chat/completions";
+const modUrl = 'https://api.openai.com/v1/moderations'
 
 // Audio env vars
 const elevenKey = process.env.elevenKey;
@@ -141,16 +142,52 @@ async function getVoice(gptTitle, gptHandoff, gptScript, voice, world, subject, 
   }
 }
 
+async function contentCheck(questionText, userName) {
+
+  const contentToCheck = userName + '\n' + questionText;
+
+  const data = {
+    input: contentToCheck
+  }
+
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${gptKey}`,
+  };
+
+  const response = await fetch(modUrl, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data)
+  });
+  const modCheckResponse = await response.json();
+
+  const flagged = modCheckResponse.results[0].flagged;
+
+  return flagged;
+
+}
+
 export default async (req, res) => {
   try {
-    const { questionText, userName } = req.query;
+    const { questionText, userName, mod } = req.query;
 
-      const result = await gather(questionText, userName);
-      res.setHeader('Access-Control-Allow-Credentials', true);
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      console.log(result);
-      res.json(result);
-  
+      const modFlag  = await contentCheck(questionText, userName)
+
+      if (modFlag === true) {
+        
+        res.json(true);
+
+      } else if (modFlag === false) {
+
+        const result = await gather(questionText, userName);
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        console.log(result);
+        res.json(result);
+    
+      }
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'An error occurred.' });

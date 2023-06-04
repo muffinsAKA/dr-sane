@@ -354,38 +354,43 @@ async function titleCard(epTitle) {
 //  ------------- [ GET LATEST EP ] -----------------
 
 async function fetchEpisode(questionText, userName) {
-  
   const apiUrl = `https://frasier.muffins.zone/api/gather?questionText=${encodeURIComponent(questionText)}&userName=${encodeURIComponent(userName)}`;
   const themeUrl = `https://frasier.muffins.zone/api/retrieve-audio`;
   
   if (firstRun === false) {
     console.log(`fetchEpisode() round 2 starting - Line 396`);
   }
-  
 
   try {
     const response = await fetch(apiUrl);
-    const responseTheme = await fetch(themeUrl);
-
     const data = await response.json();
-    const themeData = await responseTheme.text();
 
-    if (firstRun === false) {
-      console.log(`fetchEpisode() successfully API'd Round 2 - Line 404`);
+    switch (data) {
+      case 'flagged':
+      
+      return 'flagged'
+
+      default:
+        const responseTheme = await fetch(themeUrl);
+        const themeData = await responseTheme.text();
+
+        if (firstRun === false) {
+          console.log(`fetchEpisode() successfully API'd Round 2 - Line 404`);
+        }
+
+        return {
+          title: data.gptTitle,
+          script: data.gptScript,
+          audio: data.audioBase64,
+          theme: themeData,
+          voice: data.voice,
+          world: 'fraz',
+          model: data.model,
+          location: data.location,
+        };
     }
-
-    return {
-      title: data.gptTitle,
-      script: data.gptScript,
-      audio: data.audioBase64,
-      theme: themeData,
-      voice: data.voice,
-      world: 'fraz',
-      model: data.model,
-      location: data.location,
-    };
   } catch (error) {
-    console.error(`fetch error:${error}`);
+    console.error(`fetch error: ${error}`);
   }
 }
 
@@ -473,6 +478,11 @@ async function episode(questionText, userName) {
 
    // Get the latest episode
   const episodeData = await fetchEpisode(questionText, userName);
+
+  if (episodeData === 'flagged') {
+    resetScene();
+    return;
+  }
 
   waitingDiv.style.opacity = 0;
 
