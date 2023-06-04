@@ -178,7 +178,7 @@ html, body {
   padding-right: 1vw;
   padding-top: 0.1vh;
   padding-bottom: 0.1vh;
-  opacity: 0;
+  opacity: 1;
 }
 
 #question:focus {

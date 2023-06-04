@@ -170,7 +170,7 @@ async function contentCheck(questionText, userName) {
 
 export default async (req, res) => {
   try {
-    const { questionText, userName, mod } = req.query;
+    const { questionText, userName} = req.query;
 
       const modFlag  = await contentCheck(questionText, userName)
 
