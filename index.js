@@ -137,6 +137,10 @@ function handleEnterKey(event) {
 
   if (event.key === 'Enter') {
     if (inputCount === 0) {
+      if (firstRun === false) {
+        console.log(`inputCount 0 aka name - round 2 - Line 141 ${inputCount}`);
+      }
+      
       question.style.opacity = 0;
       inputCount++;
       userInfo.user = question.value;
@@ -151,6 +155,9 @@ function handleEnterKey(event) {
       question.value = '';
 
     } else if (inputCount === 1) {
+      if (firstRun === false) {
+        console.log(`inputCount 1 aka question - round 2 - Line 141 ${inputCount}`);
+      }
       userInfo.question  = question.value;
       inputCount++;
       question.value = '';
@@ -207,6 +214,10 @@ function handleEnterKey(event) {
 
       }
 
+      if (firstRun === false) {
+        console.log(`Starting episode() Round 2 - Line 210`);
+      }
+      
       episode(userInfo.question, userInfo.user);
 
     }
@@ -277,6 +288,8 @@ async function mainInit() {
     
     await resetScene();
 
+      console.log(`resetScene() complete - round 2 - Line 291}`);
+
   }
 
   // Hide player canvas initially
@@ -334,6 +347,11 @@ function resetScene() {
 
 function initIntro(theme) {
 
+  if (firstRun === false) {
+    console.log(`initIntro() round 2 - Line 342`);
+  }
+  
+
   const options = {
     container: container,
     renderer: 'svg',
@@ -389,12 +407,21 @@ async function fetchEpisode(questionText, userName) {
   const apiUrl = `https://frasier.muffins.zone/api/gather?questionText=${encodeURIComponent(questionText)}&userName=${encodeURIComponent(userName)}`;
   const themeUrl = `https://frasier.muffins.zone/api/retrieve-audio`;
   
+  if (firstRun === false) {
+    console.log(`fetchEpisode() round 2 starting - Line 396`);
+  }
+  
+
   try {
     const response = await fetch(apiUrl);
     const responseTheme = await fetch(themeUrl);
 
     const data = await response.json();
     const themeData = await responseTheme.text();
+
+    if (firstRun === false) {
+      console.log(`fetchEpisode() successfully API'd Round 2 - Line 404`);
+    }
 
     return {
       title: data.gptTitle,
@@ -414,7 +441,12 @@ async function fetchEpisode(questionText, userName) {
 
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
+
   if (animateActive) {
+
+    if (firstRun === false) {
+      console.log(`animate() Round 2 - Line 426`);
+    }
     setTimeout(function () {
       requestAnimationFrame(animate);
       
@@ -440,6 +472,11 @@ function animate() {
 async function episode(questionText, userName) {
 
   // Get the latest episode
+
+  if (firstRun === false) {
+    console.log(`episode() Successfully Started - Line 458`);
+  }
+
   const episodeData = await fetchEpisode(questionText, userName);
 
   waitingDiv.style.opacity = 0;
@@ -447,13 +484,22 @@ async function episode(questionText, userName) {
   // Show player canvas
   firstTime.style.opacity = 1;
   canvas.style.display = 'flex';
+  canvas.style.opacity = 1;
   
 
   // Get theme song length
   let themeLength = Math.ceil(await themeSong(episodeData.theme, soundKacl, audioLoader));
+  if (firstRun === false) {
+    console.log(`themelength round 2 - Line 474: ${themeLength}`);
+  }
   
     // Get monologue length
   let monoLength = Math.ceil(await monologueLength(episodeData.audio)) -0.5;
+
+  if (firstRun === false) {
+    console.log(`monoLength round 2 - Line 481: ${monoLength}`);
+  }
+  
 
   border.style.opacity = 1;
 
@@ -516,6 +562,11 @@ async function episode(questionText, userName) {
 async function createCredits() {
 
   let creditsLength = await credLength(audioLoader, soundKacl);
+
+  if (firstRun === false) {
+    console.log(`creditsLength round 2 - Line 553: ${creditsLength}`);
+  }
+  
 
   console.log(creditsLength);
   
