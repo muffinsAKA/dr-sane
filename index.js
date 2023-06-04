@@ -27,6 +27,7 @@ let canvasHeight = window.innerHeight * 0.6
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
+let loop = 0;
 let delta;
 
 let userInfo = {
@@ -463,7 +464,7 @@ async function episode(questionText, userName) {
     console.log(`First Run = False -> Switching to kacl`);
 
     switchScene(kacl.scene, kacl.camera, kacl.mixer, 'kacl', null, null);
-    kaclCamRandomzier(kacl.camera);
+    //kaclCamRandomzier(kacl.camera);
         
     console.log(`Is this kacl?`);
 
@@ -510,12 +511,23 @@ async function episode(questionText, userName) {
   }
 
   ktl.add(() => {
+
     intro.initIntroTheme(episodeData.theme);
+
   }, 0);
 
+  if (firstRun === true) {
+  
+    ktl.add(() => {
+      intro.initIntroLottie();
+    },'+=0.1');
+
+} else if (firstRun === false) {
+
   ktl.add(() => {
-    intro.initIntroLottie();
-  },'+=0.1');
+    intro.introLottie.goToAndPlay(0, true);
+  }, '+=0.1')
+}
 
   // fade out intro
   ktl.add(() => fadeOut(firstTime), `+=${themeLength - 1}` );
