@@ -1,5 +1,6 @@
 :root {
   --base-font-size: 2vw;
+  font-size: 1.4vh;
 }
 
 html, body {
@@ -11,6 +12,7 @@ html, body {
     }
 
 #container {
+  position: relative;
   width: 100%;
   height: 100%;
 }
@@ -149,6 +151,7 @@ html, body {
   align-items: center;
   z-index: 1;
   pointer-events: none;
+  font-size: 1rem;
 }
 
 #question {
@@ -157,29 +160,31 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 5vh;
+  height: 4vh;
   width: 6vw;
   min-width: fit-content;
-  min-height: fit-content;
+  min-height: 3vh;
   border-radius: 0.4vw;
   border: 0;
   outline-color: rgb(37, 37, 37);
   background-color: rgb(12, 11, 11);
-  color: rgb(116, 116, 116);
+  color: rgb(141, 141, 141);
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   pointer-events: all;
   font-family: "Korin", sans-serif;
   transition: width 1s ease, height 1.2s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
   padding-left: 1vw;
   padding-right: 1vw;
+  padding-top: 0.1vh;
+  padding-bottom: 0.1vh;
 }
 
 #question:focus {
   transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
   color: rgb(148, 148, 148);
   width: 20vw;
-  height: 4vh;
+  height: 3.5vh;
   border: 0;
   outline:0;
 }
@@ -219,36 +224,34 @@ html, body {
 
 #mod {
   position: absolute;
-  background-color: rgb(165, 19, 19);
-  top: calc(50% - 5vw - 5vh);
+  top: calc(50% - 8vh);
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 11vh;
   width: 6vw;
   min-width: fit-content;
-  min-height: fit-content;
   border-radius: 0.4vw;
   border: 0;
   outline-color: rgb(37, 37, 37);
-  color: rgb(216, 160, 160);
-  text-align: center;
-  line-height: 1.3;
+  background-color: rgb(146, 16, 16);
+  color: rgb(224, 154, 154);
   font-size: 1em;
-  pointer-events: all;
+  line-height: 1.25;
   font-family: "Korin", sans-serif;
-  transition: width 1s ease, height 1.2s ease, opacity 0.8s ease, background-color 0.5s ease, transform 0.5s ease;
-  padding-left: 1.5vw;
-  padding-right: 1.5vw;
-  padding-top: 0.5vw;
-  padding-bottom: 0.5vw;
+  padding: 0.5rem 1rem;
   display: none;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   opacity: 0;
   cursor: pointer;
+  transition: width 1s ease, height 1.2s ease, opacity 0.8s ease, background-color 0.5s ease, transform 0.5s ease;
+  pointer-events: all;
+  text-align: center;
 }
+
 
 #mod:hover {
   transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease; 
   transform: translate(-50%, -50%) scale(1.05);
+  background-color: rgb(179, 27, 27);
+  color: rgb(255, 193, 193);
 }
