@@ -237,6 +237,7 @@ async function mainInit(flagged) {
 
  if (firstRun === false || flagged === 'flagged') {
     
+  waitingDiv.style.opacity = 0;
     await resetScene();
 
   }
