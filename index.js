@@ -306,7 +306,7 @@ const intro = {
 
   initIntroLottie() {
 
-    lottie.loadAnimation(this.lottieOptions),
+    lottie.loadAnimation(this.lottieOptions)
 
     this.introLottie = lottie;
 
@@ -438,7 +438,6 @@ async function episode(questionText, userName) {
       kacl.mixer = kaclTemp.mixer;
 
       kaclCamRandomzier(current.camera);
-      kaclCamRandomzier(kacl.camera);
       animate();
     });
     
