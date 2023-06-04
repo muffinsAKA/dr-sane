@@ -179,7 +179,8 @@ function handleEnterKey(event) {
           kacl.camera = kaclTemp.camera;
           kacl.mixer = kaclTemp.mixer;
 
-
+          kaclCamRandomzier(current.camera);
+          kaclCamRandomzier(kacl.camera);
           animate();
         });
         
@@ -307,10 +308,8 @@ function resetScene() {
     ctl.clear();
     ktl.clear();
 
-    if (firstTime) {
-      firstTime.style.opacity = 1;
+      firstTime.style.opacity = 0;
       firstTime.style.display = 'flex';
-    }
 
     canvas.style.opacity = 0;
     border.style.opacity = 0;
@@ -436,9 +435,6 @@ async function fetchEpisode(questionText, userName) {
 //  ------------- [ KACL ANIMATE ] -----------------
 function animate() {
 
-    if (firstRun === false) {
-      console.log(`animate() Round 2 - Line 426`);
-    }
     setTimeout(function () {
       requestAnimationFrame(animate);
       
