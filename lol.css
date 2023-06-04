@@ -105,7 +105,6 @@ html, body {
   white-space: pre-wrap;
   justify-content: center;
   align-items: center;
-  white-space: nowrap;
   filter: drop-shadow(2px 3px 0px rgba(0, 0, 0, 1));
 }
 #border {
