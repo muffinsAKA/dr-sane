@@ -305,7 +305,7 @@ function resetScene() {
     console.log(`Current Scene (should be Credits): ${current.sceneName}`);
 
   resolve();
-}, 2000)
+}, 1000)
   });
 }
 
