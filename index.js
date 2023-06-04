@@ -282,10 +282,10 @@ function resetScene() {
     border.style.opacity = 0;
     creditsDiv.style.opacity = 1;
 
+    waitingDiv.style.opacity = 0;
+
     setTimeout(() => {
 
-   
-    waitingDiv.style.opacity = 0;
 
     inputState.count = 0;
 
