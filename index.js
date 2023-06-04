@@ -284,7 +284,7 @@ function resetScene() {
 
     setTimeout(() => {
 
-    }, 1300)
+    }, 2000)
     waitingDiv.style.opacity = 0;
 
     inputState.count = 0;
