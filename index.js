@@ -33,7 +33,6 @@ let animateActive = true;
 let firstRun = true;
 let lottieIntroInstance = null;
 let inputCount = 0;
-let userName;
 let delta;
 
 
@@ -134,7 +133,7 @@ function handleEnterKey(event) {
     if (inputCount === 0) {
       question.style.opacity = 0;
       inputCount++;
-      userName = question.value;
+      const userName = question.value;
       question.placeholder = '';
 
       setTimeout(() => {
@@ -202,7 +201,7 @@ function handleEnterKey(event) {
 
       }
 
-      episode(questionText);
+      episode(questionText, userName);
 
     }
   }
@@ -305,8 +304,6 @@ function resetScene() {
     animateActive = false;
 
     inputCount = 0;
-    userName = null;
-    episodeData = null;
 
     creditsText.innerHTML = '';
     titleDiv.innerHTML = ''
@@ -434,10 +431,10 @@ function animate() {
 }
 //  ------------- [ EPISODE LOOP ] -----------------
 
-async function episode(questionText) {
+async function episode(questionText, userName) {
 
   // Get the latest episode
-  const episodeData = await fetchEpisode(questionText);
+  const episodeData = await fetchEpisode(questionText, userName);
 
   waitingDiv.style.opacity = 0;
 
