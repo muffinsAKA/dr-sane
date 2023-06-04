@@ -19,8 +19,6 @@ const  question = document.getElementById('question');
 const waitingDiv = document.getElementById("waiting");
 const border = document.getElementById('border');
 const modWarning = document.getElementById('mod');
-//const questionDiv = document.getElementById('questionDiv');
-//const body = document.getElementById('body')
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -298,6 +296,9 @@ function resetScene() {
     clock = new THREE.Clock();
     delta = null;
 
+    setTimeout(() => {
+
+    }, 1000)
     console.log(`Current Scene (should be Credits): ${current.sceneName}`);
 
   resolve();
