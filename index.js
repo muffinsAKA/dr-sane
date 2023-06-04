@@ -90,14 +90,14 @@ let current = {
   texture: null,
   cone: null,
   sceneName: null
-}
+};
 
 let kacl = {
   scene: null,
   camera: null,
   mixer: null,
   sceneName: 'kacl'
-}
+};
 
 let creditsFall = {
   scene: null,
@@ -106,14 +106,14 @@ let creditsFall = {
   texture: null,
   cone: null,
   sceneName: 'creditsFall'
-}
+};
 
 let creditsDance = {
   scene: null,
   camera: null,
   mixer: null,
   sceneName: 'creditsDance'
-}
+};
 
 function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   
@@ -127,6 +127,7 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
   current.cone = cone;
 
   console.log(`Switched Scene ${newScene.scene} ||| ${newScene.camera} ||| ${newScene.mixer} |||`);
+  console.log(`Current Scene: ${current.scene} ||| ${current.camera} ||| ${current.mixer}`);
 
 
 }
