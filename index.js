@@ -75,15 +75,20 @@ console.dir(current);
 
 function logHolds(logReq) {
   if (logReq === 'creditsDance') {
+    
     console.dir(creditsDanceHold);
+    return console.dir(creditsDanceHold);
   }
-
+    
   if (logReq === 'creditsFall') {
+    
     console.dir(creditsFallHold);
+    return console.dir(creditsFallHold);
   }
 
   if (logReq === 'kacl') {
     console.dir(kaclHold);
+    return  console.dir(kaclHold);
   }
 }
 
@@ -168,9 +173,6 @@ window.addEventListener('resize', adjustSize);
 async function mainInit() {
 
   setRenderer(canvas, renderer, canvasWidth, canvasHeight);
-
-// Set variables if not first run
-
 
 
  if (firstRun === false) {
@@ -469,6 +471,8 @@ async function createCredits() {
 
   // start next episode
   ctl.add(mainInit, creditsLength + 2);
+
+  ctl.add(() => firstRun = false, creditsLength + 2.5);
   
   // Play timline
   ctl.play();
