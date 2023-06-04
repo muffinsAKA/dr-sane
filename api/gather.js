@@ -175,8 +175,8 @@ export default async (req, res) => {
       const modFlag  = await contentCheck(questionText, userName)
 
       if (modFlag === true) {
-        
-        res.json(true);
+
+        res.json('flagged');
 
       } else if (modFlag === false) {
 

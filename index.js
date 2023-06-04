@@ -365,6 +365,8 @@ async function fetchEpisode(questionText, userName) {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
+    console.log(`data in fetchEpisode: ${data}`)
+
     switch (data) {
       case 'flagged':
       
@@ -480,6 +482,7 @@ async function episode(questionText, userName) {
   const episodeData = await fetchEpisode(questionText, userName);
 
   if (episodeData === 'flagged') {
+    console.log(`episodeData in if episodeData: ${episodeData}`)
     resetScene();
     return;
   }
