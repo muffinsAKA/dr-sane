@@ -129,11 +129,14 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 
 function handleEnterKey(event) {
+
+  let userName;
+
   if (event.key === 'Enter') {
     if (inputCount === 0) {
       question.style.opacity = 0;
       inputCount++;
-      const userName = question.value;
+      userName = question.value;
       question.placeholder = '';
 
       setTimeout(() => {
