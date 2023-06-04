@@ -483,7 +483,7 @@ async function episode(questionText, userName) {
 
   if (episodeData === 'flagged') {
     console.log(`episodeData in if episodeData: ${episodeData}`)
-    mainInit();
+    mainInit('flagged');
     return;
   }
 
