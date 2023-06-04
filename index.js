@@ -249,7 +249,10 @@ async function mainInit(flagged) {
     setTimeout(() => {
 
       modWarning.style.opacity = 0;
-      modWarning.style.display = 'none'
+      
+      setTimeout(() => {
+        modWarning.style.display = 'none'
+      }, 10000)
 
     }, 8000)
     
