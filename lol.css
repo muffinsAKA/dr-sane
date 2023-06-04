@@ -231,6 +231,7 @@ html, body {
   font-family: "Korin", sans-serif;
   transition: opacity 1s ease;
   text-align: center;
+  opacity: inherit;
 }
 
 #mod {
