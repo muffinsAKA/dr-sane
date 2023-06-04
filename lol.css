@@ -19,9 +19,9 @@ html, body {
 }
 #player {
   position: absolute;
-  width: 60vw;
+  width: 80vw;
   height: 60vh;
-  max-width: 1080px;
+  max-width: 1280px;
   max-height: 768px;
   top: 50%;
   left: 50%;
@@ -34,9 +34,9 @@ html, body {
 
 #first-time {
   position: absolute;
-  width: 60vw;
+  width: 80vw;
   height: 60vh;
-  max-width: 1080px;
+  max-width: 1280px;
   max-height: 768px;
   top: 50%;
   left: 50%;
@@ -53,9 +53,9 @@ html, body {
 }
 #title {
   position: fixed;
-  width: 60vw;
+  width: 80vw;
   height: 60vh;
-  max-width: 1080px;
+  max-width: 1280px;
   max-height: 768px;
   top: 50%;
   left: 50%;
@@ -74,9 +74,9 @@ html, body {
   
 }
 #credits {
-  width: 60vw;
+  width: 80vw;
   height: 60vh;
-  max-width: 1080px;
+  max-width: 1280px;
   max-height: 768px;
   position: fixed;
   display: flex;
@@ -112,9 +112,9 @@ html, body {
 }
 #border {
   position: absolute;
-  width: 60vw;
+  width: 80vw;
   height: 60vh;
-  max-width: 1080px;
+  max-width: 1280px;
   max-height: 768px;
   top: 50%;
   left: 50%;
