@@ -331,8 +331,8 @@ function resetScene() {
     ktl.clear();
 
     if (firstTime) {
-      firstTime.style.opacity = 0;
-      firstTime.style.display = 'none';
+      firstTime.style.opacity = 1;
+      firstTime.style.display = 'flex';
     }
 
     canvas.style.opacity = 0;
