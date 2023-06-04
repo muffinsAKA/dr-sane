@@ -167,21 +167,6 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 }
 
-function handleFocusOut() {
-  question.classList.add('fade');
-  border.style.opacity = 0;
-
-  if (inputCount <= 1) {
-    setTimeout(() => {
-      question.placeholder = "I'm listening.";
-      question.classList.remove('fade');
-    }, 1000);
-  } else if (inputCount > 1) {
-    question.placeholder = '';
-    question.style.opacity = 0;
-    question.classList.add('fade');
-  }
-}
 
 //  ------------- [ MAIN INITIALIZATION ] -----------------
 window.addEventListener('DOMContentLoaded', mainInit);
@@ -302,6 +287,21 @@ async function mainInit() {
     }
   };
   
+  function handleFocusOut() {
+    question.classList.add('fade');
+    border.style.opacity = 0;
+  
+    if (inputCount <= 1) {
+      setTimeout(() => {
+        question.placeholder = "I'm listening.";
+        question.classList.remove('fade');
+      }, 1000);
+    } else if (inputCount > 1) {
+      question.placeholder = '';
+      question.style.opacity = 0;
+      question.classList.add('fade');
+    }
+  }
   
   function addQuestionEventListeners() {
     question.addEventListener('keydown', handleEnterKey);
@@ -309,10 +309,14 @@ async function mainInit() {
     question.addEventListener('blur', handleFocusOut);
   }
 
+  if (firstRun === true) {
   addQuestionEventListeners();
+  }
 }
 
-async function resetScene() {
+function resetScene() {
+    return new Promise((resolve) => {
+
   // Clear timelines
   ctl.clear();
   ktl.clear();
@@ -344,7 +348,8 @@ async function resetScene() {
 
   console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
 
-
+  resolve();
+  });
 }
 
 
