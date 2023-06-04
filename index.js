@@ -246,12 +246,15 @@ async function mainInit(flagged) {
   if (flagged) {
     
     modWarning.style.opacity = 1;
-    
+
     setTimeout(() => {
 
-      mod.modWarning.style.opacity = 0;
+      modWarning.style.opacity = 0;
 
     }, 6000)
+    
+    
+
   }
 
 
