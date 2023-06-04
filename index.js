@@ -339,6 +339,7 @@ function resetScene() {
     question.classList.remove('fade');
     clock = null;
     clock = new THREE.Clock();
+    delta = null;
 
     console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
 
