@@ -176,8 +176,9 @@ window.addEventListener('resize', adjustSize);
 
 async function mainInit() {
 
+  if (firstRun === true) {
   setRenderer(canvas, renderer, canvasWidth, canvasHeight);
-
+  }
 
  if (firstRun === false) {
     
