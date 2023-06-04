@@ -237,13 +237,14 @@ async function mainInit(flagged) {
 
  if (firstRun === false || flagged === 'flagged') {
     
-  waitingDiv.style.opacity = 0;
+
     await resetScene();
 
   }
 
   if (flagged === 'flagged') {
     
+    waitingDiv.style.opacity = 0;
     modWarning.style.opacity = 1;
     modWarning.style.display = 'flex'
 
