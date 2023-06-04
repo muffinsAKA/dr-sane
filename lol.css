@@ -103,6 +103,8 @@ html, body {
   margin-top: auto;
   margin-bottom: 10%;
   white-space: pre-wrap;
+  justify-content: center;
+  align-items: center;
   filter: drop-shadow(2px 3px 0px rgba(0, 0, 0, 1));
 }
 #border {
