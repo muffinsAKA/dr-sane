@@ -80,23 +80,6 @@ function logCurrentScene() {
   console.log('Scene Name:', current.sceneName);
 }
 
-function logHolds(logReq) {
-  if (logReq === 'creditsDance') {
-    console.log('Credits Dance:');
-    console.dir(creditsDance);
-  }
-  
-  if (logReq === 'creditsFall') {
-    console.log('Credits Fall:');
-    console.dir(creditsFall);
-  }
-
-  if (logReq === 'kacl') {
-    console.log('KACL:');
-    console.dir(kacl);
-  }
-}
-
 //  ------------- [ RENDERERS ] -----------------
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
@@ -187,8 +170,6 @@ function handleEnterKey(event) {
           current.camera = kacl.camera;
           current.mixer = kacl.mixer;
           current.sceneName = 'kacl';
-          
-          console.log(`firstRun createKacl -> current: ${logCurrentScene()}`);
 
           animate();
         });
@@ -341,7 +322,7 @@ function resetScene() {
     clock = new THREE.Clock();
     delta = null;
 
-    console.log(`Current Scene (should be Credits): ${logCurrentScene()}`);
+    console.log(`Current Scene (should be Credits): ${current.sceneName}`);
 
   resolve();
   });
