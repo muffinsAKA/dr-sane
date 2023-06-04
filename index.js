@@ -279,6 +279,10 @@ function resetScene() {
     canvas.style.opacity = 0;
     border.style.opacity = 0;
     creditsDiv.style.opacity = 1;
+
+    setTimeout(() => {
+
+    }, 1000)
     waitingDiv.style.opacity = 0;
 
     inputState.count = 0;
@@ -296,9 +300,6 @@ function resetScene() {
     clock = new THREE.Clock();
     delta = null;
 
-    setTimeout(() => {
-
-    }, 1000)
     console.log(`Current Scene (should be Credits): ${current.sceneName}`);
 
   resolve();
