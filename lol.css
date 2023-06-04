@@ -178,6 +178,7 @@ html, body {
   padding-right: 1vw;
   padding-top: 0.1vh;
   padding-bottom: 0.1vh;
+  opacity: 0;
 }
 
 #question:focus {
@@ -220,6 +221,16 @@ html, body {
   font-family: "Korin", sans-serif;
   transition: opacity 1s ease;
   opacity: 0;
+  text-align: center;
+  line-height: 0.85;
+}
+
+#waiting p {
+  color: rgb(99, 99, 99);
+  font-size: 18px;
+  font-family: "Korin", sans-serif;
+  transition: opacity 1s ease;
+  text-align: center;
 }
 
 #mod {
