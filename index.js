@@ -237,7 +237,7 @@ async function mainInit(flagged) {
 
 
 
- if (firstRun === false || flagged) {
+ if (firstRun === false || flagged === 'flagged') {
     
     await resetScene();
 
@@ -256,9 +256,6 @@ async function mainInit(flagged) {
     
 
   }
-
-
-
 
   // Hide player canvas initially
   canvas.style.display = 'none';
