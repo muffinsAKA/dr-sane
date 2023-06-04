@@ -527,7 +527,7 @@ async function fetchEpisode(questionText, userName) {
       location: data.location,
     };
   } catch (error) {
-    console.error(`fetch error:${error}`);
+    console.error(JSON.stringify(error));
     // Handle error case
   }
 }
