@@ -228,13 +228,13 @@ const inputState = {
 window.addEventListener('DOMContentLoaded', mainInit);
 window.addEventListener('resize', adjustSize);
 
-async function mainInit() {
+async function mainInit(flagged) {
 
   if (firstRun === true) {
   setRenderer(canvas, renderer, canvasWidth, canvasHeight);
   }
 
- if (firstRun === false) {
+ if (firstRun === false || flagged) {
     
     await resetScene();
 
@@ -483,7 +483,7 @@ async function episode(questionText, userName) {
 
   if (episodeData === 'flagged') {
     console.log(`episodeData in if episodeData: ${episodeData}`)
-    resetScene();
+    mainInit();
     return;
   }
 
