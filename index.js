@@ -472,7 +472,6 @@ async function createCredits() {
   // start next episode
   ctl.add(mainInit, creditsLength + 2);
 
-  ctl.add(() => firstRun = false, creditsLength + 2.5);
   
   // Play timline
   ctl.play();
@@ -499,6 +498,8 @@ async function createCredits() {
   .catch((error) => {
     console.error(error);
   });
+
+  firstRun = false;
 
 }
 

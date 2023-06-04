@@ -201,6 +201,6 @@ html, body {
   color: rgb(99, 99, 99);
   font-size: 36px;
   font-family: "Korin", sans-serif;
-  transition: opacity 2s ease;
+  transition: opacity 1s ease;
   opacity: 0;
 }
