@@ -98,13 +98,14 @@ html, body {
 #credits p {
   margin: 0;
   padding: 0;
-  font-size: 2rem;
+  font-size: 1.8em;
   text-align: left;
   margin-top: auto;
   margin-bottom: 10%;
   white-space: pre-wrap;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
   filter: drop-shadow(2px 3px 0px rgba(0, 0, 0, 1));
 }
 #border {
