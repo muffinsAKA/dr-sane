@@ -16,6 +16,6 @@
       transparent 1px
     ), url(./res/grain75.gif);
     background-blend-mode: lighten;
-    opacity: 0.12;
+    opacity: 0.11;
     pointer-events: none;
   }
