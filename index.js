@@ -322,7 +322,7 @@ async function mainInit() {
   
 }
 
-function resetScene(handleEnterKey, handleQuestionFocus, handleFocusOut) {
+function resetScene() {
   return new Promise((resolve) => {
   
     removeQuestionEventListeners()
@@ -608,6 +608,7 @@ async function episode(questionText, userName) {
 
   if (firstRun === false) {
     console.log(`Current Scene before Kacl Round 2 (should be Credits): ${logCurrentScene()}`);
+    animateActive = true;
     switchScene(kaclHold.scene, kaclHold.camera, kaclHold.mixer, 'kacl', null, null);
     console.log(`Kacl Round 2? ${logCurrentScene()}`);
   }
