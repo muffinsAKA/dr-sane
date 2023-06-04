@@ -17,7 +17,8 @@ const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
 const  question = document.getElementById('question');
 const waitingDiv = document.getElementById("waiting");
-const border = document.getElementById('border')
+const border = document.getElementById('border');
+const modWarning = document.getElementById('mod');
 //const questionDiv = document.getElementById('questionDiv');
 //const body = document.getElementById('body')
 
@@ -234,13 +235,27 @@ async function mainInit(flagged) {
   setRenderer(canvas, renderer, canvasWidth, canvasHeight);
   }
 
+
+
  if (firstRun === false || flagged) {
     
     await resetScene();
 
-      console.log(`resetScene() complete - round 2 - Line 291}`);
-
   }
+
+  if (flagged) {
+    
+    modWarning.style.opacity = 1;
+    
+    setTimeout(() => {
+
+      mod.modWarning.style.opacity = 0;
+
+    }, 6000)
+  }
+
+
+
 
   // Hide player canvas initially
   canvas.style.display = 'none';
