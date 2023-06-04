@@ -315,7 +315,7 @@ async function mainInit() {
   addQuestionEventListeners();
 }
 
-function resetScene() {
+function resetScene(handleEnterKey, handleQuestionFocus, handleFocusOut) {
     return new Promise((resolve) => {
 
   // Clear timelines
