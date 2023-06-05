@@ -23,7 +23,7 @@ const elevenState = {
       const responseJson = await response.json();
   
       const characterLimit = responseJson.subscription.character_limit;
-      const charactersUsed = Math.ceil(responseJson.subscription.character_count);
+      const charactersUsed = responseJson.subscription.character_count;
 
       return { characterLimit, charactersUsed };
     }
@@ -40,7 +40,7 @@ const funding = 38 / 0.24 * 1000
         res.setHeader('Access-Control-Allow-Origin', '*');
 
         res.json({
-      characterLimit: elevenUsage.characterLimit + funding,
+      characterLimit: Math.ceil(elevenUsage.characterLimit + funding),
       charactersUsed: elevenUsage.charactersUsed
     });
       
