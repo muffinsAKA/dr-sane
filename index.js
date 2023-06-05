@@ -153,7 +153,7 @@ const inputState = {
 
   handleEnterKey(event) {
   
-    if (event.key === 'Enter' || event.type  === 'click') {
+    if (event.key === 'Enter' || event.type === 'touchend') {
       if (inputState.count === 0) {
   
         question.style.opacity = 0;
@@ -188,6 +188,11 @@ const inputState = {
         episode(userInfo.question, userInfo.user);
   
       }
+      submitButton.style.transform = `scale(1.1)`;
+
+      setTimeout(() => { 
+        submitButton.style.transform = 'scale(1);'
+      }, 300)
     }
   },
 
@@ -231,7 +236,7 @@ const inputState = {
   },
   
   addQuestionEventListeners() {
-    question.addEventListener('keydown', this.handleEnterKey);
+    question.addEventListener('touchend', this.handleEnterKey);
     question.addEventListener('focus', this.handleQuestionFocus);
     question.addEventListener('blur', this.handleFocusOut);
     submitButton.addEventListener('click', this.handleEnterKey);
@@ -243,7 +248,7 @@ const inputState = {
     question.removeEventListener('keydown', this.handleEnterKey);
     question.removeEventListener('focus', this.handleQuestionFocus);
     question.removeEventListener('blur', this.handleFocusOut);
-    submitButton.removeEventListener('click', this.handleEnterKey);
+    submitButton.removeEventListener('touchend', this.handleEnterKey);
     submitButton.removeEventListener('focus', this.handleQuestionFocus);
     submitButton.removeEventListener('blur', this.handleFocusOut);
   }
