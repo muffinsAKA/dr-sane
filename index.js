@@ -215,6 +215,7 @@ const inputState = {
   handleFocusOut() {
     question.classList.add('fade');
     canvas.style.border = 'none';
+    canvas.style.opacity = 0;
   
     if (inputState.count <= 1) {
       setTimeout(() => {
@@ -596,10 +597,13 @@ async function episode(questionText, userName) {
 
 
    // fade in to kacl studio
+   ktl.add(() => fadeOut(blocker), "+=5");
    ktl.add(() => {
     canvas.style.display = 'flex';
-   }, '+=5')
-   ktl.add(() => fadeOut(blocker), "+=5");
+   }, '+=0')
+   ktl.add(() => {
+    canvas.style.opacity = 1;
+   }, '+=0')
 
   // start monologue
   ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
