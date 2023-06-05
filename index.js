@@ -133,8 +133,8 @@ const usageStats = {
 
     stats.characterLimit = stats.characterLimit.toLocaleString();
     stats.charactersUsed = stats.charactersUsed.toLocaleString();
-    
-    chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit} characters used`;
+
+    chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit}`;
 
   }
 }

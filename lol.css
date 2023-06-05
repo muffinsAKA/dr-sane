@@ -368,15 +368,29 @@ z-index: 3;
   position: relative;
   font-family:'Courier New', Courier, monospace;
   font-weight: bold;
+  font-size: 24px;
+  color: rgb(231, 160, 102);
+  text-align: center;
+  padding-left: 19px;
+  padding-right: 19px;
+  margin-right: 10px;
+  padding-top: 1.2vh;
+  margin-bottom: 8px;
+}
+
+#chars-used {
+  position: relative;
+  font-family:'Courier New', Courier, monospace;
+  font-weight: normal;
   font-size: 18px;
   color: rgb(231, 160, 102);
   text-align: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-bottom: 0.25vh;
-  padding-top: 1.2vh;
+  padding-bottom: 8px;
+  padding-left: 19px;
+  padding-right: 19px;
+  margin-right: 10px;
+  margin-top: 0;
+
 }
 
 #what {
