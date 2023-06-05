@@ -5,56 +5,60 @@
     <link rel="stylesheet" href="lol.css">
     <link rel="stylesheet" href="media.css">
     <link rel="stylesheet" href="grain.css">    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>I'm Listening</title>
   </head>
   <body>
     <div id="container">
       <div id="border"></div>
-
-    <div id="questionDiv">
-      <div id="mod" onclick="window.open('https://www.google.com/search?q=where+to+buy+a+bible', '_blank');">
-        Content was flagged by ChatGPT. <br>Are you a bad person?</br>
+      <div id="blocker"></div>
+      <div id="questionDiv">
+        <div id="mod" onclick="window.open('https://www.google.com/search?q=where+to+buy+a+bible', '_blank');">
+          Content was flagged by ChatGPT. <br>Are you a bad person?</br>
+        </div>
+        <input type="text" id="question" placeholder="I'm listening." maxlength="40">
+        
+        <div id="waiting">The doctor will be with you shortly. 
+          <p>~10 seconds</p>
+        </div>
       </div>
-      <input type="text" id="question" placeholder="I'm listening." maxlength="30">
       
-      <div id="waiting">The doctor will be with you shortly. 
-        <p>~10 seconds</p>
-      </div>
-    </div>
-    
-    <video id="video" src="https://muffinsaka.s3.amazonaws.com/blues.mp4" crossorigin="anonymous"></video>
+      <video id="video" src="https://muffinsaka.s3.amazonaws.com/blues.mp4" crossorigin="anonymous" playsinline muted autoplay loop></video>
 
-    <div class="film-grain"></div>
 
-    <div id="first-time"></div>
-    <div id="blocker"></div>
+
+      <div class="film-grain"></div>
+
+      <div id="first-time"></div>
+      
       <canvas id="player"></canvas>
     
 
-    <div id="credits"><p></p></div>
+      <div id="credits"><p></p></div>
 
-    <div id="title"></div>
-
-    <div class="stats-container">
-      <div id="stats">
-        <p id="chars"></p>
-        <p id="what">It costs [ $ ] to generate Fraz's voice and since y'all are usin' it (GOOD!) it's goin' quick. <br><br>If you'd like to donate feel free. All money goes to the site only.</p>
-        <form action="https://www.paypal.com/donate" method="post" target="_top">
-          <input type="hidden" name="business" value="T27KTRW6U8928" />
-          <input type="hidden" name="no_recurring" value="1" />
-          <input type="hidden" name="item_name" value="Funding Dr. Crane's radio show" />
-          <input type="hidden" name="currency_code" value="USD" />
-          <input type="image" id="paypal" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-          <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+      <div id="title"></div>
+      <div class="stats-container">
+        <div id="stats">
+          <p id="x-button">[X]</p>
+          <p id="chars"></p>
+          <p id="chars-used">characters used<br>for voice generation</p>
+          <p id="what">It costs [ $ ] per letter to generate Fraz's voice and since y'all are usin' it (GOOD!) it's goin' quick. <br><br>If you'd like to donate feel free. All money goes to the site only.</p>
+          <form action="https://www.paypal.com/donate" method="post" target="_top">
+            <input type="hidden" name="business" value="T27KTRW6U8928" />
+            <input type="hidden" name="no_recurring" value="1" />
+            <input type="hidden" name="item_name" value="Funding Dr. Crane's radio show" />
+            <input type="hidden" name="currency_code" value="USD" />
+            <input type="image" id="paypal" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+            <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
           </form>
+        </div>
+      </div>
+      
+      <div class="twitter-container">
+        <a href="https://twitter.com/muffinsaka" class="twitter-follow-button">@muffinsAKA</a>
       </div>
     </div>
-    <div class="twitter-container">
-      <a href="https://twitter.com/muffinsaka" class="twitter-follow-button">@muffinsAKA</a>
-    </div>
-  </div>
-  </script>
+    
     <script type="module" src="./index.js"></script>
 
   </body>

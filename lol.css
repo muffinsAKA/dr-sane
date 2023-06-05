@@ -16,7 +16,6 @@ html, body {
   position: relative;
   width: 100%;
   height: 100%;
-  pointer-events: none;
 }
 
 #blocker {
@@ -33,8 +32,8 @@ html, body {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  opacity: 1;
   pointer-events: none;
+  opacity: 1;
   border-radius: 12px;
   transition: opacity 2s ease;
   z-index: 1;
@@ -169,7 +168,7 @@ html, body {
   z-index: 1;
   pointer-events: none;
   font-size: 1rem;
-  z-index: 2;
+  z-index: 3;
 }
 
 
@@ -305,13 +304,13 @@ html, body {
   padding-right: 10px;
   text-decoration: none;
   transition: color 0.8s ease, background-color 0.8s ease, font-size 0.8s ease;
+  z-index: 2;
 }
 
 .twitter-container a:hover{
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 5vh;
   opacity: 1;
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(255, 255, 255);
@@ -329,36 +328,54 @@ html, body {
 .stats-container {
 position: absolute;
 bottom: 5vh;
-left: 6%;
+left: 3%;
+z-index: 3;
 
 
 }
+#x-button {
+  position: relative;
+  display: flex;
+  width: 0;
+  height: 0;
+  left: 40%;
+  flex-direction: column;
+  text-align: right;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1em;
+  top: 0;
+  bottom: 0;
+  border-radius: 13px;
+  opacity: 1;
+  color: rgb(255, 166, 0);
+  transition: opacity 0.5s ease;
+  cursor: pointer;
+  margin-right: 1vw;
+  margin-top: 12px;
+  white-space: nowrap;
+}
+
+#x-button:hover {
+  color: rgb(255, 255, 255);
+}
+
 #stats {
   display: flex;
   flex-direction: column;
   align-items: center; 
   justify-content: center;
-  width: 15vw;
+  width: 18vw;
   height: fit-content;
   top: 0;
   bottom: 0;
   border-radius: 13px;
-  opacity: 0.65;
+  opacity: 0.6;
   transition: opacity 0.5s ease;
-  outline: 1px solid rgba(175, 175, 172, 0.479);
+  outline: 1px solid rgba(175, 175, 172, 0.253);
 }
 
 #stats:hover {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center;
-  width: 15vw;
-  height: fit-content;
-  top: 0;
-  bottom: 0;
-  border-radius: 13px;
-  opacity: 1;
+opacity: 1;
   transition: opacity 0.5s ease, scale 0.3s ease;
   outline: 1px solid rgb(175, 175, 172);
   scale: 1.015;
@@ -368,12 +385,30 @@ left: 6%;
   position: relative;
   font-family:'Courier New', Courier, monospace;
   font-weight: bold;
-  font-size: 18px;
-  color: rgb(231, 160, 102);
+  font-size: 24px;
+  color: rgb(255, 166, 0);
   text-align: center;
-  padding: 10px;
-  margin-bottom: 0.25vh;
-  padding-top: 1.5vh;
+  padding-left: 19px;
+  padding-right: 19px;
+  margin-right: 10px;
+  padding-top: 1.2vh;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+#chars-used {
+  position: relative;
+  font-family:'Courier New', Courier, monospace;
+  font-weight: normal;
+  font-size: 18px;
+  color: rgb(255, 166, 0);
+  text-align: center;
+  padding-bottom: 8px;
+  padding-left: 19px;
+  padding-right: 19px;
+  margin-right: 10px;
+  margin-top: 0;
+
 }
 
 #what {
@@ -384,7 +419,8 @@ left: 6%;
   font-size: 15px;
   color: beige;
   padding: 10px;
-  margin: 0
+  margin: 0;
+  z-index: 2;
 }
 
 #paypal {
@@ -395,6 +431,7 @@ left: 6%;
   color: beige;
   padding: 5px;
   margin-bottom: 0.5vh;
+  z-index: 2;
 }
 
 #paypal:hover {
