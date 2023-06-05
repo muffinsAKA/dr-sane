@@ -323,10 +323,10 @@ left: 6%;
   height: fit-content;
   top: 0;
   bottom: 0;
-  border-radius: 4px;
-  opacity: 0.5;
-  outline: 1px solid rgb(175, 175, 172);
+  border-radius: 13px;
+  opacity: 0.65;
   transition: opacity 0.5s ease;
+  outline: 1px solid rgba(175, 175, 172, 0.479);
 }
 
 #stats:hover {
@@ -338,10 +338,11 @@ left: 6%;
   height: fit-content;
   top: 0;
   bottom: 0;
-  border-radius: 4px;
+  border-radius: 13px;
   opacity: 1;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease, scale 0.3s ease;
   outline: 1px solid rgb(175, 175, 172);
+  scale: 1.02;
 }
 
 #chars {
