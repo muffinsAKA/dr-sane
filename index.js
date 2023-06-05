@@ -538,7 +538,6 @@ async function episode(questionText, userName) {
 
   // Show player canvas
   firstTime.style.opacity = 1;
-  canvas.style.display = 'flex';
  
   
 
@@ -597,6 +596,9 @@ async function episode(questionText, userName) {
 
 
    // fade in to kacl studio
+   ktl.add(() => {
+    canvas.style.display = 'flex';
+   }, '+=5')
    ktl.add(() => fadeOut(blocker), "+=5");
 
   // start monologue
