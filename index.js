@@ -20,6 +20,7 @@ const waitingDiv = document.getElementById("waiting");
 const modWarning = document.getElementById('mod');
 const chars = document.getElementById('chars');
 const blocker = document.getElementById('blocker');
+const statsDiv = document.getElementById('stats');
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -141,6 +142,9 @@ const usageStats = {
 
 usageStats.getStats()
 
+setTimeout(() => {
+  statsDiv.style.opacity = 0.55;
+}, 3000)
 
 const inputState = {
   count: 0,
