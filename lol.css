@@ -333,6 +333,24 @@ z-index: 3;
 
 
 }
+#x-button {
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  text-align: right;
+  height: fit-content;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.1em;
+  top: 0;
+  bottom: 0;
+  border-radius: 13px;
+  opacity: 1;
+  color: beige;
+  transition: opacity 0.5s ease;
+  cursor:pointer;
+  margin-right: 1.15vw;
+}
+
 #stats {
   display: flex;
   flex-direction: column;

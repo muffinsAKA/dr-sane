@@ -20,8 +20,8 @@ const waitingDiv = document.getElementById("waiting");
 const modWarning = document.getElementById('mod');
 const chars = document.getElementById('chars');
 const blocker = document.getElementById('blocker');
-const statsDiv = document.getElementById('stats');
-
+const xButton = document.getElementById('x-button');
+const statsDiv = document.getElementById('stats')
 
 let canvasWidth = window.innerWidth * 0.5
 let canvasHeight = window.innerHeight * 0.6
@@ -125,6 +125,10 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 
 }
+
+xButton.addEventListener('click', () => {
+  statsDiv.style.opacity =  0;
+});
 
 const usageStats = {
   async getStats() {
