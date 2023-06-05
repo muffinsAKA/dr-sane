@@ -808,7 +808,6 @@
             color: rgb(167, 167, 167);
             background-color: rgb(2, 2, 2);
             opacity: 1;
-            z-index: 1;
             text-align: center;
             border-radius: 4px;
             padding: 10px;
@@ -818,15 +817,15 @@
             margin-left: 0;
             margin-right: 0;
             outline: 1px solid rgba(128, 128, 128, 0.253);
-            transition:width 0.6s ease, opacity 0.5 ease;
-            transform: scale(1);
+            transition: width 1s ease, opacity 1 ease;
+            -webkit-transition: width 1s ease, opacity 1s ease;
             z-index: 1;
             pointer-events: auto;
           }
   
           #submitButton:active {
             outline: 1px solid rgba(255, 147, 5, 0.253);
-            width: 28vw;
+            width: 32vw;
   
           }
 
