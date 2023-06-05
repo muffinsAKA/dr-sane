@@ -51,5 +51,4 @@ export default async (req, res) => {
     }
   };
 
-  elevenState.check();
 
