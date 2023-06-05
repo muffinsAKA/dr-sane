@@ -796,6 +796,7 @@
           padding-top: 0.1vh;
           padding-bottom: 0.1vh;
           opacity: 1;
+          -webkit-text-size-adjust: 100%;
         }
         
         #question:focus {
@@ -803,9 +804,6 @@
           color: rgb(163, 163, 163);
           width: 80vw;
           max-width: 375px;
-          height: 5vh;
-          border: 0;
-          outline:0;
         }
         
         #question::placeholder {
