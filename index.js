@@ -189,14 +189,15 @@ const inputState = {
         question.placeholder = '';
         question.style.opacity = 0;
         question.style.display = 'none';
+        question.blur();
         submitButton.style.opacity = 0;
         submitButton.style.display = 'none';
         statsDiv.style.opacity = 0;
-  
+
         setTimeout(() => {
           statsDiv.style.display = 'none'
           waitingDiv.style.opacity = 1;
-  
+            
         }, 500);
         
         if (firstRun === true) {
