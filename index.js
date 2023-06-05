@@ -19,6 +19,7 @@ const  question = document.getElementById('question');
 const waitingDiv = document.getElementById("waiting");
 const modWarning = document.getElementById('mod');
 const chars = document.getElementById('chars');
+const blocker = document.getElementById('blocker');
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -315,9 +316,10 @@ function resetScene() {
     question.style.display = 'inline-block';
     question.style.opacity = 1;
     question.placeholder = "I'm Listening.";
-    
-
     question.classList.remove('fade');
+
+    blocker.style.opacity = 1;
+  
     clock = null;
     clock = new THREE.Clock();
     delta = null;
@@ -590,7 +592,7 @@ async function episode(questionText, userName) {
 
 
    // fade in to kacl studio
-   ktl.add(() => fadeIn(canvas), "+=5");
+   ktl.add(() => fadeOut(blocker), "+=5");
 
   // start monologue
   ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
