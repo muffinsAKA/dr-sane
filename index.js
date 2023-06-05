@@ -169,7 +169,8 @@ const inputState = {
         question.value = '';
   
       } else if (inputState.count === 1) {
-  
+        
+        canvas.style.display = 'none';
         userInfo.question  = question.value;
         inputState.count++;
         question.value = '';
