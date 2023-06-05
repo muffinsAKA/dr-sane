@@ -780,6 +780,7 @@
           width: 6vw;
           max-width: 375px;
           min-height: 3vh;
+          line-height: normal;
           border-radius: 0.4vw;
           border: 0;
           outline-color: rgb(37, 37, 37);
