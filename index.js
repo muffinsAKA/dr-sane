@@ -194,6 +194,7 @@ const inputState = {
         statsDiv.style.opacity = 0;
   
         setTimeout(() => {
+          statsDiv.style.display = 'none'
           waitingDiv.style.opacity = 1;
   
         }, 500);
@@ -369,7 +370,13 @@ function resetScene() {
     blocker.style.opacity = 1;
     submitButton.style.display = 'flex';
     submitButton.style.opacity = 1;
+    
+    statsDiv.style.display = 'flex';
+    
     statsDiv.style.opacity = 1;
+
+    
+
   
     clock = null;
     clock = new THREE.Clock();
