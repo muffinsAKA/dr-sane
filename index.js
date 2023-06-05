@@ -231,10 +231,10 @@ const inputState = {
   },
   
   addQuestionEventListeners() {
-    question.addEventListener('keydown', this.handleEnterKey);
+    question.addEventListener('click', this.handleEnterKey);
     question.addEventListener('focus', this.handleQuestionFocus);
     question.addEventListener('blur', this.handleFocusOut);
-    submitButton.addEventListener('keydown', this.handleEnterKey);
+    submitButton.addEventListener('click', this.handleEnterKey);
     submitButton.addEventListener('focus', this.handleQuestionFocus);
     submitButton.addEventListener('blur', this.handleFocusOut);
   },
