@@ -200,7 +200,7 @@ html, body {
 }
 
 #submitButton {
-display: none;
+  display:none;
 }
 
 #question:focus {
