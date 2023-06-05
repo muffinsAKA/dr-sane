@@ -188,6 +188,7 @@ const inputState = {
         question.placeholder = '';
         question.style.opacity = 0;
         question.style.display = 'none';
+        submitButton.style.opacity = 0;
         submitButton.style.display = 'none';
   
         setTimeout(() => {
@@ -358,6 +359,8 @@ function resetScene() {
     question.classList.remove('fade');
 
     blocker.style.opacity = 1;
+    submitButton.style.display = 'flex';
+    submitButton.style.opacity = 1;
   
     clock = null;
     clock = new THREE.Clock();
@@ -628,7 +631,7 @@ async function episode(questionText, userName) {
 
    // fade in to kacl studio
    ktl.add(() => fadeOut(blocker), "+=5");
-   
+
    ktl.add(() => {
     canvas.style.display = 'flex';
    }, '+=0')
