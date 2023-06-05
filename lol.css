@@ -36,6 +36,7 @@ html, body {
   pointer-events: none;
   border-radius: 12px;
   transition: opacity 2s ease;
+  z-index: 1;
 }
 
 #player {
@@ -57,6 +58,7 @@ html, body {
   border: none;
   border-radius: 12px;
   transition: border 1s ease;
+  z-index: 0;
 }
 
 
@@ -78,6 +80,7 @@ html, body {
   opacity: 1;
   border-radius: 15px;
   transition: opacity 2s ease;
+  z-index: 1;
 
 }
 #title {
@@ -100,6 +103,7 @@ html, body {
   pointer-events: none;
   justify-content: center;
   border-radius: 15px;
+  z-index: 0;
   
 }
 #credits {
@@ -126,6 +130,7 @@ html, body {
   align-items: center;
   pointer-events: none;
   border-radius: 15px;
+  z-index: 0;
 }
 #credits p {
   margin: 0;
@@ -138,6 +143,7 @@ html, body {
   justify-content: center;
   align-items: center;
   filter: drop-shadow(2px 3px 0px rgba(0, 0, 0, 1));
+  z-index: 0;
 }
 
 
@@ -145,6 +151,7 @@ html, body {
   display: block;
   opacity: 0;
   pointer-events: none;
+  z-index: 1;
 }
 
 #questionDiv {
@@ -161,6 +168,7 @@ html, body {
   z-index: 1;
   pointer-events: none;
   font-size: 1rem;
+  z-index: 2;
 }
 
 
