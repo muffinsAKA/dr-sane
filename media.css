@@ -946,12 +946,10 @@
               transition: opacity 0.5s ease;
               cursor: pointer;
               border-radius: 2px;
+              opacity: 0;
               outline: 1px solid rgb(255, 166, 0);
             }
-            
-            #x-button:hover {
-              color: rgb(255, 255, 255);
-            }
+
             
             #stats {
               display: flex;
