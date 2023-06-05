@@ -32,10 +32,10 @@ html, body {
   align-items: center;
   color: white;
   font-size: 2rem;
+  opacity: 1;
   pointer-events: none;
   border: 2px solid #202020;
   border-radius: 12px;
-  z-index: 1;
   transition: opacity 1s ease;
   z-index: 1;
 }
