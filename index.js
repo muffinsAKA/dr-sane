@@ -20,10 +20,11 @@ const waitingDiv = document.getElementById("waiting");
 const modWarning = document.getElementById('mod');
 const chars = document.getElementById('chars');
 const blocker = document.getElementById('blocker');
+const xButton = document.getElementById('x-button');
+const statsDiv = document.getElementById('stats')
 
-
-let canvasWidth = window.innerWidth * 0.5
-let canvasHeight = window.innerHeight * 0.6
+let canvasWidth = window.innerWidth;
+let canvasHeight = window.innerHeight;
 
 //  ------------- [ GLOBAL VARS ] -----------------
 let firstRun = true;
@@ -125,20 +126,26 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 }
 
+
+xButton.addEventListener('click', () => {
+  statsDiv.style.opacity =  0;
+});
+
 const usageStats = {
   async getStats() {
-    const apiUrl = 'https://dr-sane-git-testing-muffins.vercel.app/api/usage'
+    const apiUrl = 'https://frasier.muffins.zone/api/usage'
     const response = await fetch(apiUrl);
     const stats = await response.json();
 
+    stats.characterLimit = stats.characterLimit.toLocaleString();
+    stats.charactersUsed = stats.charactersUsed.toLocaleString();
 
-    chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit} characters used`;
-
+    chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit}`;
 
   }
 }
 
-usageStats.getStats();
+usageStats.getStats()
 
 const inputState = {
   count: 0,
@@ -154,7 +161,7 @@ const inputState = {
         question.placeholder = '';
   
         setTimeout(() => {
-          question.maxLength = 100;
+          question.maxLength = 200;
           question.style.opacity = 1;
           question.placeholder = `What's your question, ${userInfo.user}?`;
         }, 1500);
@@ -279,7 +286,7 @@ async function mainInit(flagged) {
   }
 
   // Hide player canvas initially
-  canvas.style.display = 'none';
+  canvas.style.display = 'block';
 
   
   // Add event listeners
@@ -373,9 +380,6 @@ const intro = {
 //  ------------- [ RESIZE ] -----------------
 async function adjustSize() {
 
-
-  canvasWidth = window.innerWidth * 0.5;
-  canvasHeight = window.innerHeight * 0.6;
 
   renderer.setSize(canvasWidth, canvasHeight);
   
@@ -533,7 +537,7 @@ async function episode(questionText, userName) {
 
   // Show player canvas
   firstTime.style.opacity = 1;
-  
+  canvas.style.display = 'flex';
  
   
 
@@ -593,9 +597,6 @@ async function episode(questionText, userName) {
 
    // fade in to kacl studio
    ktl.add(() => fadeOut(blocker), "+=5");
-   ktl.add(() => {
-    fadeIn(canvas);
-   }, '+=0')
 
   // start monologue
   ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
@@ -705,8 +706,6 @@ async function createCredits() {
 
   // start next episode
   ctl.add(mainInit, creditsLength + 2);
-
-  ctl.add(fadeOut(canvas), creditsLength);
 
   
   // Play timline
@@ -827,7 +826,7 @@ async function createCreditsWorld(location) {
 switch (location) {
   case 'creditsFall':
 
-    video.play();
+
     video.loop = true;
     video.muted = true;
 
