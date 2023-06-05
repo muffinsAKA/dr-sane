@@ -26,10 +26,18 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: #05050509;
   display: flex;
-  opacity: 0;
-  transition: opacity 2.5s;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2rem;
+  pointer-events: none;
+  border: 2px solid #202020;
   border-radius: 12px;
+  z-index: 1;
+  transition: opacity 1s ease;
+  z-index: 1;
 }
 
 #first-time {
@@ -127,11 +135,13 @@ html, body {
   font-size: 2rem;
   pointer-events: none;
   opacity: 0;
-  border: 2px solid #111111;
+  border: 2px solid #202020;
   border-radius: 12px;
-  z-index: 0;
+  z-index: 1;
   transition: opacity 1s ease;
+  z-index: 2;
 }
+
 
 #video {
   display: block;
