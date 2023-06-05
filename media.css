@@ -81,7 +81,7 @@
     color: white;
     font-size: 2rem;
     opacity: 1;
-    border-radius: 15px;
+    border-radius: 12px;
     transition: opacity 2s ease;
     z-index: 2;
   
@@ -491,7 +491,7 @@
         color: white;
         font-size: 2rem;
         opacity: 1;
-        border-radius: 15px;
+        border-radius: 12px;
         transition: opacity 2s ease;
         z-index: 2;
       
