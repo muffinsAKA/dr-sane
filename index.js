@@ -128,14 +128,10 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 const usageStats = {
   async getStats() {
-    //const apiUrl = 'http://localhost:5181/api/usage'
-    //const response = await fetch(apiUrl);
-    //const stats = await response.json();
+    const apiUrl = 'https://dr-sane-git-testing-muffins.vercel.app/api/usage'
+    const response = await fetch(apiUrl);
+    const stats = await response.json();
 
-    const stats = {
-      charactersUsed: 500,
-      characterLimit: 50000
-    }
 
     chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit} characters used`;
 
