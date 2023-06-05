@@ -199,6 +199,10 @@ html, body {
   opacity: 1;
 }
 
+#submitButton {
+display: none;
+}
+
 #question:focus {
   transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
   color: rgb(148, 148, 148);
