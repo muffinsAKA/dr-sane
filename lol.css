@@ -307,4 +307,17 @@ html, body {
   transition: color 0.8s ease, background-color 0.8s ease, font-size 0.8s ease;
 }
 
+.stats-container {
+position: absolute;
+bottom: 3vh;
+left: 10%;
 
+}
+#stats {
+  width: 10vw;
+  height: 10vh;
+  top: 0;
+  bottom: 0;
+  border-radius: 4px;
+  outline: 2px solid rgb(175, 175, 172);
+}

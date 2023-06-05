@@ -19,6 +19,8 @@ const  question = document.getElementById('question');
 const waitingDiv = document.getElementById("waiting");
 const border = document.getElementById('border');
 const modWarning = document.getElementById('mod');
+const charsUsed = document.getElementById('chars-used');
+const charLimit = document.getElementById('chars-avail');
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -124,6 +126,16 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 }
 
+const usageStats = {
+  async getStats() {
+    const response = await fetch(apiUrl);
+    const stats = await response.json();
+
+    charsUsed.textContent = stats.charactersUsed;
+    charLimit.textCibtet = stats.charcterLimit;
+
+  }
+}
 const inputState = {
   count: 0,
 
