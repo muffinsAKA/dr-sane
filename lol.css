@@ -274,7 +274,7 @@ html, body {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 3vh;
+  bottom: 5vh;
   opacity: 1;
   font-family: Arial, Helvetica, sans-serif;
   color: rgba(255, 255, 255, 0.158);
@@ -309,7 +309,7 @@ html, body {
 
 .stats-container {
 position: absolute;
-bottom: 3vh;
+bottom: 5vh;
 left: 6%;
 
 
