@@ -157,7 +157,7 @@ const inputState = {
 
   handleEnterKey(event) {
   
-    if (event.key === 'Enter' || event.type === 'touchstart') {
+    if (event.key === 'Enter' || event.type === 'touchend') {
       
       event.preventDefault();
 
@@ -259,7 +259,7 @@ const inputState = {
 
       console.log('mobile mode')
 
-      submitButton.addEventListener('touchstart', this.handleEnterKey)
+      submitButton.addEventListener('touchend', this.handleEnterKey)
 
 
       question.addEventListener('keydown', this.handleEnterKey);
