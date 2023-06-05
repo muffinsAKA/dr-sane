@@ -103,7 +103,7 @@ html, body {
   align-items: center;
   pointer-events: none;
   justify-content: center;
-  border-radius: 15px;
+  border-radius: 12px;
   z-index: 1;
   
 }
@@ -130,7 +130,7 @@ html, body {
   text-align: center;
   align-items: center;
   pointer-events: none;
-  border-radius: 15px;
+  border-radius: 12px;
   z-index: 0;
 }
 #credits p {
