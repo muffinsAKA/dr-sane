@@ -8,6 +8,7 @@ import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, set
 
 
 
+
 //  ------------- [ DOM ELEMENTS ] -----------------
 const firstTime = document.getElementById('first-time');
 const canvas = document.querySelector('#player');
@@ -241,6 +242,8 @@ const inputState = {
 
     if (mediaQueryMobile.matches === true) {
 
+      console.log('mobile mode')
+
       submitButton.addEventListener('touchstart', this.handleEnterKey)
       question.addEventListener('keydown', this.handleEnterKey);
 
@@ -320,7 +323,19 @@ async function mainInit(flagged) {
 
   // Hide player canvas initially
   canvas.style.display = 'block';
-  submitButton.style.display = 'flex';
+
+  const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+  
+  if (mediaQueryMobile.matches === true) {
+
+    submitButton.style.display = 'flex';
+    
+  } else {
+
+    submitButton.style.display = 'none';
+   
+  }
+
 
   
   // Add event listeners
