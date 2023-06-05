@@ -142,10 +142,6 @@ const usageStats = {
 
 usageStats.getStats()
 
-setTimeout(() => {
-  statsDiv.style.opacity = 0.55;
-}, 3000)
-
 const inputState = {
   count: 0,
 
