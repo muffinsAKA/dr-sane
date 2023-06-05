@@ -787,7 +787,7 @@
           background-color: rgb(12, 11, 11);
           color: rgb(161, 161, 161);
           text-align: center;
-          font-size: 1.25rem;
+          font-size: 16px;
           pointer-events: all;
           font-family: "Korin", sans-serif;
           transition: width 1s ease, height 1.2s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
