@@ -8,6 +8,7 @@ import { fadeIn, fadeOut, monologue, monologueLength, themeSong, credLength, set
 
 
 
+
 //  ------------- [ DOM ELEMENTS ] -----------------
 const firstTime = document.getElementById('first-time');
 const canvas = document.querySelector('#player');
@@ -22,6 +23,7 @@ const chars = document.getElementById('chars');
 const blocker = document.getElementById('blocker');
 const xButton = document.getElementById('x-button');
 const statsDiv = document.getElementById('stats')
+const submitButton = document.getElementById('submitButton')
 
 let canvasWidth = window.innerWidth;
 let canvasHeight = window.innerHeight;
@@ -152,8 +154,10 @@ const inputState = {
 
   handleEnterKey(event) {
   
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.type === 'touchstart') {
       if (inputState.count === 0) {
+
+        console.log('click')
   
         question.style.opacity = 0;
         inputState.count++;
@@ -177,6 +181,7 @@ const inputState = {
         question.placeholder = '';
         question.style.opacity = 0;
         question.style.display = 'none';
+        submitButton.style.display = 'none';
   
         setTimeout(() => {
           waitingDiv.style.opacity = 1;
@@ -187,6 +192,7 @@ const inputState = {
         episode(userInfo.question, userInfo.user);
   
       }
+
     }
   },
 
@@ -230,17 +236,45 @@ const inputState = {
   },
   
   addQuestionEventListeners() {
-    question.addEventListener('keydown', this.handleEnterKey);
-    question.addEventListener('focus', this.handleQuestionFocus);
-    question.addEventListener('blur', this.handleFocusOut);
+    
+    const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+    console.log(mediaQueryMobile);
+
+    if (mediaQueryMobile.matches === true) {
+
+      console.log('mobile mode')
+
+      submitButton.addEventListener('touchstart', this.handleEnterKey)
+      question.addEventListener('keydown', this.handleEnterKey);
+
+    } else {
+
+      question.addEventListener('keydown', this.handleEnterKey);
+      question.addEventListener('focus', this.handleQuestionFocus);
+      question.addEventListener('blur', this.handleFocusOut);
+
+    }
+
+
   },
   
   removeQuestionEventListeners() {
-    question.removeEventListener('keydown', this.handleEnterKey);
-    question.removeEventListener('focus', this.handleQuestionFocus);
-    question.removeEventListener('blur', this.handleFocusOut);
-  }
 
+    const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+
+    if (mediaQueryMobile.matches === true) {
+      
+      question.removeEventListener('keydown', this.handleEnterKey);
+      submitButton.removeEventListener('touchend', this.handleEnterKey);
+
+    } else {
+
+      question.removeEventListener('keydown', this.handleEnterKey);
+      question.removeEventListener('focus', this.handleQuestionFocus);
+      question.removeEventListener('blur', this.handleFocusOut);
+  
+    }
+  }
 }
 
 
@@ -289,6 +323,19 @@ async function mainInit(flagged) {
 
   // Hide player canvas initially
   canvas.style.display = 'block';
+
+  const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+  
+  if (mediaQueryMobile.matches === true) {
+
+    submitButton.style.display = 'flex';
+    
+  } else {
+
+    submitButton.style.display = 'none';
+   
+  }
+
 
   
   // Add event listeners
