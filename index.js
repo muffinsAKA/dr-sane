@@ -41,7 +41,7 @@ let userInfo = {
 
 
 //  ------------- [ GLOBAL OBJS ] -----------------
-const audioLoader = new THREE.AudioLoader();
+
 let clock = new THREE.Clock();
 
 
@@ -50,8 +50,9 @@ let clock = new THREE.Clock();
 
 
 //  ------------- [ AUDIO ] -----------------
-const listenerKacl = new THREE.AudioListener();
-const soundKacl = new THREE.Audio( listenerKacl );
+let audioLoader;
+let listenerKacl;
+let soundKacl;
 
 
 //  ------------- [ TIMELINES ] -----------------
@@ -197,6 +198,12 @@ const inputState = {
   
         }, 500);
         
+        if (firstRun === false) {
+          audioLoader = new THREE.AudioLoader();
+          listenerKacl = new THREE.AudioListener();
+          soundKacl = new THREE.Audio( listenerKacl );
+        }
+
         
         episode(userInfo.question, userInfo.user);
   
