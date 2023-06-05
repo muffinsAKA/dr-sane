@@ -12,30 +12,29 @@
     <div id="container">
       <div id="border"></div>
 
-    <div id="questionDiv">
-      <div id="mod" onclick="window.open('https://www.google.com/search?q=where+to+buy+a+bible', '_blank');">
-        Content was flagged by ChatGPT. <br>Are you a bad person?</br>
+      <div id="questionDiv">
+        <div id="mod" onclick="window.open('https://www.google.com/search?q=where+to+buy+a+bible', '_blank');">
+          Content was flagged by ChatGPT. <br>Are you a bad person?</br>
+        </div>
+        <input type="text" id="question" placeholder="I'm listening." maxlength="40">
+        
+        <div id="waiting">The doctor will be with you shortly. 
+          <p>~10 seconds</p>
+        </div>
       </div>
-      <input type="text" id="question" placeholder="I'm listening." maxlength="40">
       
-      <div id="waiting">The doctor will be with you shortly. 
-        <p>~10 seconds</p>
-      </div>
-    </div>
-    
-    <video id="video" src="https://muffinsaka.s3.amazonaws.com/blues.mp4" crossorigin="anonymous"></video>
+      <video id="video" src="https://muffinsaka.s3.amazonaws.com/blues.mp4" crossorigin="anonymous"></video>
 
-    <div class="film-grain"></div>
+      <div class="film-grain"></div>
 
-    <div id="first-time"></div>
-    <div id="blocker"></div>
+      <div id="first-time"></div>
+      <div id="blocker"></div>
       <canvas id="player"></canvas>
     
 
-    <div id="credits"><p></p></div>
+      <div id="credits"><p></p></div>
 
-    <div id="title"></div>
-    <div class="twitter-container">
+      <div id="title"></div>
       <div class="stats-container">
         <div id="stats">
           <p id="x-button">[X]</p>
@@ -49,15 +48,15 @@
             <input type="hidden" name="currency_code" value="USD" />
             <input type="image" id="paypal" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
             <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-            </form>
+          </form>
         </div>
-      <a href="https://twitter.com/muffinsaka" class="twitter-follow-button">@muffinsAKA</a>
+      </div>
+      
+      <div class="twitter-container">
+        <a href="https://twitter.com/muffinsaka" class="twitter-follow-button">@muffinsAKA</a>
+      </div>
     </div>
     
-    </div>
-
-  </div>
-  </script>
     <script type="module" src="./index.js"></script>
 
   </body>
