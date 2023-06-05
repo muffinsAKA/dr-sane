@@ -810,6 +810,7 @@
             transition: transform 0.15s ease, scale 0.15s ease, width 0.15s ease, height 0.15s ease;
             transform: scale(1);
             z-index: 1;
+            pointer-events: auto;
           }
   
           #submitButton:active {
