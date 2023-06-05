@@ -826,7 +826,6 @@ async function createCreditsWorld(location) {
 switch (location) {
   case 'creditsFall':
 
-    video.play();
     video.loop = true;
     video.muted = true;
 
