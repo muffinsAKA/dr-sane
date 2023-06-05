@@ -359,9 +359,8 @@ left: 6%;
 
 #what {
   position: relative;
-
   font-family:'Courier New', Courier, monospace;
-  line-height: 1.3em;
+  line-height: 1.2em;
   text-align: center;
   font-size: 15px;
   color: beige;
