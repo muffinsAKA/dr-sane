@@ -818,7 +818,7 @@
             margin-right: 0;
             outline: 1px solid rgba(128, 128, 128, 0.253);
             transition: width 1s ease, opacity 1 ease;
-            -webkit-transition: width 1s ease, opacity 1s ease;
+            -webkit-transition: width 0.3s ease, opacity 1s ease;
             z-index: 1;
             pointer-events: auto;
           }
