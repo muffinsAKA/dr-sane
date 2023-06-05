@@ -190,6 +190,7 @@ const inputState = {
         question.style.display = 'none';
         submitButton.style.opacity = 0;
         submitButton.style.display = 'none';
+        statsDiv.style.opacity = 0;
   
         setTimeout(() => {
           waitingDiv.style.opacity = 1;
@@ -361,6 +362,7 @@ function resetScene() {
     blocker.style.opacity = 1;
     submitButton.style.display = 'flex';
     submitButton.style.opacity = 1;
+    statsDiv.style.opacity = 1;
   
     clock = null;
     clock = new THREE.Clock();
