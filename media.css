@@ -1002,7 +1002,7 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 13vh;
+            bottom: 0vh;
             opacity: 1;
             font-family: Arial, Helvetica, sans-serif;
             background-color: rgba(29, 156, 240, 0.25);
