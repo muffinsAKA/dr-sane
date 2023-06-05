@@ -34,13 +34,13 @@ export default async (req, res) => {
     try {
   
         const elevenUsage  = await elevenState.check();
-
+const funding = 38 / 0.24 * 1000
 
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.setHeader('Access-Control-Allow-Origin', '*');
 
         res.json({
-      characterLimit: elevenUsage.characterLimit,
+      characterLimit: elevenUsage.characterLimit + funding,
       charactersUsed: elevenUsage.charactersUsed
     });
       
