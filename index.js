@@ -599,7 +599,7 @@ async function episode(questionText, userName) {
 
  
   // fade out post-monologue
-  ktl.add(() => fadeOut(canvas), `+=${monoLength}`);
+  ktl.add(() => fadeIn(blocker), `+=${monoLength}`);
 
   // Play timeline and call credits 2.55s seconds after its over (2.5s on fadeout so cant do it right away)
   ktl.play().eventCallback("onComplete", () => {
@@ -692,10 +692,10 @@ async function createCredits() {
 
   const creditsChoice = creditsOptions[Math.floor(Math.random() * creditsOptions.length)];
 
-  ctl.add(() => fadeIn(canvas), 0.5);
+  ctl.add(() => fadeOut(blocker), 0.5);
 
   // fade out after credits
-  ctl.add(() => fadeOut(canvas), creditsLength - 3);
+  ctl.add(() => fadeIn(blocker), creditsLength - 3);
   
   // hide credits after final credits have shown
   ctl.add(() => creditsDiv.style.display = "none", creditsLength - 2 );
@@ -708,10 +708,8 @@ async function createCredits() {
   ctl.play();
   
   firstRun = false;
-  console.log(`First Run set to False`)
 
   // create credits world
-
   createCreditsWorld(creditsChoice)
   .then((credits) => {
 

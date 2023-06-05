@@ -57,7 +57,7 @@
     font-size: 2rem;
     opacity: 1;
     pointer-events: none;
-    border: 2px solid #111111;
+    border: none;
     border-radius: 12px;
     transition: border 1s ease;
   }
@@ -434,7 +434,7 @@
         font-size: 2rem;
         opacity: 1;
         pointer-events: none;
-        border: 2px solid #111111;
+        border: none;
         border-radius: 12px;
         transition: border 1s ease;
       }
