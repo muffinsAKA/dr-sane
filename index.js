@@ -231,7 +231,7 @@ const inputState = {
   },
   
   addQuestionEventListeners() {
-    question.addEventListener('click', this.handleEnterKey);
+    question.addEventListener('keydown', this.handleEnterKey);
     question.addEventListener('focus', this.handleQuestionFocus);
     question.addEventListener('blur', this.handleFocusOut);
     submitButton.addEventListener('click', this.handleEnterKey);
@@ -243,7 +243,7 @@ const inputState = {
     question.removeEventListener('keydown', this.handleEnterKey);
     question.removeEventListener('focus', this.handleQuestionFocus);
     question.removeEventListener('blur', this.handleFocusOut);
-    submitButton.removeEventListener('keydown', this.handleEnterKey);
+    submitButton.removeEventListener('click', this.handleEnterKey);
     submitButton.removeEventListener('focus', this.handleQuestionFocus);
     submitButton.removeEventListener('blur', this.handleFocusOut);
   }
