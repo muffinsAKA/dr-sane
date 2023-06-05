@@ -153,7 +153,7 @@ const inputState = {
 
   handleEnterKey(event) {
   
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.type  === 'click') {
       if (inputState.count === 0) {
   
         question.style.opacity = 0;
