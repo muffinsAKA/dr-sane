@@ -191,9 +191,6 @@ const inputState = {
   
       }
 
-      submitButton.style.transform = `scale(1.1)`;
-      submitButton.style.transform = `scale(1)`;
-
     }
   },
 
