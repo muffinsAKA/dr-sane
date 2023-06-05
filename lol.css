@@ -342,7 +342,7 @@ z-index: 3;
   flex-direction: column;
   text-align: right;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.1em;
+  font-size: 1em;
   top: 0;
   bottom: 0;
   border-radius: 13px;
@@ -350,7 +350,9 @@ z-index: 3;
   color: rgb(255, 166, 0);
   transition: opacity 0.5s ease;
   cursor: pointer;
-  margin-right: 1.15vw;
+  margin-right: 1vw;
+  margin-top: 12px;
+  white-space: nowrap;
 }
 
 #x-button:hover {
