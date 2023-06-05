@@ -23,7 +23,7 @@ const blocker = document.getElementById('blocker');
 const xButton = document.getElementById('x-button');
 const statsDiv = document.getElementById('stats')
 
-let canvasWidth = window.innerWidth * 0.8
+let canvasWidth = window.innerWidth * 0.5
 let canvasHeight = window.innerHeight * 0.6
 
 //  ------------- [ GLOBAL VARS ] -----------------
@@ -380,7 +380,7 @@ const intro = {
 async function adjustSize() {
 
 
-  canvasWidth = window.innerWidth * 0.8;
+  canvasWidth = window.innerWidth * 0.5;
   canvasHeight = window.innerHeight * 0.6;
 
   renderer.setSize(canvasWidth, canvasHeight);
