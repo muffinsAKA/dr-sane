@@ -371,9 +371,12 @@ z-index: 3;
   font-size: 18px;
   color: rgb(231, 160, 102);
   text-align: center;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin-bottom: 0.25vh;
-  padding-top: 1.5vh;
+  padding-top: 1.2vh;
 }
 
 #what {
