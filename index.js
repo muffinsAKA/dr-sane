@@ -184,7 +184,7 @@ const inputState = {
 
   handleQuestionFocus() {
 
-    border.style.opacity = 1;
+    canvas.style.border = '2px solid #111111';
     question.classList.add("fade");
   
     if (inputState.count === 0) {
@@ -206,7 +206,7 @@ const inputState = {
 
   handleFocusOut() {
     question.classList.add('fade');
-    border.style.opacity = 0;
+    canvas.style.border = 'none';
   
     if (inputState.count <= 1) {
       setTimeout(() => {
@@ -279,7 +279,7 @@ async function mainInit(flagged) {
   }
 
   // Hide player canvas initially
-  canvas.style.display = 'none';
+  canvas.style.display = 'block';
 
   
   // Add event listeners
@@ -299,8 +299,8 @@ function resetScene() {
       firstTime.style.opacity = 0;
       firstTime.style.display = 'flex';
 
-    canvas.style.opacity = 0;
-    border.style.opacity = 0;
+
+    canvas.style.border = 'none';
     creditsDiv.style.opacity = 1;
 
     waitingDiv.style.opacity = 0;
@@ -550,7 +550,7 @@ async function episode(questionText, userName) {
   }
   
 
-  border.style.opacity = 1;
+  canvas.style.border = '2px solid #111111';
 
   if (firstRun === true) {
     
