@@ -796,7 +796,7 @@
           padding-top: 0.1vh;
           padding-bottom: 0.1vh;
           opacity: 1;
-          -webkit-text-size-adjust: 100%;
+          -webkit-text-size-adjust: none;
         }
         
         #question:focus {
@@ -804,25 +804,27 @@
           color: rgb(163, 163, 163);
           width: 80vw;
           max-width: 375px;
+          -webkit-text-size-adjust: none;
         }
         
         #question::placeholder {
           opacity: 1;
           transition: opacity 1s ease, color 0.5s ease;
           text-align: center;
-          
+          -webkit-text-size-adjust: none;
         }
         
         #question:focus::placeholder {
           color: rgb(76, 76, 76);
           transition: opacity 1s ease, color 0.5s ease;
           text-align: center;
-          
+          -webkit-text-size-adjust: none;
         }
         
         #question.fade::placeholder {
           transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
           opacity: 0;
+          -webkit-text-size-adjust: none;
         }
         
         #question:hover {
