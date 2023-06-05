@@ -319,17 +319,6 @@ async function mainInit(flagged) {
   // Hide player canvas initially
   canvas.style.display = 'block';
 
-  
-  if (mediaQueryMobile.matches === true) {
-
-    submitButton.style.display = 'flex';
-    
-  } else {
-
-    submitButton.style.display = 'none';
-   
-  }
-
 
   
   // Add event listeners
@@ -639,6 +628,7 @@ async function episode(questionText, userName) {
 
    // fade in to kacl studio
    ktl.add(() => fadeOut(blocker), "+=5");
+   
    ktl.add(() => {
     canvas.style.display = 'flex';
    }, '+=0')
