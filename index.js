@@ -375,7 +375,6 @@ function resetScene() {
     question.classList.remove('fade');
 
     blocker.style.opacity = 1;
-    blocker.style.display = 'flex'
   
     clock = null;
     clock = new THREE.Clock();
