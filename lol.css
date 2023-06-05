@@ -364,7 +364,7 @@ z-index: 3;
   flex-direction: column;
   align-items: center; 
   justify-content: center;
-  width: 15vw;
+  width: 18vw;
   height: fit-content;
   top: 0;
   bottom: 0;
@@ -375,16 +375,7 @@ z-index: 3;
 }
 
 #stats:hover {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center;
-  width: 15vw;
-  height: fit-content;
-  top: 0;
-  bottom: 0;
-  border-radius: 13px;
-  opacity: 1;
+opacity: 1;
   transition: opacity 0.5s ease, scale 0.3s ease;
   outline: 1px solid rgb(175, 175, 172);
   scale: 1.015;
