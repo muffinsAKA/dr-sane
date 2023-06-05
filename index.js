@@ -25,6 +25,8 @@ const xButton = document.getElementById('x-button');
 const statsDiv = document.getElementById('stats')
 const submitButton = document.getElementById('submitButton')
 
+const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+
 let canvasWidth = window.innerWidth;
 let canvasHeight = window.innerHeight;
 
@@ -39,7 +41,7 @@ let userInfo = {
 
 
 //  ------------- [ GLOBAL OBJS ] -----------------
-const audioLoader = new THREE.AudioLoader();
+
 let clock = new THREE.Clock();
 
 
@@ -48,8 +50,9 @@ let clock = new THREE.Clock();
 
 
 //  ------------- [ AUDIO ] -----------------
-const listenerKacl = new THREE.AudioListener();
-const soundKacl = new THREE.Audio( listenerKacl );
+let audioLoader;
+let listenerKacl;
+let soundKacl;
 
 
 //  ------------- [ TIMELINES ] -----------------
@@ -155,6 +158,9 @@ const inputState = {
   handleEnterKey(event) {
   
     if (event.key === 'Enter' || event.type === 'touchstart') {
+      
+      event.preventDefault();
+
       if (inputState.count === 0) {
 
         console.log('click')
@@ -171,6 +177,8 @@ const inputState = {
         }, 1500);
   
         question.value = '';
+
+        
   
       } else if (inputState.count === 1) {
         
@@ -181,13 +189,22 @@ const inputState = {
         question.placeholder = '';
         question.style.opacity = 0;
         question.style.display = 'none';
+        submitButton.style.opacity = 0;
         submitButton.style.display = 'none';
+        statsDiv.style.opacity = 0;
   
         setTimeout(() => {
+          statsDiv.style.display = 'none'
           waitingDiv.style.opacity = 1;
   
         }, 500);
         
+        if (firstRun === true) {
+          audioLoader = new THREE.AudioLoader();
+          listenerKacl = new THREE.AudioListener();
+          soundKacl = new THREE.Audio( listenerKacl );
+        }
+
         
         episode(userInfo.question, userInfo.user);
   
@@ -224,10 +241,12 @@ const inputState = {
     canvas.style.opacity = 0;
   
     if (inputState.count <= 1) {
-      setTimeout(() => {
-        question.placeholder = "I'm listening.";
-        question.classList.remove('fade');
-      }, 1000);
+
+        setTimeout(() => {
+          question.placeholder = "I'm listening.";
+          question.classList.remove('fade');
+        }, 1000);
+
     } else if (inputState.count > 1) {
       question.placeholder = '';
       question.style.opacity = 0;
@@ -237,43 +256,29 @@ const inputState = {
   
   addQuestionEventListeners() {
     
-    const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
-    console.log(mediaQueryMobile);
-
-    if (mediaQueryMobile.matches === true) {
 
       console.log('mobile mode')
 
       submitButton.addEventListener('touchstart', this.handleEnterKey)
-      question.addEventListener('keydown', this.handleEnterKey);
 
-    } else {
 
       question.addEventListener('keydown', this.handleEnterKey);
       question.addEventListener('focus', this.handleQuestionFocus);
       question.addEventListener('blur', this.handleFocusOut);
 
-    }
-
-
   },
   
   removeQuestionEventListeners() {
 
-    const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
 
-    if (mediaQueryMobile.matches === true) {
       
-      question.removeEventListener('keydown', this.handleEnterKey);
-      submitButton.removeEventListener('touchend', this.handleEnterKey);
 
-    } else {
+      submitButton.removeEventListener('touchend', this.handleEnterKey);
 
       question.removeEventListener('keydown', this.handleEnterKey);
       question.removeEventListener('focus', this.handleQuestionFocus);
       question.removeEventListener('blur', this.handleFocusOut);
   
-    }
   }
 }
 
@@ -324,18 +329,6 @@ async function mainInit(flagged) {
   // Hide player canvas initially
   canvas.style.display = 'block';
 
-  const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
-  
-  if (mediaQueryMobile.matches === true) {
-
-    submitButton.style.display = 'flex';
-    
-  } else {
-
-    submitButton.style.display = 'none';
-   
-  }
-
 
   
   // Add event listeners
@@ -375,6 +368,15 @@ function resetScene() {
     question.classList.remove('fade');
 
     blocker.style.opacity = 1;
+    submitButton.style.display = 'flex';
+    submitButton.style.opacity = 1;
+    
+    statsDiv.style.display = 'flex';
+    
+    statsDiv.style.opacity = 1;
+
+    
+
   
     clock = null;
     clock = new THREE.Clock();
@@ -645,6 +647,7 @@ async function episode(questionText, userName) {
 
    // fade in to kacl studio
    ktl.add(() => fadeOut(blocker), "+=5");
+
    ktl.add(() => {
     canvas.style.display = 'flex';
    }, '+=0')
