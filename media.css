@@ -762,7 +762,7 @@
 
         #question {
           height: 6vh;
-          width: 50%;
+          width: 50vw;
           max-width: 375px;
           min-height: 3vh;
           line-height: normal;
@@ -789,8 +789,8 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 70%;
-          height: 3vh;
+          width: 50vw;
+          height: 2vh;
           font-family: 'Courier New', Courier, monospace;
           color: rgb(167, 167, 167);
           background-color: rgb(17, 17, 17);
@@ -810,7 +810,7 @@
         #question:focus {
           transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
           color: rgb(163, 163, 163);
-          width: 60vw;
+          width: 65vw;
           height: 6vh;
           max-width: 375px;
           -webkit-text-size-adjust: none;

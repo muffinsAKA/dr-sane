@@ -22,6 +22,7 @@ const chars = document.getElementById('chars');
 const blocker = document.getElementById('blocker');
 const xButton = document.getElementById('x-button');
 const statsDiv = document.getElementById('stats')
+const submitButton = document.getElementById('submitButton')
 
 let canvasWidth = window.innerWidth;
 let canvasHeight = window.innerHeight;
@@ -233,12 +234,18 @@ const inputState = {
     question.addEventListener('keydown', this.handleEnterKey);
     question.addEventListener('focus', this.handleQuestionFocus);
     question.addEventListener('blur', this.handleFocusOut);
+    submitButton.addEventListener('keydown', this.handleEnterKey);
+    submitButton.addEventListener('focus', this.handleQuestionFocus);
+    submitButton.addEventListener('blur', this.handleFocusOut);
   },
   
   removeQuestionEventListeners() {
     question.removeEventListener('keydown', this.handleEnterKey);
     question.removeEventListener('focus', this.handleQuestionFocus);
     question.removeEventListener('blur', this.handleFocusOut);
+    submitButton.removeEventListener('keydown', this.handleEnterKey);
+    submitButton.removeEventListener('focus', this.handleQuestionFocus);
+    submitButton.removeEventListener('blur', this.handleFocusOut);
   }
 
 }
