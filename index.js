@@ -132,7 +132,7 @@ xButton.addEventListener('click', () => {
 
 const usageStats = {
   async getStats() {
-    const apiUrl = 'https://dr-sane-git-testing-muffins.vercel.app/api/usage'
+    const apiUrl = 'https://frasier.muffins.zone/api/usage'
     const response = await fetch(apiUrl);
     const stats = await response.json();
 
