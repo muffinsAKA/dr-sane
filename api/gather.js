@@ -26,7 +26,7 @@ async function defaultPrompt(questionText, userName) {
   const location = 'kacl';
   const model = 'fraz';
   const charLimit = 500;
-  const tokens = 900;
+  const tokens = 1000;
   const subject = questionText;
 
   const prompt = `Pretend to be Dr. Frasier Crane on his radio show replying a caller named ${userName} asking this question: "${subject}". \

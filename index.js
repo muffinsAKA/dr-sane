@@ -160,7 +160,7 @@ const inputState = {
         question.placeholder = '';
   
         setTimeout(() => {
-          question.maxLength = 100;
+          question.maxLength = 200;
           question.style.opacity = 1;
           question.placeholder = `What's your question, ${userInfo.user}?`;
         }, 1500);
