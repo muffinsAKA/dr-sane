@@ -621,7 +621,7 @@
           width: 100%;
           height: 100%;
           background-color: #05050509;
-          z-index: 1;
+          z-index: 2;
         }
         
         #player {
