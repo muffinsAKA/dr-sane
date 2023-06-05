@@ -17,7 +17,6 @@ const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
 const  question = document.getElementById('question');
 const waitingDiv = document.getElementById("waiting");
-const border = document.getElementById('border');
 const modWarning = document.getElementById('mod');
 const chars = document.getElementById('chars');
 
