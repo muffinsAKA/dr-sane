@@ -342,7 +342,7 @@ left: 6%;
   opacity: 1;
   transition: opacity 0.5s ease, scale 0.3s ease;
   outline: 1px solid rgb(175, 175, 172);
-  scale: 1.02;
+  scale: 1.015;
 }
 
 #chars {
@@ -377,4 +377,10 @@ left: 6%;
   color: beige;
   padding: 5px;
   margin-bottom: 0.5vh;
+}
+
+#paypal:hover {
+outline: 0;
+scale: 1.05;
+transition: scale 0.3s ease;
 }
