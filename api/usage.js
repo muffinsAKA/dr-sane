@@ -23,7 +23,7 @@ const elevenState = {
       const responseJson = await response.json();
   
       const characterLimit = responseJson.subscription.character_limit;
-      const charactersUsed = responseJson.subscription.character_count;
+      const charactersUsed = Math.ceil(responseJson.subscription.character_count);
 
       return { characterLimit, charactersUsed };
     }
