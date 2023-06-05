@@ -131,14 +131,16 @@ const usageStats = {
     const response = await fetch(apiUrl);
     const stats = await response.json();
 
-
+    stats.characterLimit = stats.characterLimit.toLocaleString();
+    stats.charactersUsed = stats.charactersUsed.toLocaleString();
+    
     chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit} characters used`;
-
 
   }
 }
 
-usageStats.getStats();
+usageStats.getStats()
+
 
 const inputState = {
   count: 0,
