@@ -180,6 +180,7 @@ const inputState = {
         question.placeholder = '';
         question.style.opacity = 0;
         question.style.display = 'none';
+        submitButton.style.display = 'none';
   
         setTimeout(() => {
           waitingDiv.style.opacity = 1;
@@ -319,6 +320,7 @@ async function mainInit(flagged) {
 
   // Hide player canvas initially
   canvas.style.display = 'block';
+  submitButton.style.display = 'flex';
 
   
   // Add event listeners
