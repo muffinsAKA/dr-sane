@@ -199,7 +199,7 @@ const inputState = {
   
         }, 500);
         
-        if (firstRun === false) {
+        if (firstRun === true) {
           audioLoader = new THREE.AudioLoader();
           listenerKacl = new THREE.AudioListener();
           soundKacl = new THREE.Audio( listenerKacl );
