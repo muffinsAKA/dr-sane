@@ -17,10 +17,9 @@ const titleDiv = document.querySelector('#title');
 const video = document.getElementById( 'video' );
 const  question = document.getElementById('question');
 const waitingDiv = document.getElementById("waiting");
-const border = document.getElementById('border');
 const modWarning = document.getElementById('mod');
 const chars = document.getElementById('chars');
-
+const blocker = document.getElementById('blocker');
 
 
 let canvasWidth = window.innerWidth * 0.5
@@ -185,7 +184,7 @@ const inputState = {
 
   handleQuestionFocus() {
 
-    border.style.opacity = 1;
+    canvas.style.border = '2px solid #111111';
     question.classList.add("fade");
   
     if (inputState.count === 0) {
@@ -207,7 +206,7 @@ const inputState = {
 
   handleFocusOut() {
     question.classList.add('fade');
-    border.style.opacity = 0;
+    canvas.style.border = 'none';
   
     if (inputState.count <= 1) {
       setTimeout(() => {
@@ -280,7 +279,7 @@ async function mainInit(flagged) {
   }
 
   // Hide player canvas initially
-  canvas.style.display = 'none';
+  canvas.style.display = 'block';
 
   
   // Add event listeners
@@ -300,8 +299,8 @@ function resetScene() {
       firstTime.style.opacity = 0;
       firstTime.style.display = 'flex';
 
-    canvas.style.opacity = 0;
-    border.style.opacity = 0;
+
+    canvas.style.border = 'none';
     creditsDiv.style.opacity = 1;
 
     waitingDiv.style.opacity = 0;
@@ -317,9 +316,10 @@ function resetScene() {
     question.style.display = 'inline-block';
     question.style.opacity = 1;
     question.placeholder = "I'm Listening.";
-    
-
     question.classList.remove('fade');
+
+    blocker.style.opacity = 1;
+  
     clock = null;
     clock = new THREE.Clock();
     delta = null;
@@ -551,7 +551,7 @@ async function episode(questionText, userName) {
   }
   
 
-  border.style.opacity = 1;
+  canvas.style.border = '2px solid #111111';
 
   if (firstRun === true) {
     
@@ -592,14 +592,14 @@ async function episode(questionText, userName) {
 
 
    // fade in to kacl studio
-   ktl.add(() => fadeIn(canvas), "+=5");
+   ktl.add(() => fadeOut(blocker), "+=5");
 
   // start monologue
   ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
 
  
   // fade out post-monologue
-  ktl.add(() => fadeOut(canvas), `+=${monoLength}`);
+  ktl.add(() => fadeIn(blocker), `+=${monoLength}`);
 
   // Play timeline and call credits 2.55s seconds after its over (2.5s on fadeout so cant do it right away)
   ktl.play().eventCallback("onComplete", () => {
@@ -692,10 +692,10 @@ async function createCredits() {
 
   const creditsChoice = creditsOptions[Math.floor(Math.random() * creditsOptions.length)];
 
-  ctl.add(() => fadeIn(canvas), 0.5);
+  ctl.add(() => fadeOut(blocker), 0.5);
 
   // fade out after credits
-  ctl.add(() => fadeOut(canvas), creditsLength - 3);
+  ctl.add(() => fadeIn(blocker), creditsLength - 3);
   
   // hide credits after final credits have shown
   ctl.add(() => creditsDiv.style.display = "none", creditsLength - 2 );
@@ -708,10 +708,8 @@ async function createCredits() {
   ctl.play();
   
   firstRun = false;
-  console.log(`First Run set to False`)
 
   // create credits world
-
   createCreditsWorld(creditsChoice)
   .then((credits) => {
 
