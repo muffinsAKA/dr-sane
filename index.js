@@ -236,21 +236,42 @@ const inputState = {
   },
   
   addQuestionEventListeners() {
-    question.addEventListener('keydown', this.handleEnterKey);
-    question.addEventListener('focus', this.handleQuestionFocus);
-    question.addEventListener('blur', this.handleFocusOut);
-    submitButton.addEventListener('touchend', this.handleEnterKey);
+    
+    const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+
+    if (mediaQueryMobile.matches) {
+
+      submitButton.addEventListener('touchend', this.handleEnterKey)
+      question.addEventListener('keydown', this.handleEnterKey);
+
+    } else {
+
+      question.addEventListener('keydown', this.handleEnterKey);
+      question.addEventListener('focus', this.handleQuestionFocus);
+      question.addEventListener('blur', this.handleFocusOut);
+
+    }
+
 
   },
   
   removeQuestionEventListeners() {
-    question.removeEventListener('keydown', this.handleEnterKey);
-    question.removeEventListener('focus', this.handleQuestionFocus);
-    question.removeEventListener('blur', this.handleFocusOut);
-    submitButton.removeEventListener('touchend', this.handleEnterKey);
 
+    const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+
+    if (mediaQueryMobile.matches) {
+      
+      question.removeEventListener('keydown', this.handleEnterKey);
+      submitButton.removeEventListener('touchend', this.handleEnterKey);
+
+    } else {
+
+      question.removeEventListener('keydown', this.handleEnterKey);
+      question.removeEventListener('focus', this.handleQuestionFocus);
+      question.removeEventListener('blur', this.handleFocusOut);
+  
+    }
   }
-
 }
 
 
