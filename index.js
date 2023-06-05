@@ -25,6 +25,8 @@ const xButton = document.getElementById('x-button');
 const statsDiv = document.getElementById('stats')
 const submitButton = document.getElementById('submitButton')
 
+const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+
 let canvasWidth = window.innerWidth;
 let canvasHeight = window.innerHeight;
 
@@ -155,6 +157,9 @@ const inputState = {
   handleEnterKey(event) {
   
     if (event.key === 'Enter' || event.type === 'touchstart') {
+      
+      event.preventDefault();
+
       if (inputState.count === 0) {
 
         console.log('click')
@@ -171,6 +176,8 @@ const inputState = {
         }, 1500);
   
         question.value = '';
+
+        
   
       } else if (inputState.count === 1) {
         
@@ -224,10 +231,12 @@ const inputState = {
     canvas.style.opacity = 0;
   
     if (inputState.count <= 1) {
-      setTimeout(() => {
-        question.placeholder = "I'm listening.";
-        question.classList.remove('fade');
-      }, 1000);
+
+        setTimeout(() => {
+          question.placeholder = "I'm listening.";
+          question.classList.remove('fade');
+        }, 1000);
+
     } else if (inputState.count > 1) {
       question.placeholder = '';
       question.style.opacity = 0;
@@ -237,43 +246,29 @@ const inputState = {
   
   addQuestionEventListeners() {
     
-    const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
-    console.log(mediaQueryMobile);
-
-    if (mediaQueryMobile.matches === true) {
 
       console.log('mobile mode')
 
       submitButton.addEventListener('touchstart', this.handleEnterKey)
-      question.addEventListener('keydown', this.handleEnterKey);
 
-    } else {
 
       question.addEventListener('keydown', this.handleEnterKey);
       question.addEventListener('focus', this.handleQuestionFocus);
       question.addEventListener('blur', this.handleFocusOut);
 
-    }
-
-
   },
   
   removeQuestionEventListeners() {
 
-    const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
 
-    if (mediaQueryMobile.matches === true) {
       
-      question.removeEventListener('keydown', this.handleEnterKey);
-      submitButton.removeEventListener('touchend', this.handleEnterKey);
 
-    } else {
+      submitButton.removeEventListener('touchend', this.handleEnterKey);
 
       question.removeEventListener('keydown', this.handleEnterKey);
       question.removeEventListener('focus', this.handleQuestionFocus);
       question.removeEventListener('blur', this.handleFocusOut);
   
-    }
   }
 }
 
@@ -324,7 +319,6 @@ async function mainInit(flagged) {
   // Hide player canvas initially
   canvas.style.display = 'block';
 
-  const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
   
   if (mediaQueryMobile.matches === true) {
 
