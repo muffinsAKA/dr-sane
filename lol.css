@@ -36,6 +36,7 @@ html, body {
   pointer-events: none;
   border: 2px solid #202020;
   border-radius: 12px;
+  transition: border 1s ease;
 }
 
 #first-time {
