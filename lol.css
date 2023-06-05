@@ -334,21 +334,27 @@ z-index: 3;
 
 }
 #x-button {
+  position: relative;
   display: flex;
+  width: 0;
+  height: 0;
+  left: 40%;
   flex-direction: column;
-  width: 15vw;
   text-align: right;
-  height: fit-content;
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.1em;
   top: 0;
   bottom: 0;
   border-radius: 13px;
   opacity: 1;
-  color: beige;
+  color: rgb(255, 199, 126);
   transition: opacity 0.5s ease;
-  cursor:pointer;
+  cursor: pointer;
   margin-right: 1.15vw;
+}
+
+#x-button:hover {
+  color: rgb(255, 255, 255);
 }
 
 #stats {
@@ -387,13 +393,14 @@ z-index: 3;
   font-family:'Courier New', Courier, monospace;
   font-weight: bold;
   font-size: 24px;
-  color: rgb(231, 160, 102);
+  color: rgb(255, 166, 0);
   text-align: center;
   padding-left: 19px;
   padding-right: 19px;
   margin-right: 10px;
   padding-top: 1.2vh;
   margin-bottom: 8px;
+  margin-top: 0;
 }
 
 #chars-used {
@@ -401,7 +408,7 @@ z-index: 3;
   font-family:'Courier New', Courier, monospace;
   font-weight: normal;
   font-size: 18px;
-  color: rgb(231, 160, 102);
+  color: rgb(255, 166, 0);
   text-align: center;
   padding-bottom: 8px;
   padding-left: 19px;
