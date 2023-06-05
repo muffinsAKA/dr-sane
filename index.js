@@ -153,8 +153,10 @@ const inputState = {
 
   handleEnterKey(event) {
   
-    if (event.key === 'Enter' || event.type === 'touchend') {
+    if (event.key === 'Enter' || event.type === 'touchstart') {
       if (inputState.count === 0) {
+
+        console.log('click')
   
         question.style.opacity = 0;
         inputState.count++;
@@ -188,11 +190,10 @@ const inputState = {
         episode(userInfo.question, userInfo.user);
   
       }
-      submitButton.style.transform = `scale(1.1)`;
 
-      setTimeout(() => { 
-        submitButton.style.transform = 'scale(1);'
-      }, 300)
+      submitButton.style.transform = `scale(1.1)`;
+      submitButton.style.transform = `scale(1)`;
+
     }
   },
 
@@ -238,10 +239,11 @@ const inputState = {
   addQuestionEventListeners() {
     
     const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
+    console.log(mediaQueryMobile);
 
-    if (mediaQueryMobile.matches) {
+    if (mediaQueryMobile.matches === true) {
 
-      submitButton.addEventListener('touchend', this.handleEnterKey)
+      submitButton.addEventListener('touchstart', this.handleEnterKey)
       question.addEventListener('keydown', this.handleEnterKey);
 
     } else {
@@ -259,7 +261,7 @@ const inputState = {
 
     const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
 
-    if (mediaQueryMobile.matches) {
+    if (mediaQueryMobile.matches === true) {
       
       question.removeEventListener('keydown', this.handleEnterKey);
       submitButton.removeEventListener('touchend', this.handleEnterKey);

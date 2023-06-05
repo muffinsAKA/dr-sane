@@ -171,6 +171,9 @@ html, body {
   z-index: 3;
 }
 
+#submitButton{
+  pointer-events: all;
+}
 
 #question {
   caret-color: rgba(255,255,255, 0.1);
