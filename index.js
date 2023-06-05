@@ -236,12 +236,11 @@ const inputState = {
   },
   
   addQuestionEventListeners() {
-    question.addEventListener('touchend', this.handleEnterKey);
+    question.addEventListener('keydown', this.handleEnterKey);
     question.addEventListener('focus', this.handleQuestionFocus);
     question.addEventListener('blur', this.handleFocusOut);
-    submitButton.addEventListener('click', this.handleEnterKey);
-    submitButton.addEventListener('focus', this.handleQuestionFocus);
-    submitButton.addEventListener('blur', this.handleFocusOut);
+    submitButton.addEventListener('touchend', this.handleEnterKey);
+
   },
   
   removeQuestionEventListeners() {
@@ -249,8 +248,7 @@ const inputState = {
     question.removeEventListener('focus', this.handleQuestionFocus);
     question.removeEventListener('blur', this.handleFocusOut);
     submitButton.removeEventListener('touchend', this.handleEnterKey);
-    submitButton.removeEventListener('focus', this.handleQuestionFocus);
-    submitButton.removeEventListener('blur', this.handleFocusOut);
+
   }
 
 }
