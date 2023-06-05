@@ -279,7 +279,7 @@ async function mainInit(flagged) {
   }
 
   // Hide player canvas initially
-  canvas.style.display = 'block';
+  canvas.style.display = 'none';
 
   
   // Add event listeners
@@ -533,7 +533,7 @@ async function episode(questionText, userName) {
 
   // Show player canvas
   firstTime.style.opacity = 1;
-  canvas.style.display = 'flex';
+  
  
   
 
@@ -593,6 +593,9 @@ async function episode(questionText, userName) {
 
    // fade in to kacl studio
    ktl.add(() => fadeOut(blocker), "+=5");
+   ktl.add(() => {
+    fadeIn(canvas);
+   }, '+=0')
 
   // start monologue
   ktl.add(() => monologue(audioLoader, episodeData.audio, soundKacl), "+=0");
@@ -702,6 +705,8 @@ async function createCredits() {
 
   // start next episode
   ctl.add(mainInit, creditsLength + 2);
+
+  ctl.add(fadeOut(canvas), creditsLength);
 
   
   // Play timline
