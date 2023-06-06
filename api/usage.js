@@ -45,14 +45,14 @@ export default async (req, res) => {
 
           const amountOver = elevenUsage.charactersUsed - elevenUsage.characterLimit + funding;
 
-          
-          cost = elevenUsage.characterLimit - amountOver * 0.00024;
+                    
+          const costOverInDollars = amountOver * 0.00024;
         }
 
       res.json({
       characterLimit: Math.ceil(elevenUsage.characterLimit + funding),
       charactersUsed: elevenUsage.charactersUsed,
-      overage: cost
+      overage: costOverInDollars
     });
       
   
