@@ -47,7 +47,7 @@ export default async (req, res) => {
 
           cost = amountOver * 0.000024;
 
-          cost = Math.floor(cost);
+          cost = cost.toFixed(2);
         }
 
       res.json({
