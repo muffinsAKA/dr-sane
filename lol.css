@@ -417,11 +417,10 @@ z-index: 3;
 #paypal {
   position: relative;
   font-family:'Courier New', Courier, monospace;
-  line-height: 1.3em;
-  font-size: 15px;
   color: beige;
   padding: 5px;
   margin-bottom: 0.5vh;
+  padding: 10px;
   z-index: 2;
 }
 
