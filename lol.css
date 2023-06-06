@@ -109,7 +109,7 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2em;
+  font-size: 3em;
   color: rgb(238, 238, 238);
   background-color: #05050500;
   opacity: 1;
