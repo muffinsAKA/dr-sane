@@ -160,6 +160,7 @@ const usageStats = {
     } else {
 
     chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit}`;
+    
     }
 
   }
