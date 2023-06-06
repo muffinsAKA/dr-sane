@@ -153,7 +153,7 @@ const usageStats = {
     if (stats.overage) {
       
       stats.overage = stats.overage.toLocaleString();
-      chars.innerHTML = `${stats.charactersUsed} / ${stats.characterLimit}<br><p style="font-size: 0.6em; margin-top:6px; color: rgb(225,100,60); margin-bottom: 5px;">($${stats.overage} over)`;
+      chars.innerHTML = `${stats.charactersUsed} / ${stats.characterLimit}<br><p style="font-size: 0.65em; margin-top:6px; color: rgb(225,100,60); margin-bottom: 4px;">($${stats.overage} over)`;
       chars.style.fontSize = '1.6em'
       
 
