@@ -362,15 +362,13 @@ z-index: 3;
   bottom: 0;
   border-radius: 13px;
   opacity: 0.6;
-  transition: opacity 0.5s ease;
-  outline: 1px solid rgba(175, 175, 172, 0.253);
+  transition: opacity 0.5s ease, scale 0.3s ease;
+  outline: 2px solid rgba(172, 167, 157, 0.253);
 }
 
 #stats:hover {
-opacity: 1;
-  transition: opacity 0.5s ease, scale 0.3s ease;
-  outline: 1px solid rgba(224, 203, 162, 0.774);
-  scale: 1.015;
+  opacity: 1;
+  scale: 1.03;
 }
 
 #chars {
