@@ -95,7 +95,9 @@ export async function setRenderer(canvas, renderer, canvasWidth, canvasHeight) {
 
   renderer.setSize(canvasWidth, canvasHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 4));
-  renderer.outputEncoding = THREE.sRGBEncoding;  
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.NoToneMapping;
+
 
 }
 
