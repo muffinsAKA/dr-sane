@@ -46,7 +46,7 @@ export default async (req, res) => {
           const amountOver = elevenUsage.charactersUsed - elevenUsage.characterLimit + funding;
 
                     
-          cost = costOverInDollars = amountOver * 0.00024;
+          cost = amountOver * 0.00024;
         }
 
       res.json({
