@@ -369,7 +369,7 @@ z-index: 3;
 #stats:hover {
 opacity: 1;
   transition: opacity 0.5s ease, scale 0.3s ease;
-  outline: 1px solid rgb(175, 175, 172);
+  outline: 1px solid rgba(224, 203, 162, 0.774);
   scale: 1.015;
 }
 
