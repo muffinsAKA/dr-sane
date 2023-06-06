@@ -134,6 +134,9 @@ function switchScene(newScene, newCamera, newMixer, sceneName, texture, cone) {
 
 xButton.addEventListener('click', () => {
   statsDiv.style.opacity =  0;
+  setTimeout(() => {
+    statsDiv.style.display = 'none';
+  }, 1000)
 });
 
 const usageStats = {
