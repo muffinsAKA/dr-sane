@@ -192,8 +192,8 @@ html, body {
 #question:focus {
   transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
   color: rgb(148, 148, 148);
-  width: 20vw;
-  height: 3.5vh;
+  width: 24vw;
+  height: 5vh;
   border: 0;
   outline:0;
 }
