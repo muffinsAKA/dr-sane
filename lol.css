@@ -293,7 +293,6 @@ html, body {
   padding-left: 10px;
   padding-right: 10px;
   text-decoration: none;
-  outline: 1px solid rgba(34, 34, 34, 0.603);
   transition: color 0.8s ease, background-color 0.8s ease, font-size 0.8s ease;
   z-index: 2;
 }
