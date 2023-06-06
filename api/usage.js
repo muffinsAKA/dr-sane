@@ -52,7 +52,7 @@ export default async (req, res) => {
       res.json({
       characterLimit: Math.ceil(elevenUsage.characterLimit + funding),
       charactersUsed: elevenUsage.charactersUsed,
-      overage: costOverInDollars
+      overage: cost
     });
       
   
