@@ -22,8 +22,9 @@ const modWarning = document.getElementById('mod');
 const chars = document.getElementById('chars');
 const blocker = document.getElementById('blocker');
 const xButton = document.getElementById('x-button');
-const statsDiv = document.getElementById('stats')
-const submitButton = document.getElementById('submitButton')
+const statsDiv = document.getElementById('stats');
+const submitButton = document.getElementById('submitButton');
+const charsUsed = document.getElementById('chars-used');
 
 const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
 
@@ -147,8 +148,19 @@ const usageStats = {
 
     stats.characterLimit = stats.characterLimit.toLocaleString();
     stats.charactersUsed = stats.charactersUsed.toLocaleString();
+    console.log(stats.overage)
+
+    if (stats.overage) {
+      
+      stats.overage = stats.overage.toLocaleString();
+      chars.innerHTML = `${stats.charactersUsed} / ${stats.characterLimit}<br><p style="font-size: 0.6em; margin-top:6px; color: rgb(225,100,60); margin-bottom: 5px;">($${stats.overage} over)`;
+      chars.style.fontSize = '1.6em'
+      
+
+    } else {
 
     chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit}`;
+    }
 
   }
 }

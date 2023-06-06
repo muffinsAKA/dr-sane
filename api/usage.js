@@ -34,14 +34,24 @@ export default async (req, res) => {
     try {
   
         const elevenUsage  = await elevenState.check();
-const funding = 38 / 0.24 * 1000
+        const funding = 38 / 0.24 * 1000
 
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.setHeader('Access-Control-Allow-Origin', '*');
 
-        res.json({
+        let cost;
+
+        if (elevenUsage.charactersUsed >= elevenUsage.characterLimit+funding) {
+
+          const amountOver = elevenUsage.charactersUsed - elevenUsage.characterLimit + funding;
+
+          cost = amountOver * 0.00024;
+        }
+
+      res.json({
       characterLimit: Math.ceil(elevenUsage.characterLimit + funding),
-      charactersUsed: elevenUsage.charactersUsed
+      charactersUsed: elevenUsage.charactersUsed,
+      overage: cost
     });
       
   
