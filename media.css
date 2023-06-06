@@ -171,7 +171,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      height: 4vh;
+      height: 5.5vh;
       width: 6vw;
       min-width: fit-content;
       min-height: 3vh;
@@ -181,7 +181,7 @@
       background-color: rgb(12, 11, 11);
       color: rgb(141, 141, 141);
       text-align: left;
-      font-size: 1.5rem;
+      font-size: 2.15rem;
       pointer-events: all;
       font-family: "Korin", sans-serif;
       transition: width 1s ease, height 1.2s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
@@ -195,8 +195,8 @@
     #question:focus {
       transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
       color: rgb(148, 148, 148);
-      width: 20vw;
-      height: 3.5vh;
+      width: 28vw;
+      height: 6vh;
       border: 0;
       outline:0;
     }
@@ -461,17 +461,17 @@
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          height: 4vh;
+          height: 6vh;
           width: 6vw;
           min-width: fit-content;
-          min-height: 3vh;
+          min-height: 4vh;
           border-radius: 0.4vw;
           border: 0;
           outline-color: rgb(37, 37, 37);
           background-color: rgb(12, 11, 11);
           color: rgb(141, 141, 141);
           text-align: left;
-          font-size: 1.5rem;
+          font-size: 2.5rem;
           pointer-events: all;
           font-family: "Korin", sans-serif;
           transition: width 1s ease, height 1.2s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
@@ -485,8 +485,8 @@
         #question:focus {
           transition: width 1s ease, height 1.5s ease, opacity 1.1s ease, background-color 0.5s ease, transform 0.5s ease;
           color: rgb(148, 148, 148);
-          width: 20vw;
-          height: 3.5vh;
+          width: 32vw;
+          height: 7.5vh;
           border: 0;
           outline:0;
         }
