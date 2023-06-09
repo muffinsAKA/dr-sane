@@ -45,7 +45,7 @@ export default async (req, res) => {
 
           const amountOver = Math.abs((elevenUsage.characterLimit + funding) - elevenUsage.charactersUsed);
 
-          cost = amountOver * 0.24;
+          cost = amountOver * 0.000024;
 
           cost = cost.toFixed(2);
         }
