@@ -43,9 +43,9 @@ export default async (req, res) => {
 
         if (elevenUsage.charactersUsed > elevenUsage.characterLimit+funding === true) {
 
-          const amountOver = elevenUsage.charactersUsed - elevenUsage.characterLimit;
+          const amountOver = elevenUsage.charactersUsed - elevenUsage.characterLimit + funding;
 
-          cost = funding + amountOver * 0.000024;
+          cost = amountOver * 0.000024;
 
           cost = cost.toFixed(2);
         }
