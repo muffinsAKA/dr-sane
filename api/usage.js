@@ -34,7 +34,7 @@ export default async (req, res) => {
     try {
   
         const elevenUsage  = await elevenState.check();
-        const funding = (32 / 0.24) * 1000
+        const funding = (0 / 0.24) * 1000
 
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.setHeader('Access-Control-Allow-Origin', '*');
