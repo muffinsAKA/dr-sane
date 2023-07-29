@@ -1,14 +1,12 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
+const AWS = require('aws-sdk');
 
 // GPT env vars
-const gptKey = process.env.gptKey;
+const gptKey = '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';
 const gptReqUrl = "https://api.openai.com/v1/chat/completions";
 const modUrl = 'https://api.openai.com/v1/moderations'
 
 // Audio env vars
-const elevenKey = process.env.elevenKey;
+const elevenKey = 'e3c889715930f857c3f095fb35adaa0b';
 const elevenReqUrl = "https://api.elevenlabs.io/v1/text-to-speech/";
 
 const elevenHeader = {
@@ -26,7 +24,7 @@ async function defaultPrompt(questionText, userName) {
   const location = 'kacl';
   const model = 'fraz';
   const charLimit = 500;
-  const tokens = 1000;
+  const tokens = 200;
   const subject = questionText;
 
   const prompt = `Pretend to be Dr. Frasier Crane on his radio show replying a caller named ${userName} asking this question: "${subject}". \

@@ -140,35 +140,6 @@ xButton.addEventListener('click', () => {
   }, 1000)
 });
 
-const usageStats = {
-  async getStats() {
-    const apiUrl = 'https://frasier.muffins.zone/api/usage'
-    const response = await fetch(apiUrl);
-    const stats = await response.json();
-
-    stats.characterLimit = stats.characterLimit.toLocaleString();
-    stats.charactersUsed = stats.charactersUsed.toLocaleString();
-    console.log(stats.overage)
-
-    if (stats.overage) {
-      
-      stats.overage = stats.overage.toLocaleString();
-      chars.innerHTML = `${stats.charactersUsed} / ${stats.characterLimit}`;
-      charsUsed.innerHTML = `characters used<br><br><p style="font-size: 1.2em; line-height:2; font-weight: bold;margin-top:4px; color: rgb(255,80,20); margin-bottom: 6px; background-color: rgba(200, 30, 30, 0.2); padding-top:6px; border-radius: 2px; outline: 1px solid rgba(255, 100, 0, 0.6);">$${stats.overage} over</p>`
-      chars.style.fontSize = '1.6em'
-      
-
-    } else {
-
-    chars.textContent = `${stats.charactersUsed} / ${stats.characterLimit}`;
-
-    }
-
-  }
-}
-
-usageStats.getStats()
-
 const inputState = {
   count: 0,
 
