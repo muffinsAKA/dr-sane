@@ -4,30 +4,56 @@
     
     
     
-    <meta charset="utf-8" />
-    <title>Dr. Maku Sane</title>
-    <script type="module" crossorigin src="/assets/index-6582bc0c.js"></script>
-    <link rel="stylesheet" href="/assets/index-09eb1950.css">
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>I'm Listening</title>
+    <script type="module" crossorigin src="/assets/index-7375e401.js"></script>
+    <link rel="stylesheet" href="/assets/index-f4e71996.css">
   </head>
   <body>
-    <div id="border"></div>
+    <div id="container">
+      <div id="border"></div>
+      <div id="blocker"></div>
+      <div id="questionDiv">
+        <div id="mod" onclick="window.open('https://www.google.com/search?q=where+to+buy+a+bible', '_blank');">
+          Content was flagged by ChatGPT. <br>Are you a bad person?</br>
+        </div>
+        <input type="text" id="question" placeholder="I'm Listening." maxlength="40">
+        <div id="submitButton">>></div>
+
+        <div id="waiting">The doctor will be with you shortly. 
+          <p>~10 seconds</p>
+        </div>
+      </div>
+      
+      <video id="video" src="https://muffinsaka.s3.amazonaws.com/blues.mp4" crossorigin="anonymous" playsinline muted autoplay loop></video>
+
+
+
+      <div class="film-grain"></div>
+
+      <div id="first-time"></div>
+      
+      <canvas id="player"></canvas>
     
-    <video id="video" src="/assets/blues-c02edf76.mp4" class="video-hidden"></video>
 
-    <div class="film-grain"></div>
+      <div id="credits"><p></p></div>
 
-    <canvas id="start-screen"></canvas>
-
-    <div id="first-time"></div>
-
-    <canvas id="player"></canvas>
-
-    <div id="credits"><p></p></div>
-
-    <div id="title"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js" integrity="sha512-fTTVSuY9tLP+l/6c6vWz7uAQqd1rq3Q/GyKBN2jOZvJSLC5RjggSdboIFL1ox09/Ezx/AKwcv/xnDeYN9+iDDA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+      <div id="title"></div>
+      <div class="stats-container">
+        <div id="stats">
+          <p id="x-button">[X]</p>
+          <p id="chars"></p>
+          <p id="chars-used">characters used<br>for voice generation</p>
+          <p id="what">It costs [ $20 ] per month to generate Fraz's voice. <br></br>If you'd like to donate to help cover the extra costs you can do so below.</p>
+          <a href="https://buy.stripe.com/cN23dM4cB9Uo9DGdQQ"><input type="image" id="paypal" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" /></a>
+          </div>
+      </div>
+      
+      <div class="twitter-container">
+        <a href="" class="twitter-follow-button" onclick="window.open('https://twitter.com/muffinsaka', '_blank');">@muffinsAKA</a>
+      </div>
+    </div>
     
     
 

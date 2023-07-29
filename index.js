@@ -19,12 +19,10 @@ const video = document.getElementById( 'video' );
 const  question = document.getElementById('question');
 const waitingDiv = document.getElementById("waiting");
 const modWarning = document.getElementById('mod');
-const chars = document.getElementById('chars');
 const blocker = document.getElementById('blocker');
 const xButton = document.getElementById('x-button');
 const statsDiv = document.getElementById('stats');
 const submitButton = document.getElementById('submitButton');
-const charsUsed = document.getElementById('chars-used');
 
 const mediaQueryMobile = window.matchMedia("(max-width: 400px)");
 
