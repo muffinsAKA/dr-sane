@@ -440,8 +440,8 @@ async function titleCard(epTitle) {
 //  ------------- [ GET LATEST EP ] -----------------
 
 async function fetchEpisode(questionText, userName) {
-  const apiUrl = `https://frasier.muffins.zone/api/gather?questionText=${encodeURIComponent(questionText)}&userName=${encodeURIComponent(userName)}`;
-  const themeUrl = `https://frasier.muffins.zone/api/retrieve-audio`;
+  const apiUrl = `https://j36epos621.execute-api.us-east-1.amazonaws.com/dev/getShow?questionText=${encodeURIComponent(questionText)}&userName=${encodeURIComponent(userName)}`;
+  const themeUrl = `https://j36epos621.execute-api.us-east-1.amazonaws.com/dev/getaudio`;
   
   if (firstRun === false) {
     console.log(`fetchEpisode() round 2 starting - Line 396`);
