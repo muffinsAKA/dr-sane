@@ -438,7 +438,9 @@ async function titleCard(epTitle) {
 //  ------------- [ GET LATEST EP ] -----------------
 
 async function fetchEpisode(questionText, userName) {
-  const apiUrl = `https://j36epos621.execute-api.us-east-1.amazonaws.com/dev/getShow?questionText=${encodeURIComponent(questionText)}&userName=${encodeURIComponent(userName)}`;
+  console.log(questionText);
+  console.log(userName);
+  const apiUrl = `https://j36epos621.execute-api.us-east-1.amazonaws.com/dev/getshow?questionText=${encodeURIComponent(questionText)}&userName=${encodeURIComponent(userName)}`;
   const themeUrl = `https://j36epos621.execute-api.us-east-1.amazonaws.com/dev/getaudio`;
   
   if (firstRun === false) {

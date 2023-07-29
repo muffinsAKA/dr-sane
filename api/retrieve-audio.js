@@ -62,8 +62,9 @@ export async function retrieveAudio() {
   
 export default async (req, res) => {
     try {
-        res.setHeader('Access-Control-Allow-Credentials', true);
-        res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Credentials', true);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET');
         const audioData = await retrieveAudio();
         res.send(audioData);
     } catch (err) {
